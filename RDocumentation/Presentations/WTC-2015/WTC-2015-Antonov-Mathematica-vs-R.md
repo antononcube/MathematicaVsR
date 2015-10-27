@@ -386,6 +386,10 @@ Examples for future projects where R would be on par with Mathematica
 
 ### Music 
 
+### Other examples at GitHub
+- I plan to post example comparison projects at GitHub:
+  [MathematicaVsR](https://github.com/antononcube/MathematicaVsR/).
+
 
 Examples where R "has a package for it"
 ========================================================
@@ -423,3 +427,5 @@ Conclusions
   
 - R is slow, but keep in mind that at least half dozen fast implementations exist for some subsets of R.
 
+- More examples at GitHub
+  [MathematicaVsR](https://github.com/antononcube/MathematicaVsR/).
