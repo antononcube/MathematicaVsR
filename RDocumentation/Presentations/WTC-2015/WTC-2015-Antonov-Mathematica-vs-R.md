@@ -1,3 +1,7 @@
+---
+output: pdf_document
+classoption: landscape
+---
 Mathematica Vs R
 ========================================================
 author: Anton Antonov
@@ -302,13 +306,15 @@ if ("h2o" %in% rownames(installed.packages())) { remove.packages("h2o") }
 install.packages("h2o", repos=(c("http://s3.amazonaws.com/h2o-release/h2o/rel-kahan/5/R", getOption("repos"))))
 --->
 
-```{r}
+
+```r
 ##library(h2o)
 ##localH2O = h2o.init()
 ```
 
 Let us run a demo to see $H_2O$ at work.
-```{r}
+
+```r
 ##demo(h2o.glm)
 ```
 
