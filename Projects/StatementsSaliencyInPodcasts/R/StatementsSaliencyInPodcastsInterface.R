@@ -1,8 +1,30 @@
-##---
-## Title: Interactive interface for salient statements in podcasts
-## Author: Anton Antonov
-## Start date: 2016-09-18
-##---
+##     Statements saliency in podcasts R interactive interface
+##   Copyright (C) 2016  Anton Antonov
+##   
+##   This program is free software: you can redistribute it and/or modify
+##   it under the terms of the GNU General Public License as published by
+##   the Free Software Foundation, either version 3 of the License, or
+##   (at your option) any later version.
+##   This program is distributed in the hope that it will be useful,
+##   but WITHOUT ANY WARRANTY; without even the implied warranty of
+##   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##   GNU General Public License for more details.
+##   You should have received a copy of the GNU General Public License
+##   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+##   
+##   Written by Anton Antonov,
+##   antononcube @ gmail . com ,
+##   Windermere, Florida, USA.
+##============================================================
+## This R/Shiny script is part of the project
+## 
+##   "Statements saliency in podcasts",
+##  https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts
+## 
+## at MathematicaVsR at GitHub,
+##   https://github.com/antononcube/MathematicaVsR .
+##
+##============================================================
 
 library(shiny)
 library(DT)
@@ -11,7 +33,7 @@ server <- function(input, output) {
   
   qIndex <- reactive( { input$index })
   
-  ## Using simple title search
+  ##   Using simple title search
   output$view <-  DT::renderDataTable({ datatable({
     data.frame( Title = podcastTitles, stringsAsFactors = FALSE )
   }, rownames = TRUE, filter = 'top', options = list(pageLength = 8, autoWidth = FALSE) ) })

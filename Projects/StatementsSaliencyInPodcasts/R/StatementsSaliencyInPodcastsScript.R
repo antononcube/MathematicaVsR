@@ -1,9 +1,30 @@
-##---
-## Title: Statements saliency in podcasts
-## Author: Anton Antonov
-## Start date: 2016-09-17
-##---
-
+##   Statements saliency in podcasts R-Markdown script
+##   Copyright (C) 2016  Anton Antonov
+##   
+##   This program is free software: you can redistribute it and/or modify
+##   it under the terms of the GNU General Public License as published by
+##   the Free Software Foundation, either version 3 of the License, or
+##   (at your option) any later version.
+##   This program is distributed in the hope that it will be useful,
+##   but WITHOUT ANY WARRANTY; without even the implied warranty of
+##   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##   GNU General Public License for more details.
+##   You should have received a copy of the GNU General Public License
+##   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+##   
+##   Written by Anton Antonov,
+##   antononcube @ gmail . com ,
+##   Windermere, Florida, USA.
+##============================================================
+## This R script is part of the project
+## 
+##   "Statements saliency in podcasts",
+##  https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts
+## 
+## at MathematicaVsR at GitHub,
+##   https://github.com/antononcube/MathematicaVsR .
+##
+##============================================================
 ## The purpose of this file is to have an executable script that demonstrates 
 ##  1. the scraping (ingestion, processing) of a document collection from 
 ##     the web, and
@@ -18,7 +39,7 @@
 ##   Chapter 13, "Automatic Key Word and Key Sentence Extraction" of the book 
 ##   Matrix Methods in Data Mining and Pattern Recognition, 2007, SIAM,
 ##   by Lars Elden.
-
+##============================================================
 
 library(plyr)
 library(httr)
