@@ -36,7 +36,7 @@ The following concrete steps are taken.
 
 The following scripts can be executed to go through all the steps listed above.
 
-- *Mathemaitca* script : ["./Mathematica/StatementsSaliencyInPodcastsScript.m"]().
+- *Mathemaitca* script : ["./Mathematica/StatementsSaliencyInPodcastsScript.m"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/StatementsSaliencyInPodcasts/Mathematica/StatementsSaliencyInPodcastsScript.m).
 
 - R script : ["./R/StatementsSaliencyInPodcastsScript.R"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/StatementsSaliencyInPodcasts/R/StatementsSaliencyInPodcastsScript.R).
 
@@ -51,11 +51,13 @@ The following scripts can be executed to go through all the steps listed above.
 
 After executing the scripts listed above the executing following scripts would produce interactive interfaces that allow to see the outcomes of different parameter selections.
 
-- *Mathematica* interactive interface : ["./Mathematica/StatementsSaliencyInPodcastsInterface.m"]().
+- *Mathematica* interactive interface : ["./Mathematica/StatementsSaliencyInPodcastsInterface.m"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/StatementsSaliencyInPodcasts/Mathematica/StatementsSaliencyInPodcastsInterface.m).
 
 - R / Shiny interactive interface : ["./R/StatementsSaliencyInPodcastsInterface.R"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/StatementsSaliencyInPodcasts/R/StatementsSaliencyInPodcastsInterface.R).
 
 ## Observations and conclusions
+
+TBD
 
 ## License
 
