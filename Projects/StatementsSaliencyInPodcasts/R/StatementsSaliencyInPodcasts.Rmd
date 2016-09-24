@@ -6,12 +6,17 @@ output: html_document
 ---
 <!--- title: "Summarization of Freakonomics podcasts" -->
 <!--- 
-rmarkdown::render( input = "./SummarizationOfFreakonomicsPodcasts.Rmd", output_file = "./SummarizationOfFreakonomicsPodcasts.html")
+rmarkdown::render( input = "./StatementsSaliencyInPodcasts.Rmd", output_file = "./StatementsSaliencyInPodcasts.html")
 --->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
 
+Libraries needed:
+
+```{r} 
+library(plyr)
 library(httr)
 library(XML)
 library(rvest)
@@ -302,15 +307,15 @@ Running the file "SalientStatementsInterface.R" would produce a Shiny intractive
 
 ## References
 
-\[1\] Anton Antonov, [MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR).
+[1] Anton Antonov, [MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR).
 
-\[2\] Anton Antonv, ["Implementation of document-term matrix re-weighting functions in R"](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/DocumentTermWeightFunctions.R) (2014) at [MathematicaForPrediction project at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+[2] Anton Antonv, ["Implementation of document-term matrix re-weighting functions in R"](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/DocumentTermWeightFunctions.R) (2014) at [MathematicaForPrediction project at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
-\[3\] Wikipedia entry, [Bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model).
+[3] Wikipedia entry, [Bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model).
 
-\[4\] Wikipedia entry, [Stop words](https://en.wikipedia.org/wiki/Stop_words).
+[4] Wikipedia entry, [Stop words](https://en.wikipedia.org/wiki/Stop_words).
 
-\[5\] Lars Elden, Matrix Methods in Data Mining and Pattern Recognition, 2007, SIAM. 
+[5] Lars Elden, Matrix Methods in Data Mining and Pattern Recognition, 2007, SIAM. 
 See Chapter 13, "Automatic Key Word and Key Sentence Extraction". 
 
 

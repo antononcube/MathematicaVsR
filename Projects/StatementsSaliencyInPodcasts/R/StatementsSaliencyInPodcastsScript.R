@@ -20,6 +20,7 @@
 ##   by Lars Elden.
 
 
+library(plyr)
 library(httr)
 library(XML)
 library(rvest)
