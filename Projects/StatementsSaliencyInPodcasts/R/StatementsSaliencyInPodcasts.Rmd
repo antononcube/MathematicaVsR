@@ -14,7 +14,7 @@ rmarkdown::render( input = "./StatementsSaliencyInPodcasts.Rmd", output_file = "
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Libraries needed:
+Libraries (and code) needed:
 
 ```{r} 
 library(plyr)
@@ -92,7 +92,7 @@ if ( !exists("podcastLinks") ) {
 
 ### Get podcast transcripts
 
-The following code goes through each podcast links dowloads its content.
+The following code goes through each podcast links downloads its content.
 
 ```{r}
 if ( !exists("podcastPages") ) {
@@ -114,7 +114,7 @@ podcastTexts <-
   }, .progress = "none" )
 ```
 
-Each of the obtained podcast transcripts are respresented as list of stings, each string corresponding to a paragraph in the transcript HTML file.
+Each of the obtained podcast transcripts are represented as list of stings, each string corresponding to a paragraph in the transcript HTML file.
 
 The following code takes the title of each page.
 
@@ -159,8 +159,6 @@ grep( pattern = "^\\[[[:upper:]]*", x = c("[MUSIC: Interkosmos, â€œTickticktockâ
 
 ### Seleting paragraphs that start with human names
 
-gsub( "^[[:upper:]]*\\:", "", c("DUBNER: Among the many potential virtues of posting messages like these is the cost, which is very low.") )
-
 The next transformation is to select paragraphs that start with strings like "DUBNER:" or "Sarah BOLT:".
 ```{r}
 podcastTexts3 <- 
@@ -191,7 +189,7 @@ podcastTexts <- podcastTexts4
 
 ## The Bag-of-words model
 
-One on the most established approaches in information retrieval is to use the so called [bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model), \[3\]. With that model every words is an axis in a linear vector space, and a document is represented as a vector in that space.
+One on the most established approaches in information retrieval is to use the so called [bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model), [3]. With that model every words is an axis in a linear vector space, and a document is represented as a vector in that space.
 
 We are going to use the function `DocumentTermMatrix` from the source file [DocumentTermWeightFunctions.R]() in order to convert a list of "documents" (strings) to a sparse matrix the rows of which correspond to the documents and the columns correspond to words (terms). 
 
@@ -220,7 +218,7 @@ print( histogram( rowSums(twMat), type = "count", main = "Words per transcript d
 
 ## Stop words
 
-In order to get better result we have to remove the [stop words](https://en.wikipedia.org/wiki/Stop_words) \[4\] from the texts.
+In order to get better result we have to remove the [stop words](https://en.wikipedia.org/wiki/Stop_words) [4] from the texts.
 The following command downloads is a list stop words referenced in the Wikipedia entry "Stop words."
 
 ```{r}
@@ -236,7 +234,7 @@ The number of stop words obtained is ```r length(stopWords)```. Here is a sample
 sample(stopWords,20)
 ```
 
-Using the transcript term matrix we can find additional stop words that specifica for the transcript collection. We can ask which words have frequencies comparable with the stop words. These commands find the top most frequent words in the collection:
+Using the transcript term matrix we can find additional stop words that are specific for the transcript collection. We can ask which words have frequencies comparable with the stop words. These commands find the top most frequent words in the collection:
 
 ```{r}
 fr<-colSums(twMat)[stopWords]; fr[order(-fr)[1:12]]/sum(twMat)
@@ -246,7 +244,7 @@ Compare with the list in the Wikipedia entry ["Most common words in English"](ht
 
 ## Finding the most important sentences
 
-At this point we are ready to program a function that is going calculate the most important statements in a podcast using the algegraic approach explained in \\\[5\\\] by Elden.
+At this point we are ready to program a function that is going calculate the most important statements in a podcast using the algebraic approach explained in [5] by Elden.
 
 Here is the function definition:
 
@@ -293,30 +291,30 @@ MostImportantSentences <- function( sentences,
 
 ```{r}
 podcastTitles[[96]]
-MostImportantSentences( sentences = podcastTexts[[96]], nSentences = 5, stopWords = stopWords, applyWordStemming = FALSE )
+MostImportantSentences( sentences = podcastTexts[[96]], nSentences = 3, stopWords = stopWords, applyWordStemming = FALSE )
 ```
 
 ```{r}
-podcastTitles[[122]]
-MostImportantSentences( sentences = podcastTexts[[122]], nSentences = 5, stopWords = stopWords, applyWordStemming = FALSE )
+podcastTitles[[124]]
+MostImportantSentences( sentences = podcastTexts[[124]], nSentences = 3, stopWords = stopWords, applyWordStemming = FALSE )
 ```
 
 
 ### Interactive interface
 
-Running the file "SalientStatementsInterface.R" would produce a Shiny intractive interface that allows to see effects of different parameter combinations.
+Running the file ["StatementsSaliencyInPodcastsInterface.R"@](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/StatementsSaliencyInPodcasts/R/StatementsSaliencyInPodcastsInterface.R) would produce a Shiny interactive interface that allows to see effects of different parameter combinations.
 
 ## References
 
-\\\[1\\\] Anton Antonov, [MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR).
+[1] Anton Antonov, [MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR).
 
-\\\[2\\\] Anton Antonov, ["Implementation of document-term matrix re-weighting functions in R"](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/DocumentTermWeightFunctions.R) (2014) at [MathematicaForPrediction project at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+[2] Anton Antonov, ["Implementation of document-term matrix re-weighting functions in R"](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/DocumentTermWeightFunctions.R) (2014) at [MathematicaForPrediction project at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
-\\\[3\\\] Wikipedia entry, [Bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model).
+[3] Wikipedia entry, [Bag-of-words model](https://en.wikipedia.org/wiki/Bag-of-words_model).
 
-\\\[4\\\] Wikipedia entry, [Stop words](https://en.wikipedia.org/wiki/Stop_words).
+[4] Wikipedia entry, [Stop words](https://en.wikipedia.org/wiki/Stop_words).
 
-\\\[5\\\] Lars Elden, Matrix Methods in Data Mining and Pattern Recognition, 2007, SIAM. 
+[5] Lars Elden, Matrix Methods in Data Mining and Pattern Recognition, 2007, SIAM. 
 See Chapter 13, "Automatic Key Word and Key Sentence Extraction". 
 
 
