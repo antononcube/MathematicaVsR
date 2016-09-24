@@ -7,6 +7,7 @@ output: html_document
 <!--- title: "Summarization of Freakonomics podcasts" -->
 <!--- 
 rmarkdown::render( input = "./StatementsSaliencyInPodcasts.Rmd", output_file = "./StatementsSaliencyInPodcasts.html")
+rmarkdown::render( input = "./StatementsSaliencyInPodcasts.Rmd", output_file = "./StatementsSaliencyInPodcasts.pdf")
 
 --->
 
@@ -302,7 +303,9 @@ MostImportantSentences( sentences = podcastTexts[[124]], nSentences = 3, stopWor
 
 ### Interactive interface
 
-Running the file ["StatementsSaliencyInPodcastsInterface.R"@](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/StatementsSaliencyInPodcasts/R/StatementsSaliencyInPodcastsInterface.R) would produce a Shiny interactive interface that allows to see effects of different parameter combinations.
+Running the file ["StatementsSaliencyInPodcastsInterface.R"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/StatementsSaliencyInPodcasts/R/StatementsSaliencyInPodcastsInterface.R) would produce a Shiny interactive interface that allows to see effects of different parameter combinations.
+
+[![Snapshot](http://imgur.com/7kGplsfl.png)](http://imgur.com/7kGplsf.png)
 
 ## References
 

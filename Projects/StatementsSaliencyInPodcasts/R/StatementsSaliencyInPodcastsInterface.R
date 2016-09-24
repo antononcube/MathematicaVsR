@@ -7,8 +7,6 @@
 library(shiny)
 library(DT)
 
-source("./FreakonomicsPodcastsIngestion.R")
-
 server <- function(input, output) {
   
   qIndex <- reactive( { input$index })
