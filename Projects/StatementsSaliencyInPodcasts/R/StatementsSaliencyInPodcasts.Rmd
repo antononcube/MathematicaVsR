@@ -42,7 +42,7 @@ The goal for this project is two-fold:
 
 2. to compare the programming code of the developed functionalities with a similar project in *Mathematica*.
 
-In order to those experiments we have find, choose, and download suitable text data. This document gives a walk through with code of the complete sequence of steps from intent to experimental results. 
+In order to make those experiments we have to find, choose, and download suitable text data. This document gives a walk through with code of the complete sequence of steps from intent to experimental results. 
 
 The following concrete steps are taken.
 
@@ -52,9 +52,9 @@ The following concrete steps are taken.
 
 3. Text data parsing, cleaning, and other pre-processing.
 
-4. Mapping of selected document into linear vector space using the bag-of-words model.
+4. Mapping of a selected document into linear vector space using the Bag-of-words model.
 
-5. Finding sentence saliency using matrix algebra.
+5. Finding sentence/statement saliency using matrix algebra.
 
 6. Experimenting with the saliency algorithm over the data and making a suitable interactive interface. 
 
