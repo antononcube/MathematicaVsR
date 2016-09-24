@@ -1,16 +1,43 @@
-(* Mathematica Package *)
-(* Created by Mathematica Plugin for IntelliJ IDEA *)
+(*
+    Statements saliency in podcasts Mathematica interactive interface
+    Copyright (C) 2016  Anton Antonov
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Written by Anton Antonov,
+    antononcube @ gmail . com ,
+    Windermere, Florida, USA.
+*)
 
 (* :Title: StatementsSaliencyInPodcastsInterface *)
-(* :Context: StatementsSaliencyInPodcastsInterface` *)
-(* :Author: antonov *)
+(* :Context: Global` *)
+(* :Author: Anton Antonov *)
 (* :Date: 2016-09-24 *)
 
 (* :Package Version: 0.1 *)
 (* :Mathematica Version: *)
-(* :Copyright: (c) 2016 antonov *)
+(* :Copyright: (c) 2016 Anton Antonov *)
 (* :Keywords: *)
 (* :Discussion:
+
+    This Mathematica script is part of the project
+
+      "Statements saliency in podcasts",
+      https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts
+
+    at
+
+      MathematicaVsR at GitHub,
+      https://github.com/antononcube/MathematicaVsR .
 
    In order to run this dinamic interface run the following command:
 
