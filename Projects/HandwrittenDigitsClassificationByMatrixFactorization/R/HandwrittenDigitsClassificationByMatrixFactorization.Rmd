@@ -1,0 +1,413 @@
+---
+title: "Handwritten digits classification by matrix factorization"
+author: "Anton Antonov"
+date: "9/27/2016"
+output: html_document
+---
+
+<!--- 
+To run globally use the command:
+rmarkdown::render( input = "./HandwrittenDigitsClassificationByMatrixFactorization.Rmd", output_file = "./HandwrittenDigitsClassificationByMatrixFactorization.html")
+--->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This document (R-Markdown file) is made for the R-part of the [MathematicaVsR](https://github.com/antononcube/MathematicaVsR/) project ["Handwritten digits classification by matrix factorization"](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization).
+
+The main goal of this document is to demonstrate how to do in R:
+- the ingestion images from binary files the MNIST database of images of handwritten digits, and 
+- using matrix factorization to built a classifier, and 
+- classifier evaluation by accuracy and F-score calculation. 
+
+The matrix factorization methods used are [Singular Value Decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition) (SVD) and [Non-negative Matrix Factorization](https://en.wikipedia.org/wiki/Non-negative_matrix_factorization) (NMF).
+
+
+## Concrete steps
+
+The concrete steps taken follow.
+
+1. Ingest the **binary** data files into arrays that can be visualized
+as digit images.
+
+- The MNIST database have two sets: $60,000$ training images and $10,000$ testing images.
+
+2. Make a linear vector space representation of the images by simple
+unfolding.
+
+3. For each digit find the corresponding representation matrix and
+factorize it.
+
+4. Store the matrix factorization results in a suitable data
+structure. (These results comprise the classifier training.)
+
+- One of the matrix factors is seen as a new basis. 
+
+5. For a given test image (and its linear vector space representation)
+find the basis that approximates it best. The corresponding digit
+is the classifier prediction for the given test image.
+
+6. Evaluate the classifier(s) over all test images and compute
+accuracy, F-Scores, and other measures.
+
+More details about the classification algorithm are given in the blog post ["Classification of handwritten digits"](https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/).
+The method and algorithm are described Chapter 10 of [3].
+
+## Libraries and source code used
+```{r}
+library(irlba)
+library(data.table)
+library(devtools)
+source_url("https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/R/NonNegativeMatrixFactorization.R")
+```
+
+## Handwritten digits data ingestion
+
+First we download the files given in the [MNIST dabase site](http://yann.lecun.com/exdb/mnist/) :
+
+- [train-images-idx3-ubyte.gz](http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz):  training set images (9912422 bytes) 
+- [train-labels-idx1-ubyte.gz](http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz):  training set labels (28881 bytes) 
+- [t10k-images-idx3-ubyte.gz](http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz):   test set images (1648877 bytes) 
+- [t10k-labels-idx1-ubyte.gz](http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz):   test set labels (4542 bytes)
+
+
+### Definitions of integestion functions
+
+The following code follows very closely [the R code for MNIST ingestion](https://gist.github.com/brendano/39760#file-gistfile1-txt) written by Brendan O'Connor ([brendano](https://gist.github.com/brendano)).
+
+```{r}
+ReadMNISTImages <- function( fileName, .progress = "none" ) {
+  
+  toRead <- file( fileName, "rb")
+  
+  ## magic number, number of images, number of rows, number of columns
+  readInfo <- as.list( readBin( toRead, 'integer', n=4, size=4, endian="big") )
+  names(readInfo) <- c("MNum", "NImages", "NRows", "NColumns")
+  
+  images <- 
+    llply( 1:readInfo$NImages, function(i) {
+      mat <- matrix( readBin( toRead, 'integer', size = 1, 
+                              n= readInfo$NRows * readInfo$NColumns, endian="big", signed=F ), 
+                     readInfo$NRows, readInfo$NColumns )  
+      mat[, nrow(mat):1]
+    }, .progress = .progress )  
+  
+  close(toRead)
+  images
+}
+
+ReadMNISTImageLabels <- function( fileName ) {
+  
+  toRead <- file(fileName, "rb")
+  
+  readLabelsInfo <- as.list( readBin( toRead, 'integer', n=2, size=4, endian="big") )
+  names(readLabelsInfo) <- c("MNum", "NImages")
+  
+  labels = readBin(toRead, 'integer', n = readLabelsInfo$NImages, size=1, signed=F )
+  
+  close(toRead)  
+  labels
+}
+```
+
+### Ingestion
+
+```{r}
+if( FALSE || !exists("trainImages") ) {
+  
+  cat( "\tTime to read training images :", system.time( {
+    trainImages <- ReadMNISTImages("~/Datasets/MNIST/train-images-idx3-ubyte")
+    trainImagesLabels <- ReadMNISTImageLabels("~/Datasets/MNIST/train-labels-idx1-ubyte") 
+  } ), "\n")
+  
+  cat( "\tTime to read test images :", system.time( {
+    testImages <- ReadMNISTImages("~/Datasets/MNIST/t10k-images-idx3-ubyte")
+    testImagesLabels <- ReadMNISTImageLabels("~/Datasets/MNIST/t10k-labels-idx1-ubyte")
+  } ), "\n")
+  
+  names(trainImages) <- paste("train", 1:length(trainImages), sep = "-" )
+  names(trainImagesLabels) <- paste("train", 1:length(trainImages), sep = "-" )
+  
+  names(testImages) <- paste("test", 1:length(testImages), sep = "-" )
+  names(testImagesLabels) <- paste("test", 1:length(testImages), sep = "-" )
+}
+```
+
+### Verification statistics and plots
+
+#### Training set
+
+Number of images per digit for the training set:
+```{r}
+count(trainImagesLabels)
+```
+
+Visualize the first $100$ images with their labels of the training set:
+
+```{r, fig.height = 5, fig.width = 5}
+par( mfrow = c(10,10), mai = c(0,0,0,0))
+for(i in 1:100){
+  image( trainImages[[i]], axes = FALSE, col = gray( 0:255 / 255 ) )
+  text( 0.2, 0, trainImagesLabels[[i]], cex = 1.4, col = 2, pos = c(3,4))
+}
+```
+
+(If order to make the plot above with inverted colors use 'col = gray( 255:0 / 255 )'.)
+
+#### Testing set
+
+Number of images per digit for the testing set:
+```{r}
+count(testImagesLabels)
+```
+
+Visualize the first $100$ images with their labels of the testing set:
+
+```{r, fig.height = 5, fig.width = 5 }
+par( mfrow = c(10,10), mai = c(0,0,0,0))
+for(i in 1:100){
+  image( testImages[[i]], axes = FALSE, col = gray( 0:255 / 255 ) )
+  text( 0.2, 0, testImagesLabels[[i]], cex = 1.4, col = 2, pos = c(3,4))
+}
+```
+
+(If order to make the plot above with inverted colors use `col = gray( 255:0 / 255 )`.)
+
+## Linear vector space representation
+
+Each image is flattened and it is placed as a row in a matrix. 
+
+```{r}
+if ( FALSE || !exists("trainImagesMat") ) {
+  cat( "\tTime to make the training images matrix:", system.time(
+    trainImagesMat <- laply( trainImages, function(im) as.numeric( im ), .progress = "none" ) 
+  ), "\n")
+  cat( "\tTime to make the training images matrix:", system.time(
+    testImagesMat <- laply( testImages, function(im) as.numeric( im ), .progress = "none" )
+  ), "\n")
+  classLabels <- sort( unique( trainImagesLabels ) )
+}
+```
+
+Note here we also have computed the class labels from the data. (We expect them to be all digits from 0 to 9.)
+
+## Using Singular Value Decomposition
+
+### Factorization
+
+The following code takes a sub-matrix for each digit and factorizes it using SVD. The factorization results are put in a list with named elements. 
+(The element names being the digits.)
+
+```{r}
+cat( "\tTime to SVD factorize the training images sub-matrices :", system.time( {
+  svdRes <- 
+    llply( classLabels, function(cl) {
+      inds <- trainImagesLabels == cl
+      smat <- trainImagesMat[ inds, ]
+      smat <- as( smat, "sparseMatrix")
+      irlba( A = smat, nv = 40, nu = 40, maxit = 100, tol = 1E-6 )
+    }, .progress = "none" )
+  names(svdRes) <- classLabels 
+}), "\n")
+```
+
+### Basis interpretation
+
+This multi-panel plot shows the singular values for each SVD factorization:
+
+```{r}
+diagDF <- ldply( names(svdRes), function(x) data.frame( Digit = x, SingularValue = rev(sort(svdRes[[x]]$d)), Index = 1:length(svdRes[[x]]$d), stringsAsFactors = FALSE ) )
+ggplot(diagDF) + geom_point( aes( x = Index, y = SingularValue) ) + facet_wrap( ~ Digit, ncol = 5 )
+
+```
+
+Here is how the basis for $5$ looks like:
+```{r, fig.height=5, fig.width=5}
+dlbl <- "5"
+U <- svdRes[[dlbl]]$U; V <- svdRes[[dlbl]]$v; D <- svdRes[[dlbl]]$d
+par( mfrow = c(5,8), mai = c(0,0,0,0))
+for(i in 1:40){
+  image( matrix(V[,i], 28, 28), axes = FALSE, col = gray( 0:255 / 255 ) )
+  text( 0.2, 0, i, cex = 1.2, col = 2, pos = c(3,4))
+}  
+par(mfrow=c(1,1), mai = c(1,1,1,1))
+```
+
+With SVD we get the first vector (corresponding to the largest singular value) to be the baseline image for a digit sub-set and the rest are corrections to be added or subtracted from that baseline image. Compare with NMF basis in which all vectors are interpret-able as handwritten images.
+
+
+### Defintion of the classification function 
+
+```{r}
+vnorm <- function(x) sqrt( sum(x^2) ) 
+
+#' @description Classify by representation over an SVD basis.
+SVDClassifyImageVector <- function( factorizationsRes, vec ) {
+  
+  residuals <- 
+    laply( factorizationsRes, function(x){
+      if( is.null(x$mean) ) { lv <- vec } else { lv <- vec - x$mean }
+      rv <- lv - x$v %*% ( t(x$v) %*% lv )
+      vnorm(rv)
+    })
+  names(residuals) <- names(factorizationsRes)
+  
+  list( Label = names(factorizationsRes)[ which.min(residuals) ], Residuals = residuals ) 
+}
+```
+
+Here is an example classification with this function: 
+
+```{r}
+testImagesLabels[[123]]
+SVDClassifyImageVector( factorizationsRes = svdRes, vec = testImagesMat[123,] )
+```
+
+### Classification evaluation
+
+The following command runs the classification function over each row (image) of the testing set matrix representation.
+
+```{r}
+if(!exists("svdClRes")) {
+  cat( "\tTime to compute the SVD classifier evalution :", system.time( {
+    svdClRes <- 
+      ldply( 1:nrow(testImagesMat), function(i) {
+        res <- SVDClassifyImageVector( factorizationsRes = svdRes, vec = testImagesMat[i,] )
+        data.frame( Actual = testImagesLabels[[i]], Predicted = res$Label, stringsAsFactors = FALSE )
+      }, .progress = "none")  
+  }), "\n")
+}
+```
+
+##### Overall accuracy:
+```{r}
+mean( svdClRes$Actual == svdClRes$Predicted )
+```
+
+##### Accuracy breakdown per digit:
+```{r}
+svdClResDT <- data.table( svdClRes )
+svdClResDT[ , .( .N, Accuracy = mean(Actual == Predicted) ), by = Actual]
+```
+
+##### Confusion matrix:
+```{r}
+xtabs(~ Actual + Predicted, svdClRes)
+```
+
+## Using Non-negative Matrix Factorization
+
+### Factorization
+
+The following code takes a sub-matrix for each digit and factorizes it using SVD. The factorization results are put in a list with named elements. 
+(The element names being the digits.)
+
+```{r}
+if(!exists("nnmfRes")) {
+  cat( "\tTime to compute the NMF of training images sub-matrices :", system.time( {
+    nnmfRes <- 
+      llply( classLabels, function(cl) {
+        inds <- trainImagesLabels == cl
+        smat <- trainImagesMat[ inds, ]
+        smat <- as( smat, "sparseMatrix")
+        res <- NNMF( V = smat, k = 40, maxSteps = 200, tolerance = 1E-4, regularizationParameter = 0.1 )
+        res <- NNMFNormalizeMatrixProduct( W = res$W, H = res$H, normalizeLeft = TRUE )
+        bres <- NNMFNormalizeMatrixProduct( W = res$W, H = res$H, normalizeLeft = FALSE )
+        bres$D <- aaply( as.matrix(res$H), 1, vnorm )
+        bres
+      }, .progress = "none" )
+    names(nnmfRes) <- classLabels 
+  }), "\n")
+}
+```
+
+### Basis interpretation
+
+```{r}
+diagDF <- ldply( names(nnmfRes), function(x) data.frame( Digit = x, SingularValue = nnmfRes[[x]]$D, Index = 1:length(nnmfRes[[x]]$D), stringsAsFactors = FALSE ) )
+ggplot(diagDF) + geom_point( aes( x = Index, y = SingularValue) ) + facet_wrap( ~ Digit, ncol = 5 )
+```
+
+Here is how the basis for $5$ looks like:
+```{r, fig.height=5, fig.width=5}
+dlbl <- "5"
+H <- nnmfRes[[dlbl]]$H
+par( mfrow = c(5,8), mai = c(0,0,0,0))
+for(i in 1:40){
+  image( matrix(H[i,], 28, 28), axes = FALSE, col = gray( 0:255 / 255 ) )
+  text( 0.2, 0, i, cex = 1.2, col = 2, pos = c(3,4))
+}  
+par(mfrow=c(1,1), mai = c(1,1,1,1))
+```
+
+As expected, with NMF the basis vectors are interpret-able as handwritten digits image "topics".
+
+### Defintion of the classification function 
+
+I tried using the CRAN package [NMF](https://cran.r-project.org/web/packages/NMF/index.html) but it was too slow. 
+Here we are using [the implementation from MathematicaForPediction at GitHub](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/NonNegativeMatrixFactorization.R).
+
+```{r}
+#' @description Classify by representation over a NMF basis.
+NNMFClassifyImageVector <- function( factorizationsRes, vec, positiveDifference = FALSE ) {
+  
+  residuals <- 
+    laply( factorizationsRes, function(x){
+      approxVec <- t(x$H) %*% (Diagonal(x = x$D) %*% ( x$H %*% vec ) )
+      rv <- vec / vnorm(vec) - approxVec[,1] / vnorm( approxVec[,1] ) 
+      if ( positiveDifference ) { rv <- ifelse( rv < 0, 0, rv ) }
+      vnorm(rv)
+    })
+  names(residuals) <- names(factorizationsRes)
+  
+  list( Label = names(factorizationsRes)[ which.min(residuals) ], Residuals = residuals ) 
+}
+```
+
+Here is an example classification with this function: 
+
+```{r}
+testImagesLabels[[123]]
+NNMFClassifyImageVector( factorizationsRes = nnmfRes, vec = testImagesMat[123,] )
+```
+
+
+### Classification evaluation
+
+```{r}
+cat( "\tTime to compute the NMF classifier evalution :", system.time( {
+  nnmfClRes <- 
+      ldply( 1:nrow(testImagesMat), function( i ) {
+        res <- NNMFClassifyImageVector( factorizationsRes = nnmfRes, vec = testImagesMat[i,], positiveDifference = FALSE )
+        data.frame( Actual = testImagesLabels[[i]], Predicted = res$Label, stringsAsFactors = FALSE )
+      } )
+}), "\n")
+```
+
+
+##### Overall accuracy:
+```{r}
+mean( nnmfClRes$Actual == nnmfClRes$Predicted )
+```
+
+##### Accuracy breakdown per digit:
+```{r}
+nnmfClResDT <- data.table( nnmfClRes )
+nnmfClResDT[ , .( .N, Accuracy = mean(Actual == Predicted) ), by = Actual]
+```
+
+##### Confusion matrix:
+```{r}
+xtabs(~ Actual + Predicted, nnmfClRes)
+```
+
+## References
+
+[1] Yann LeCun et al., [MNIST database site](http://yann.lecun.com/exdb/mnist/).
+
+[2] Anton Antonov, ["Classification of handwritten digits"](https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/),  (2013), blog post at [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com/).
+
+[3] Lars Elden, Matrix Methods in Data Mining and Pattern Recognition, 2007, SIAM.
