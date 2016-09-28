@@ -61,7 +61,9 @@ The method and algorithm are described Chapter 10 of [3].
 library(plyr)
 library(ggplot2)
 library(irlba)
+library(MASS)
 library(data.table)
+library(doParallel)
 library(devtools)
 source_url("https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/R/NonNegativeMatrixFactorization.R")
 ```
@@ -304,6 +306,9 @@ xtabs(~ Actual + Predicted, svdClRes)
 
 ### Factorization
 
+I tried using the CRAN package [NMF](https://cran.r-project.org/web/packages/NMF/index.html) but it was too slow. 
+Here we are using [the implementation from MathematicaForPediction at GitHub](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/NonNegativeMatrixFactorization.R).
+
 The following code takes a sub-matrix for each digit and factorizes it using SVD. The factorization results are put in a list with named elements. 
 (The element names being the digits.)
 
@@ -315,12 +320,15 @@ if(!exists("nnmfRes")) {
         inds <- trainImagesLabels == cl
         smat <- trainImagesMat[ inds, ]
         smat <- as( smat, "sparseMatrix")
-        res <- NNMF( V = smat, k = 40, maxSteps = 200, tolerance = 1E-4, regularizationParameter = 0.1 )
+        res <- NNMF( V = smat, k = 40, maxSteps = 20, tolerance = 1E-4, regularizationParameter = 0.1 )
         res <- NNMFNormalizeMatrixProduct( W = res$W, H = res$H, normalizeLeft = TRUE )
         bres <- NNMFNormalizeMatrixProduct( W = res$W, H = res$H, normalizeLeft = FALSE )
         bres$D <- aaply( as.matrix(res$H), 1, vnorm )
+        bres$invH <- ginv( as.matrix( bres$H ) )
+        bres$Wrn <- as( aaply( as.matrix(bres$W), 1, function(x) x / vnorm(x) ), "sparseMatrix")
+        bres$M <- smat
         bres
-      }, .progress = "none" )
+      }, .progress = "time" )
     names(nnmfRes) <- classLabels 
   }), "\n")
 }
@@ -349,20 +357,29 @@ As expected, with NMF the basis vectors are interpret-able as handwritten digits
 
 ### Defintion of the classification function 
 
-I tried using the CRAN package [NMF](https://cran.r-project.org/web/packages/NMF/index.html) but it was too slow. 
-Here we are using [the implementation from MathematicaForPediction at GitHub](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/NonNegativeMatrixFactorization.R).
+Given a matrix $M \in \mathbf{R}^{n \times m}$ comprised of $n$ image vectors, the classification process for NMF is more complicated than that with SVD because the rows of the factor $H$ of the factorization $M=W H$ (the new basis) are not orthogonal to each other.
+Instead, for an image vector $v \in \mathbf{R}^{m}$ we have to look for the nearest neighbors in the matrix $W \in \mathbf{R}^{n \times k}$ of the vector $v H^{-1} \in \mathbf{R}^k$. The labels of those nearest neighbors are used to predict the label of $v$.
 
 ```{r}
 #' @description Classify by representation over a NMF basis.
-NNMFClassifyImageVector <- function( factorizationsRes, vec, positiveDifference = FALSE ) {
+NNMFClassifyImageVector <- function( factorizationsRes, vec, numberOfTopBasisVectors = 4, distanceFunction = "euclidean" ) {
   
   residuals <- 
-    laply( factorizationsRes, function(x){
-      approxVec <- t(x$H) %*% (Diagonal(x = x$D) %*% ( x$H %*% vec ) )
-      rv <- vec / vnorm(vec) - approxVec[,1] / vnorm( approxVec[,1] ) 
-      if ( positiveDifference ) { rv <- ifelse( rv < 0, 0, rv ) }
+    laply( factorizationsRes, function(x) {
+      approxVec <- matrix(vec,1) %*% x$invH
+      if( distanceFunction == "euclidean" ) {
+        dmat <- as.matrix(x$W) - matrix( rep(approxVec,nrow(x$W)), nrow = nrow(x$W), byrow = TRUE )
+        ## inds <- order(apply( dmat, 1, vnorm))[1:numberOfTopBasisVectors]
+        dmat <- rowSums(dmat^2)
+        inds <- order(dmat)[1:numberOfTopBasisVectors]
+      } else {
+        approxVec <- approxVec[1,] / vnorm( approxVec[1,] ) 
+        inds <- order( x$Wrn %*% approxVec )[1:numberOfTopBasisVectors]
+      }
+      approxVec <- colSums( x$M[inds,,drop=F] )
+      rv <- vec / vnorm(vec) - approxVec / vnorm( approxVec ) 
       vnorm(rv)
-    })
+    }, .progress = "none" )
   names(residuals) <- names(factorizationsRes)
   
   list( Label = names(factorizationsRes)[ which.min(residuals) ], Residuals = residuals ) 
@@ -379,14 +396,46 @@ NNMFClassifyImageVector( factorizationsRes = nnmfRes, vec = testImagesMat[123,] 
 
 ### Classification evaluation
 
+The classification process for NMF is slower and in order to speed it up we are going to use parallel computations.
+
 ```{r}
-cat( "\tTime to compute the NMF classifier evalution :", system.time( {
-  nnmfClRes <- 
-      ldply( 1:nrow(testImagesMat), function( i ) {
-        res <- NNMFClassifyImageVector( factorizationsRes = nnmfRes, vec = testImagesMat[i,], positiveDifference = FALSE )
-        data.frame( Actual = testImagesLabels[[i]], Predicted = res$Label, stringsAsFactors = FALSE )
-      } )
-}), "\n")
+if ( !exists("nnmfClRes") ) {
+  if ( FALSE ) {
+    
+    cat( "\tTime to sequentielly compute the NMF classifier evalution :", system.time( {
+      nnmfClRes <- 
+        ldply( 1:nrow(testImagesMat), function( i ) {
+          res <- NNMFClassifyImageVector( factorizationsRes = nnmfRes, vec = testImagesMat[i,], numberOfTopBasisVectors = 20, distanceFunction = "euclidean" )
+          data.frame( Actual = testImagesLabels[[i]], Predicted = res$Label, stringsAsFactors = FALSE )
+        }, .progress = "time" )
+    }), "\n")
+    
+  } else {
+    # Function definition for slicing a vector.
+    Slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
+    
+    if ( !exists("cl") || !("SOKcluster" %in% class(cl)) ) {
+      mcCores <- 4
+      cl <- makeCluster( mcCores )
+      registerDoParallel( cl )
+    }
+    
+    slicedIndsList <- Slice( 1:nrow(testImagesMat), ceiling( nrow(testImagesMat) / mcCores ) )
+    
+    startTime <- Sys.time()
+    
+    nnmfClRes <- 
+      foreach( parInds = slicedIndsList, .combine = rbind, .packages = c("Matrix") ) %dopar% {
+        ldply( parInds, function( i ) {
+          res <- NNMFClassifyImageVector( factorizationsRes = nnmfRes, vec = testImagesMat[i,], numberOfTopBasisVectors = 20, distanceFunction = "euclidean" )
+          data.frame( Actual = testImagesLabels[[i]], Predicted = res$Label, stringsAsFactors = FALSE )
+        } )
+      }
+    
+    endTime <- Sys.time()
+    cat("\n\t\tNMF classification time in parallel on", mcCores, "cores is :", difftime( endTime, startTime, units = "secs"), "\n" )  
+  }
+}
 ```
 
 
