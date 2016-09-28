@@ -58,6 +58,8 @@ The method and algorithm are described Chapter 10 of [3].
 
 ## Libraries and source code used
 ```{r}
+library(plyr)
+library(ggplot2)
 library(irlba)
 library(data.table)
 library(devtools)
