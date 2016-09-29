@@ -53,7 +53,7 @@ is the classifier prediction for the given test image.
 6. Evaluate the classifier(s) over all test images and compute
 accuracy, F-Scores, and other measures.
 
-More details about the classification algorithm are given in the blog post ["Classification of handwritten digits"](https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/).
+More details about the classification algorithm are given in the blog post ["Classification of handwritten digits"](https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/), [2].
 The method and algorithm are described Chapter 10 of [3].
 
 ## Libraries and source code used
@@ -91,7 +91,7 @@ the classification phase has to be modified since the obtained bases are not ort
 
 ## Handwritten digits data ingestion
 
-First we download the files given in the [MNIST dabase site](http://yann.lecun.com/exdb/mnist/) :
+First we download the files given in the [MNIST database site](http://yann.lecun.com/exdb/mnist/) :
 
 - [train-images-idx3-ubyte.gz](http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz):  training set images (9912422 bytes) 
 - [train-labels-idx1-ubyte.gz](http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz):  training set labels (28881 bytes) 
@@ -293,7 +293,7 @@ SVDClassifyImageVector( factorizationsRes = svdRes, vec = testImagesMat[123,] )
 
 ### Classification evaluation
 
-The following command runs the classification function over each row (image) of the testing set matrix representation.
+  The following command runs the classification function over each row (image) of the testing set matrix representation.
 
 ```{r SVD-classification}
 if(!exists("svdClRes")) {
@@ -323,6 +323,8 @@ svdClResDT[ , .( .N, Accuracy = mean(Actual == Predicted) ), by = Actual]
 xtabs(~ Actual + Predicted, svdClRes)
 ```
 
+\pagebreak
+
 ## Using Non-negative Matrix Factorization
 
 ### Factorization
@@ -349,7 +351,7 @@ if(!exists("nnmfRes")) {
         bres$Wrn <- as( aaply( as.matrix(bres$W), 1, function(x) x / vnorm(x) ), "sparseMatrix")
         bres$M <- smat
         bres
-      }, .progress = "time" )
+      }, .progress = "none" )
     names(nnmfRes) <- classLabels 
   }), "\n")
 }
