@@ -68,6 +68,27 @@ library(devtools)
 source_url("https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/R/NonNegativeMatrixFactorization.R")
 ```
 
+## Details of the classification algorithm
+
+### Training phase
+
+1. Optionally re-size, blur, or transform in other ways each training image into an array.
+2. Each image array (raster image) is linearized — the rows (or columns) are aligned into a one dimensional array. In other words, each raster image is mapped into a $\mathbf{R}^m$ vector space, where $m$ is the number of pixels of a transformed image.
+  - We will call these one dimensional arrays *image vectors*.
+3. From each set of images corresponding to a digit make a matrix with $m$ columns of the corresponding image vectors.
+4. Using the matrices in step 3 use a thin [Singular Value Decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition) (SVD) to derive orthogonal bases that describe the image data for each digit.
+
+### Classification phase
+
+1. Given an image of an unknown digit derive its image vector $v$ in the same was as in the training phase.
+2. Find the residuals of the approximations of $v$ with each of the bases found in step 4 of the training phase.
+3. The digit with the minimal residual is the classification result.
+
+### Using Non-negative Matrix Factorization
+
+In order to use [Non-negative Matrix Factorization](https://en.wikipedia.org/wiki/Non-negative_matrix_factorization) (NMF) instead of SVD, 
+the classification phase has to be modified since the obtained bases are not orthogonal. See below for theoretical and algorithmic details.
+
 ## Handwritten digits data ingestion
 
 First we download the files given in the [MNIST dabase site](http://yann.lecun.com/exdb/mnist/) :
@@ -119,7 +140,7 @@ ReadMNISTImageLabels <- function( fileName ) {
 
 ### Ingestion
 
-```{r}
+```{r ingestion}
 if( FALSE || !exists("trainImages") ) {
   
   cat( "\tTime to read training images :", system.time( {
@@ -151,7 +172,7 @@ count(trainImagesLabels)
 
 Visualize the first $100$ images with their labels of the training set:
 
-```{r, fig.height = 5, fig.width = 5}
+```{r training-sample-image, fig.height = 5, fig.width = 5}
 par( mfrow = c(10,10), mai = c(0,0,0,0))
 for(i in 1:100){
   image( trainImages[[i]], axes = FALSE, col = gray( 0:255 / 255 ) )
@@ -170,7 +191,7 @@ count(testImagesLabels)
 
 Visualize the first $100$ images with their labels of the testing set:
 
-```{r, fig.height = 5, fig.width = 5 }
+```{r testing-sample-image, fig.height = 5, fig.width = 5 }
 par( mfrow = c(10,10), mai = c(0,0,0,0))
 for(i in 1:100){
   image( testImages[[i]], axes = FALSE, col = gray( 0:255 / 255 ) )
@@ -205,7 +226,7 @@ Note here we also have computed the class labels from the data. (We expect them 
 The following code takes a sub-matrix for each digit and factorizes it using SVD. The factorization results are put in a list with named elements. 
 (The element names being the digits.)
 
-```{r}
+```{r SVD}
 cat( "\tTime to SVD factorize the training images sub-matrices :", system.time( {
   svdRes <- 
     llply( classLabels, function(cl) {
@@ -229,7 +250,7 @@ ggplot(diagDF) + geom_point( aes( x = Index, y = SingularValue) ) + facet_wrap( 
 ```
 
 Here is how the basis for $5$ looks like:
-```{r, fig.height=5, fig.width=5}
+```{r SVD-basis-example, fig.height=5, fig.width=5}
 dlbl <- "5"
 U <- svdRes[[dlbl]]$U; V <- svdRes[[dlbl]]$v; D <- svdRes[[dlbl]]$d
 par( mfrow = c(5,8), mai = c(0,0,0,0))
@@ -274,7 +295,7 @@ SVDClassifyImageVector( factorizationsRes = svdRes, vec = testImagesMat[123,] )
 
 The following command runs the classification function over each row (image) of the testing set matrix representation.
 
-```{r}
+```{r SVD-classification}
 if(!exists("svdClRes")) {
   cat( "\tTime to compute the SVD classifier evalution :", system.time( {
     svdClRes <- 
@@ -312,7 +333,7 @@ Here we are using [the implementation from MathematicaForPediction at GitHub](ht
 The following code takes a sub-matrix for each digit and factorizes it using SVD. The factorization results are put in a list with named elements. 
 (The element names being the digits.)
 
-```{r}
+```{r NMF}
 if(!exists("nnmfRes")) {
   cat( "\tTime to compute the NMF of training images sub-matrices :", system.time( {
     nnmfRes <- 
@@ -342,7 +363,7 @@ ggplot(diagDF) + geom_point( aes( x = Index, y = SingularValue) ) + facet_wrap( 
 ```
 
 Here is how the basis for $5$ looks like:
-```{r, fig.height=5, fig.width=5}
+```{r NMF-basis-example, fig.height=5, fig.width=5}
 dlbl <- "5"
 H <- nnmfRes[[dlbl]]$H
 par( mfrow = c(5,8), mai = c(0,0,0,0))
@@ -398,7 +419,7 @@ NNMFClassifyImageVector( factorizationsRes = nnmfRes, vec = testImagesMat[123,] 
 
 The classification process for NMF is slower and in order to speed it up we are going to use parallel computations.
 
-```{r}
+```{r NMF-classifcation}
 if ( !exists("nnmfClRes") ) {
   if ( FALSE ) {
     
