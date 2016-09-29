@@ -5,6 +5,7 @@ date: "9/27/2016"
 output: html_document
 ---
 
+
 <!--- 
 To run globally use the command:
 rmarkdown::render( input = "./HandwrittenDigitsClassificationByMatrixFactorization.Rmd", output_file = "./HandwrittenDigitsClassificationByMatrixFactorization.html")
@@ -293,7 +294,7 @@ SVDClassifyImageVector( factorizationsRes = svdRes, vec = testImagesMat[123,] )
 
 ### Classification evaluation
 
-  The following command runs the classification function over each row (image) of the testing set matrix representation.
+The following command runs the classification function over each row (image) of the testing set matrix representation.
 
 ```{r SVD-classification}
 if(!exists("svdClRes")) {
@@ -359,6 +360,8 @@ if(!exists("nnmfRes")) {
 
 ### Basis interpretation
 
+The following multi-panel plot shows the significance of the obtained NMF basis vectors for each digit.
+
 ```{r}
 diagDF <- ldply( names(nnmfRes), function(x) data.frame( Digit = x, SingularValue = nnmfRes[[x]]$D, Index = 1:length(nnmfRes[[x]]$D), stringsAsFactors = FALSE ) )
 ggplot(diagDF) + geom_point( aes( x = Index, y = SingularValue) ) + facet_wrap( ~ Digit, ncol = 5 )
@@ -378,7 +381,7 @@ par(mfrow=c(1,1), mai = c(1,1,1,1))
 
 As expected, with NMF the basis vectors are interpret-able as handwritten digits image "topics".
 
-### Defintion of the classification function 
+### Definition of the classification function 
 
 Given a matrix $M \in \mathbf{R}^{n \times m}$ comprised of $n$ image vectors, the classification process for NMF is more complicated than that with SVD because the rows of the factor $H$ of the factorization $M=W H$ (the new basis) are not orthogonal to each other.
 Instead, for an image vector $v \in \mathbf{R}^{m}$ we have to look for the nearest neighbors in the matrix $W \in \mathbf{R}^{n \times k}$ of the vector $v H^{-1} \in \mathbf{R}^k$. The labels of those nearest neighbors are used to predict the label of $v$.
