@@ -23,7 +23,7 @@ The concrete steps taken in scripts and documents of this project follow.
 1. Ingest the **binary** data files into arrays that can be visualized
 as digit images.
 
-  - We have two sets: $60,000$ training images and $10,000$ testing images.
+  - We have two sets: 60,000 training images and 10,000 testing images.
 
 2. Make a linear vector space representation of the images by simple
 unfolding.
@@ -50,7 +50,7 @@ There are scripts going through the steps listed above:
 
 - Mathematica : TBD
 
-- R : ["./R/R/HandwrittenDigitsClassificationByMatrixFactorization.Rmd"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.Rmd).
+- R : ["./R/HandwrittenDigitsClassificationByMatrixFactorization.Rmd"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.Rmd).
 
 ## Documents
 
@@ -60,8 +60,8 @@ reading and following of steps and corresponding results.
 - Mathematica : ["./Mathematica/Handwritten-digits-classification-by-matrix-factorization.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/Mathematica/Handwritten-digits-classification-by-matrix-factorization.pdf).
 
 - R :
-["./R/R/HandwrittenDigitsClassificationByMatrixFactorization.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.pdf),
-["./R/R/HandwrittenDigitsClassificationByMatrixFactorization.html"](https://cdn.rawgit.com/antononcube/MathematicaVsR/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.html).
+["./R/HandwrittenDigitsClassificationByMatrixFactorization.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.pdf),
+["./R/HandwrittenDigitsClassificationByMatrixFactorization.html"](https://cdn.rawgit.com/antononcube/MathematicaVsR/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.html).
   
   
 ## Comparison observations
