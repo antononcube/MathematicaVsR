@@ -48,19 +48,22 @@ accuracy, F-Scores, and other measures.
 
 There are scripts going through the steps listed above:
 
-- Mathematica :
+- Mathematica : TBD
 
-- R :
+- R : ["./R/R/HandwrittenDigitsClassificationByMatrixFactorization.Rmd"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.Rmd).
 
 ## Documents
 
-The following documents give suitable for reading exposition of steps
-and corresponding results.
+The following documents give an exposition that is suitable for
+reading and following of steps and corresponding results.
 
-- Mathematica :
+- Mathematica : ["./Mathematica/Handwritten-digits-classification-by-matrix-factorization.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/Mathematica/Handwritten-digits-classification-by-matrix-factorization.pdf).
 
 - R :
-
-## Conclusions
+["./R/R/HandwrittenDigitsClassificationByMatrixFactorization.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.pdf),
+["./R/R/HandwrittenDigitsClassificationByMatrixFactorization.html"](https://cdn.rawgit.com/antononcube/MathematicaVsR/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.html).
+  
+  
+## Comparison observations
 
 TBD
