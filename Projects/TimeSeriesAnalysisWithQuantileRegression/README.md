@@ -35,6 +35,21 @@ The concrete steps taken in the documents and scripts in this project are the fo
 
 ## Comparison
 
+### Work flow
+
+### Graphics
+
+The graphics below show temperature weather data in Atlanta for the time interval from 2011.04.01 to 2016.03.31 together with fitted regression quantiles and identified top outliers.
+
+Here is the *Mathematica* output graph:
+
+[!["Mathematica-KATL-MeanTemperatureF-QR-30-BSpline-knots"](http://imgur.com/ABbb5Kjl.png)](http://imgur.com/ABbb5Kj.png)
+
+Here is the R output graph:
+
+[!["R-KATL-MeanTemperature-QR-30-BSpline-knots"](http://imgur.com/EjEknNMl.png)](http://imgur.com/EjEknNM.png)
+
+### Speed 
 The R QR implementations in the package [`quantreg`](https://cran.r-project.org/web/packages/quantreg/index.html) is much faster than the ones in [`QuantileRegression.m`](https://github.com/antononcube/MathematicaForPrediction/blob/master/QuantileRegression.m). A good case demonstrating the importance of this is a dynamic interface showing the conditional PDFs and CDFs with a slider over the time series time values.
 
 The functionality design of the R implementation (`quantreg`) relies on the typical patterns of using R with formula objects and model matrices. The *Mathematica* implementation (`QuantileRegression.m`) has design that adheres to the built-in functions [`Fit`](https://reference.wolfram.com/language/ref/Fit.html) and [`NonlinearModelFit`](https://reference.wolfram.com/language/ref/NonlinearModelFit.html).
