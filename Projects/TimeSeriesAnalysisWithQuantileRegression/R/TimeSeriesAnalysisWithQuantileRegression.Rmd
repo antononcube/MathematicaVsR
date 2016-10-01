@@ -1,0 +1,230 @@
+---
+title: "Time series analysis with Quantile regression"
+author: "Anton Antonov"
+date: "10/1/2016"
+output: html_document
+---
+<!---
+##   Time series analysis with Quantile regression R-Markdown script
+##   Copyright (C) 2016  Anton Antonov
+##   
+##   This program is free software: you can redistribute it and/or modify
+##   it under the terms of the GNU General Public License as published by
+##   the Free Software Foundation, either version 3 of the License, or
+##   (at your option) any later version.
+##   This program is distributed in the hope that it will be useful,
+##   but WITHOUT ANY WARRANTY; without even the implied warranty of
+##   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##   GNU General Public License for more details.
+##   You should have received a copy of the GNU General Public License
+##   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+##   
+##   Written by Anton Antonov,
+##   antononcube @ gmail . com ,
+##   Windermere, Florida, USA.
+##============================================================
+##   This R-Markdown file) is made for the R-part of the [MathematicaVsR](https://github.com/antononcube/MathematicaVsR/) project 
+##     "Time series analysis with Quantile Regression"
+##     https://github.com/antononcube/MathematicaVsR/tree/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization).
+##============================================================
+--->
+
+<!---
+To run globally use:
+rmarkdown::render( input = "./TimeSeriesAnalysisWithQuantileRegression.Rmd", output_file = "./TimeSeriesAnalysisWithQuantileRegression.html")
+--->
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This document (R-Markdown file) is made for the R-part of the [MathematicaVsR](https://github.com/antononcube/MathematicaVsR/) project ["Time series analysis with Quantile Regression"](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization).
+
+The main goal of this document is to demonstrate how to do in R:
+
+- getting weather data (or other time series data),
+
+- fitting Quantile Regression (QR) curves to time series data, and
+
+- using QR to find outliers and conditional distributions.
+
+## Libraries
+
+```{r}
+library(weatherData)
+library(ggplot2)
+library(reshape2)
+library(quantreg)
+library(splines)
+```
+
+
+## Getting time series data
+
+Assume we want to obtain temperature time series data for Atlanta, Georgia, USA for the time interval from 2011.04.01 to 2016.03.31 .
+
+Following the guide [2] we can download that weather data in the following way.
+
+First we find weather stations identifiers in Atlanta, GA:
+```{r}
+getStationCode("Atlanta")
+```
+
+Let use the first one "KATL". The following code downloads the temperature data for desired time interval.
+
+```{r get-time-series, message=FALSE}
+if(!exists("tempDF")) {
+  res <- 
+    llply( seq(2011,2015), function(y) {
+      getWeatherForDate( station_id = "KATL", 
+                         start_date = paste(y, "04-01", sep="-" ), 
+                         end_date = paste(y+1, "03-31", sep="-" ) )
+    }, .progress = "None")
+  tempDF <- do.call(rbind, res)
+}
+```
+
+The obtained data frame has the following form:
+
+```{r}
+head(tempDF)
+```
+
+Below we are going to use the mean temperatures. Here is plot of that time series data:
+
+```{r ts-ggplot, fig.height=4, fig.width=12}
+ggplot(tempDF) + 
+  geom_line(aes(x = Date, y = Mean_TemperatureF), color='dodgerblue3')
+```
+(The color name was selected from the web page ["ggplot2 Quick Reference: colour (and fill)"](http://sape.inf.usi.ch/quick-reference/ggplot2/colour).)
+
+## Fitting Quantile regression curves and finding outliers
+
+### QR fitting of B-splines
+
+The package [`quantreg`](https://cran.r-project.org/web/packages/quantreg/index.html) provides several ways (functions and work flow) to apply QR to time series data. In this document we interested in applying QR using B-spline basis functions. Following the vignette [1] this can be done in the following way.
+
+First we are going to add to the time series data frame an index column and an absolute time column.
+
+```{r}
+tempDF <- tempDF[order(tempDF$Date),]
+tempDF <- cbind( tempDF, Index=1:nrow(tempDF), AbsTime = as.numeric(tempDF$Date) )
+```
+
+Next we make a model matrix for a selected number of knots.
+
+```{r}
+nKnots <- 30
+X <- model.matrix( Mean_TemperatureF ~ bs(Index, df = nKnots + 3, degree = 3), data = tempDF )
+```
+
+We find the QR curves -- called regression quantiles -- at these quantiles:
+```{r}
+qs <- c(0.02,0.1,0.25,0.5,0.75,0.9,0.98)
+```
+
+Do the QR fit:
+```{r qcurves}
+qcurves <-
+  llply( qs, function(x) {
+    fit <- rq( Mean_TemperatureF ~ bs(Index, df = nKnots + 3, degree = 3), tau = x, data = tempDF)
+    X %*% fit$coef
+  }, .progress = "none")
+```
+
+We put the QR fitting result into a data frame with which further manipulations and plotting would be easier.
+```{r}
+qfitDF <- do.call(cbind, qcurves )
+qfitDF <- data.frame(Index=1:nrow(qfitDF), Date = tempDF$Date, qfitDF )
+```
+
+### Finding outliers
+
+At this point finding the outliers is simple -- we just pick the points (dates) with temperatures higher than the $0.98$ regression quantile (multiplied by some factor close to $1$, like, $1.005$.)
+```{r}
+outlierInds <- which( tempDF$Mean_TemperatureF > 1.005 * qfitDF[,ncol(qfitDF)] )
+```
+
+### Plot
+
+The best way to plot the data is through melting into long form data frame. The identified outliers are given with red points.
+
+```{r qcurves-outliers-ggplot, fig.height=4, fig.width=12 }
+names(qfitDF) <- c( "Index", "Date", qs )
+qfitMeltedDF <- melt( data = qfitDF, id.vars = .(Date, Index) )
+names(qfitMeltedDF) <- gsub( "variable", "quantile", names(qfitMeltedDF) )
+
+ggplot( tempDF ) + 
+  geom_line( aes( x = Date, y = Mean_TemperatureF ), color = 'darkgrey' ) +
+  geom_line( data = qfitMeltedDF, aes( x = Date, y = value, color = quantile ) ) +
+  geom_point( data = tempDF[outlierInds, ], aes( x = Date, y = Mean_TemperatureF ), color = 'red')
+```
+
+## Re-construction of conditional probabilities distributions
+
+### CDF and PDF re-construction function definitions
+
+```{r}
+CDFEstimateFunction <- function( qs, qvals ) {
+  ## splinefun( x = qvals, y = qs, method = "natural" )
+  approxfun( x = qvals, y = qs, method = "linear" )
+}
+```
+
+Since we deal with piece-wise linear functions for CDF the PDF has to defined ad-hoc instead of using functions that find derivatives.
+
+```{r}
+PDFEstimateFunction <- function( qs, qvals ) {
+  names(qvals) <- NULL; names(qs) <- NULL
+  xs = ( qvals[-length(qvals)] + qvals[-1] ) / 2
+  ys = diff(qs) / diff(qvals)
+  approxfun( x = xs, y = ys, method = "constant" )  
+}
+```
+
+Note, that if we used [`splinefun`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/splinefun.html) for the calculation of the CDF function `cdfFunc` we could implement the PDF function simply as `pdfFunc <- function(x) cdfFunc( x, 1 )`.
+
+### QR with for lots of quantiles
+
+Consider the quantiles:
+```{r}
+qs <- seq(0,1,0.05); qs <- c(0.02, qs[qs > 0 & qs < 1 ], 0.98); qs
+```
+
+With them we do following fitting (same code as above):
+```{r}
+qcurves <-
+  llply( qs, function(x) {
+    fit <- rq( Mean_TemperatureF ~ bs(Index, df = nKnots + 3, degree = 3), tau = x, data = tempDF)
+    X %*% fit$coef
+    }, .progress = "none")
+qfitDF <- do.call(cbind, qcurves )
+qfitDF <- data.frame(Index=1:nrow(qfitDF), Date = tempDF$Date, qfitDF )
+```
+
+### CDF and PDF re-construction
+
+At this point we are ready to do the reconstruction of CDF and PDF for selected date and plot them.
+```{r cdf-pdf-reconstr-ggplot, fig.height=3,fig.width=4}
+ind <- 1100
+qvals <- as.numeric(qfitDF[ind, 3:(2+length(qs))]); names(qvals) <- NULL
+cdfFunc <- CDFEstimateFunction( qs, qvals )
+
+xs <- seq(min(qvals),max(qvals),0.05)
+print( 
+  ggplot( ldply( xs, function(x) data.frame( X = x, CDF = cdfFunc(x), PDF = pdfFunc(x) ) ) ) + 
+    geom_line( aes( x = X, y = CDF ), color = "blue" ) + 
+    geom_line( aes( x = X, y = PDF ), color = "orange" ) + 
+    ggtitle( paste( "CDF and PDF estimates for", qfitDF[ind, "Date"] ) ) +
+    theme(plot.title = element_text(lineheight=.8, face="bold")) 
+)
+```
+
+## References 
+
+[1] Roger Koenker, ["Quantile regression in R: a vignette"](https://cran.r-project.org/web/packages/quantreg/vignettes/rq.pdf), (2015), [CRAN](https://cran.r-project.org/).
+
+[2] Ram Narasimhan, ["weatherData: An R package that fetches Weather data from websites"](http://ram-n.github.io/weatherData/), http://ram-n.github.io/weatherData/.
