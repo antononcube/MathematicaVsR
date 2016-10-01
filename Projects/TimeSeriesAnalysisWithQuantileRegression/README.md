@@ -43,11 +43,11 @@ The graphics below show temperature weather data in Atlanta for the time interva
 
 Here is the *Mathematica* output graph:
 
-[!["Mathematica-KATL-MeanTemperatureF-QR-30-BSpline-knots"](http://imgur.com/ABbb5Kjl.png)](http://imgur.com/ABbb5Kj.png)
+[!["Mathematica-KATL-MeanTemperatureF-QR-30-BSpline-knots"](http://imgur.com/YDTcpCMl.png)](http://imgur.com/YDTcpCM.png)
 
 Here is the R output graph:
 
-[!["R-KATL-MeanTemperature-QR-30-BSpline-knots"](http://imgur.com/EjEknNMl.png)](http://imgur.com/EjEknNM.png)
+[!["R-KATL-MeanTemperature-QR-30-BSpline-knots"](http://imgur.com/S0CCg4yl.png)](http://imgur.com/S0CCg4y.png)
 
 ### Speed 
 The R QR implementations in the package [`quantreg`](https://cran.r-project.org/web/packages/quantreg/index.html) is much faster than the ones in [`QuantileRegression.m`](https://github.com/antononcube/MathematicaForPrediction/blob/master/QuantileRegression.m). A good case demonstrating the importance of this is a dynamic interface showing the conditional PDFs and CDFs with a slider over the time series time values.
