@@ -2,7 +2,7 @@
 title: "Time series analysis with Quantile regression"
 author: "Anton Antonov"
 date: "10/1/2016"
-output: html_document
+output: pdf_document
 ---
 <!---
 ##   Time series analysis with Quantile regression R-Markdown script
@@ -41,7 +41,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-This document (R-Markdown file) is made for the R-part of the [MathematicaVsR](https://github.com/antononcube/MathematicaVsR/) project ["Time series analysis with Quantile Regression"](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization).
+This document (R-Markdown file) is made for the R-part of the [MathematicaVsR](https://github.com/antononcube/MathematicaVsR/) project ["Time series analysis with Quantile Regression"](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/TimeSeriesAnalysisWithQuantileRegression/).
 
 The main goal of this document is to demonstrate how to do in R:
 
@@ -207,7 +207,7 @@ qfitDF <- data.frame(Index=1:nrow(qfitDF), Date = tempDF$Date, qfitDF )
 
 ### CDF and PDF re-construction
 
-At this point we are ready to do the reconstruction of CDF and PDF for selected date and plot them.
+At this point we are ready to do the reconstruction of CDF and PDF for selected dates and plot them.
 ```{r cdf-pdf-reconstr-ggplot, fig.height=3,fig.width=4}
 ind <- 1100
 qvals <- as.numeric(qfitDF[ind, 3:(2+length(qs))]); names(qvals) <- NULL

@@ -153,7 +153,7 @@ rmarkdown::render( input = "./TimeSeriesAnalysisWithQuantileRegression.Rmd", out
 --->
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>This document (R-Markdown file) is made for the R-part of the <a href="https://github.com/antononcube/MathematicaVsR/">MathematicaVsR</a> project <a href="https://github.com/antononcube/MathematicaVsR/tree/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization">“Time series analysis with Quantile Regression”</a>.</p>
+<p>This document (R-Markdown file) is made for the R-part of the <a href="https://github.com/antononcube/MathematicaVsR/">MathematicaVsR</a> project <a href="https://github.com/antononcube/MathematicaVsR/tree/master/Projects/TimeSeriesAnalysisWithQuantileRegression/">“Time series analysis with Quantile Regression”</a>.</p>
 <p>The main goal of this document is to demonstrate how to do in R:</p>
 <ul>
 <li><p>getting weather data (or other time series data),</p></li>
@@ -221,13 +221,20 @@ library(splines)</code></pre>
 ## 4 1301889600     4 1301889600     4 1301889600     4 1301889600     4
 ## 5 1301976000     5 1301976000     5 1301976000     5 1301976000     5
 ## 6 1302062400     6 1302062400     6 1302062400     6 1302062400     6
-##      AbsTime Index    AbsTime Index    AbsTime Index    AbsTime
-## 1 1301630400     1 1301630400     1 1301630400     1 1301630400
-## 2 1301716800     2 1301716800     2 1301716800     2 1301716800
-## 3 1301803200     3 1301803200     3 1301803200     3 1301803200
-## 4 1301889600     4 1301889600     4 1301889600     4 1301889600
-## 5 1301976000     5 1301976000     5 1301976000     5 1301976000
-## 6 1302062400     6 1302062400     6 1302062400     6 1302062400</code></pre>
+##      AbsTime Index    AbsTime Index    AbsTime Index    AbsTime Index
+## 1 1301630400     1 1301630400     1 1301630400     1 1301630400     1
+## 2 1301716800     2 1301716800     2 1301716800     2 1301716800     2
+## 3 1301803200     3 1301803200     3 1301803200     3 1301803200     3
+## 4 1301889600     4 1301889600     4 1301889600     4 1301889600     4
+## 5 1301976000     5 1301976000     5 1301976000     5 1301976000     5
+## 6 1302062400     6 1302062400     6 1302062400     6 1302062400     6
+##      AbsTime
+## 1 1301630400
+## 2 1301716800
+## 3 1301803200
+## 4 1301889600
+## 5 1301976000
+## 6 1302062400</code></pre>
 <p>Below we are going to use the mean temperatures. Here is plot of that time series data:</p>
 <pre class="r"><code>ggplot(tempDF) + 
   geom_line(aes(x = Date, y = Mean_TemperatureF), color='dodgerblue3')</code></pre>
@@ -309,7 +316,7 @@ qfitDF &lt;- data.frame(Index=1:nrow(qfitDF), Date = tempDF$Date, qfitDF )</code
 </div>
 <div id="cdf-and-pdf-re-construction" class="section level3">
 <h3>CDF and PDF re-construction</h3>
-<p>At this point we are ready to do the reconstruction of CDF and PDF for selected date and plot them.</p>
+<p>At this point we are ready to do the reconstruction of CDF and PDF for selected dates and plot them.</p>
 <pre class="r"><code>ind &lt;- 1100
 qvals &lt;- as.numeric(qfitDF[ind, 3:(2+length(qs))]); names(qvals) &lt;- NULL
 cdfFunc &lt;- CDFEstimateFunction( qs, qvals )
