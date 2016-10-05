@@ -130,6 +130,24 @@ The graphical visualization of a dataset with mosaic plots, [2,3], is similar in
 
 [!["titanic-class-survival-mosaic-plot"](http://imgur.com/xw303gRl.png)](http://imgur.com/xw303gR.png)
 
+## Straightforward calling of MatrixForm
+
+At this point we might want to be able to call MatrixForm more directly for the output of CrossTabulate and FromRXTabsForm. One way to do this is to define an up-value for Association .
+
+    Unprotect[Association];
+    MatrixForm[x_Association /; (KeyExistsQ[x, "XTABMatrix"] || KeyExistsQ[x, "XTABTensor"])] ^:= (MatrixForm[#1, TableHeadings -> Rest[{##}]] & @@ x);
+    Protect[Association];
+
+Now we can do this:
+
+    MatrixForm @
+     CrossTabulate[titanicData[[All, aTitanicColumnNames /@ {"passenger class", "passenger survival"}]]]
+
+[!["ctCounts-matrix-form"](http://imgur.com/NONpPFLl.png)](http://imgur.com/NONpPFL.png)
+
+**Remark:** Because of this up-value definition for Association with MatrixForm we have the associations returned by `CrossTabulate` and 
+`FromRXTabsForm` to have the key "XTABMatrix" instead of "Matrix", the former assumed to be much more rarely to be used than the latter.
+
 ## Using larger data
 
 Let us consider an example with larger data that has larger number of unique values in its columns. 
@@ -270,7 +288,7 @@ Here is an example of non-uniform contingency tables derived from the online ret
     Magnify[#, 0.75] &@
      Map[MatrixForm[#["Matrix"], TableHeadings -> (# /@ {"RowNames", "ColumnNames"})] &, tbs](*[[{1,12,-1}]]*)
 
-[!["non-uniform-tables"](http://imgur.com/dx6tp3gl.png)](http://imgur.com/dx6tp3g.png)
+[!["non-uniform-tables"](http://imgur.com/dx6tp3g.png)](http://imgur.com/dx6tp3g.png)
 
 Using the object RSparseMatrix, see [4,5], we can impose row and column names on each table. 
 
@@ -283,7 +301,44 @@ And then we impose the desired row and column names:
     tbs2 = Map[ ImposeColumnNames[ ImposeRowNames[#, {"January", "December"}], {"Q1", "Q2", "Q3", "Q4"}] &, tbs2];
     Magnify[#, 0.75] &@(MatrixForm /@ tbs2)
 
-[!["uniform-tables"](http://imgur.com/NyxJRdWl.png)](http://imgur.com/NyxJRdW.png)
+[!["uniform-tables"](http://imgur.com/NyxJRdW.png)](http://imgur.com/NyxJRdW.png)
+
+## Generalization : CrossTensorate
+
+A generalization of `CrossTabulate` is the function `CrossTensorate` implemented in [1] that takes a "formula" argument similar to R's [`xtabs`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/xtabs.html).
+
+This finds number of people of different sub-groups of Titanic data:
+
+    ctRes = CrossTensorate[Count == "passenger survival" + "passenger sex" + "passenger class", titanicData, aTitanicColumnNames];
+    MatrixForm[ctRes]
+
+[!["cross-tensorate-result"](http://imgur.com/db6EILB.png)](http://imgur.com/db6EILB.png)
+
+We can verify the result using Count:
+
+    Count[titanicData, {"1st", _, "female", "died"}]
+    (* 5 *)
+
+    Count[titanicData, {"2nd", _, "male", "survived"}]
+    (* 23 *)
+
+To split the cross-tensor across its first variable we can use this command:
+
+    sctRes = Association@
+      MapThread[Rule[#1, Join[<|"XTABTensor" -> #2|>, Rest@Rest@ctRes]] &, {ctRes[[2]], # & /@ ctRes["XTABTensor"]}];
+    MatrixForm /@ sctRes
+
+[!["cross-tensorate-split"](http://imgur.com/10nGQXY.png)](http://imgur.com/10nGQXY.png)
+
+Or we can call the more general function `CrossTensorateSplit` implemented in [1]:
+
+    Map[MatrixForm /@ CrossTensorateSplit[ctRes, #] &, Rest@Keys[ctRes]]
+
+[!["crosstensoratesplit-example"](http://imgur.com/q2Wg0sj.png)](http://imgur.com/q2Wg0sj.png)    
+
+`CrossTensorateSplit` can also be called with one argument that is a variable name.This will produce a splitting function. For example, the above command can be re-written as :
+
+    Map[MatrixForm /@ CrossTensorateSplit[#] @ ctRes &, Rest@Keys[ctRes]]
 
 ## References
 
