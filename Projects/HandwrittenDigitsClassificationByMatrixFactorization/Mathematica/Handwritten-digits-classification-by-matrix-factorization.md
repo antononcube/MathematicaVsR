@@ -1,8 +1,8 @@
-# **Handwritten digits classification by matrix factorization**
+# Handwritten digits classification by matrix factorization
 
-### Anton Antonov   
-### [MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR/tree/master/Projects)   
-### September, 2016   
+#### Anton Antonov  
+#### [MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR/tree/master/Projects)  
+#### September, 2016  
 
 ## Introduction
 
