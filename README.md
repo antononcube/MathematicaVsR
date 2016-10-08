@@ -58,7 +58,7 @@ is probably a good start.
 
 ### Abbreviations table
 | Abbreviation | Definition                        |
-|--------------+-----------------------------------|
+|--------------|-----------------------------------|
 | BofW         | bag of words (model)              |
 | Cl           | (machine learning) classification |
 | DA           | data analysis                     |
@@ -80,12 +80,14 @@ is probably a good start.
 
 ### Projects overview table
 | Project                                              | BofW | Cl | DA | DIng | DWrang | II | LR | LSA | MF | NLP | Outl | Par | QR | RLink | Sim | Str | TS | Vis |
-|------------------------------------------------------+------+----+----+------+--------+----+----+-----+----+-----+------+-----+----+-------+-----+-----+----+-----|
+|------------------------------------------------------|------|----|----|------|--------|----|----|-----|----|-----|------|-----|----|-------|-----|-----|----|-----|
 | StatementsSaliencyInPodcasts                         | X    |    |    | X    |        | X  |    |     |    | X   |      |     |    |       |     | X   |    |     |
 | HandwrittenDigitsClassificationByMatrixFactorization |      | X  |    | X    |        |    |    | X   | X  |     |      | X   |    |       |     |     |    | X   |
 | TimeSeriesAnalysisWithQuantileRegression             |      |    | X  | X    |        |    |    |     |    |     | X    |     | X  |       |     |     | X  | X   |
 | ODEsWithSeasonalities                                |      |    |    |      |        | X  |    |     |    |     |      |     |    |       | X   |     |    | X   |
 |                                                      |      |    |    |      |        |    |    |     |    |     |      |     |    |       |     |     |    |     |
+  
+
   
 
 
