@@ -54,9 +54,40 @@ given at the
 [Wolfram Technology Conference 2015](https://www.wolfram.com/events/technology-conference/2015/)
 is probably a good start.
 
-## Overview table
+## Projects overview
 
-TBD
+### Abbreviations table
+| Abbreviation | Definition                        |
+|--------------+-----------------------------------|
+| BofW         | bag of words (model)              |
+| Cl           | (machine learning) classification |
+| DA           | data analysis                     |
+| DIng         | Data ingestion                    |
+| DWrang       | data wrangling                    |
+| II           | interactive interface(s)          |
+| LR           | linear regression                 |
+| LSA          | latent semantic analysis          |
+| MF           | matrix factorization(s)           |
+| NLP          | natural language processing       |
+| Outl         | outliers                          |
+| Par          | parallel computing                |
+| QR           | quantile regression               |
+| RLink        | using Mathematica's RLink`        |
+| Sim          | simulation(s)                     |
+| Str          | strings patterns and manipulation |
+| TS           | time series                       |
+| Vis          | visualization                     |
+
+### Projects overview table
+| Project                                              | BofW | Cl | DA | DIng | DWrang | II | LR | LSA | MF | NLP | Outl | Par | QR | RLink | Sim | Str | TS | Vis |
+|------------------------------------------------------+------+----+----+------+--------+----+----+-----+----+-----+------+-----+----+-------+-----+-----+----+-----|
+| StatementsSaliencyInPodcasts                         | X    |    |    | X    |        | X  |    |     |    | X   |      |     |    |       |     | X   |    |     |
+| HandwrittenDigitsClassificationByMatrixFactorization |      | X  |    | X    |        |    |    | X   | X  |     |      | X   |    |       |     |     |    | X   |
+| TimeSeriesAnalysisWithQuantileRegression             |      |    | X  | X    |        |    |    |     |    |     | X    |     | X  |       |     |     | X  | X   |
+| ODEsWithSeasonalities                                |      |    |    |      |        | X  |    |     |    |     |      |     |    |       | X   |     |    | X   |
+|                                                      |      |    |    |      |        |    |    |     |    |     |      |     |    |       |     |     |    |     |
+  
+
 
 ## *Mathematica*'s [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
 
