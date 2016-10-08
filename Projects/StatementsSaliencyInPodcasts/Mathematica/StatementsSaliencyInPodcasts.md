@@ -40,14 +40,13 @@ Libraries and code needed:
 
 ## Introduction
 
-This Mathematica Markdown file available at the GitHub repository [MathematicaVsR](https://github.com/antononcube/MathematicaVsR/)
-in the project [StatementsSaliencyInPodcasts](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts/).
+This *Mathematica* Markdown file is part of the project [StatementsSaliencyInPodcasts](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts/).
 
-The goal for this project is two-fold:
+This *Mathematica*-part of the project has two goals:
 
-1. to experiment (in *Mathematica* and R) with algebraic computations determination of the most important sentences in natural language texts, and
+1. to experiment (in *Mathematica*) with algebraic computations determination of the most important sentences in natural language texts, and
 
-2. to compare the programming code of the developed functionalities with a similar project in *Mathematica*.
+2. to compare the programming code of the developed functionalities with a similar project in R.
 
 In order to make those experiments we have to find, choose, and download suitable text data. This document gives a walk through with code of the complete sequence of steps from intent to experimental results. 
 

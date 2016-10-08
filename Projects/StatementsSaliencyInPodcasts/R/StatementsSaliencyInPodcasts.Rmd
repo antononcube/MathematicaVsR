@@ -60,13 +60,12 @@ if ( !exists("SMRMakeDocumentTermMatrix") ) {
 
 ## Introduction
 
-This document is produced from an executable R-Markdown file available at the GitHub repository [MathematicaVsR](https://github.com/antononcube/MathematicaVsR) 
-in the project [StatementsSaliencyInPodcasts](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts/).
+This document is produced from an executable R-Markdown file and it is part of the project [StatementsSaliencyInPodcasts](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts/).
 
 
-The goal for this project is two-fold:
+This R-part of the project has two goals:
 
-1. to experiment (in *Mathematica* and R) with algebraic computations determination of the most important sentences in natural language texts, and
+1. to experiment (in R) with algebraic computations determination of the most important sentences in natural language texts, and
 
 2. to compare the programming code of the developed functionalities with a similar project in *Mathematica*.
 
