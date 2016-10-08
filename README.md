@@ -44,4 +44,13 @@ is probably a good start.
 
 TBD
 
+## License matters
+
+All code files and executable documents are with the license GPL 3.0.
+For details  see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/) .
+
+All documents are with the license Creative Commons Attribution 4.0
+International (CC BY 4.0). For details see
+[https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/) .
+
 
