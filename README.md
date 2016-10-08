@@ -19,6 +19,16 @@ Each of the projects has implementations and documents made with both
 knowledge transfer.
 
 
+## License matters
+
+All code files and executable documents are with the license GPL 3.0.
+For details  see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/) .
+
+All documents are with the license Creative Commons Attribution 4.0
+International (CC BY 4.0). For details see
+[https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/) .
+
+
 ## Projects organization
 
 Each project has an introductory page (README.md) that lists the
@@ -30,6 +40,10 @@ observations and development history.
 
 Each project (generally) has two directories named "Mathematica" and
 "R" that have corresponding documents and code.
+
+Since *Mathematica* ships with R some projects would have only a
+*Mathematica*-centric exposition of combining *Mathematica* and R
+outputs into one *Mathematica* notebook.
 
 
 ## Where to begin
@@ -44,13 +58,13 @@ is probably a good start.
 
 TBD
 
-## License matters
+## *Mathematica*'s [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
 
-All code files and executable documents are with the license GPL 3.0.
-For details  see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/) .
+For more information about *Mathematica*'s [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
+see
 
-All documents are with the license Creative Commons Attribution 4.0
-International (CC BY 4.0). For details see
-[https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/) .
+- the YouTube video ["RLink: Linking Mathematica and R"](https://www.youtube.com/watch?v=5ppY7cTy71o),
+
+- the set-up web page guide [Setting up RLink for Mathematica](http://szhorvat.net/pelican/setting-up-rlink-for-mathematica.html).
 
 
