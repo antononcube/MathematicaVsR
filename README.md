@@ -1,4 +1,4 @@
-# MathematicaVsR
+# Mathematica vs. R
 
 ## In brief
 
@@ -21,9 +21,9 @@ knowledge transfer.
 
 ## Projects organization
 
-Each project has an introductory page (README.md) that lists
-its goals, concrete steps, and links to documents and scripts with full
-explanations and code.
+Each project has an introductory page (README.md) that lists the
+project goals, concrete steps, and links to documents and scripts with
+full explanations and code.
 
 Generally, an introductory page would also have sections with comparison
 observations and development history.
@@ -36,6 +36,12 @@ Each project (generally) has two directories named "Mathematica" and
 
 This presentation,
 ["Mathematica vs. R"](https://github.com/antononcube/MathematicaVsR/blob/master/RDocumentation/Presentations/WTC-2015/WTC-2015-Antonov-Mathematica-vs-R.pdf)
-given at the [Wolfram Technology Conference 2015](https://www.wolfram.com/events/technology-conference/2015/) is probably a good start.
+given at the
+[Wolfram Technology Conference 2015](https://www.wolfram.com/events/technology-conference/2015/)
+is probably a good start.
+
+## Overview table
+
+TBD
 
 
