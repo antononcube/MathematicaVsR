@@ -45,6 +45,8 @@ Since *Mathematica* ships with R some projects would have only a
 *Mathematica*-centric exposition of combining *Mathematica* and R
 outputs into one *Mathematica* notebook.
 
+Some projects have only *Mathematica* or only R parts. This is because
+there are equivalent counter-parts.
 
 ## Where to begin
 
@@ -57,29 +59,34 @@ is probably a good start.
 ## Projects overview
 
 ### Abbreviations table
+
 | Abbreviation | Definition                        |   | Abbreviation | Definition                        |
-|--------------|-----------------------------------|---|--------------|-----------------------------------|
-| BofW         | bag of words (model)              |   | NLP          | natural language processing       |
-| Cl           | (machine learning) classification |   | Outl         | outliers                          |
-| DA           | data analysis                     |   | Par          | parallel computing                |
-| DIng         | Data ingestion                    |   | QR           | quantile regression               |
-| DWrang       | data wrangling                    |   | RLink        | using Mathematica's RLink`        |
-| II           | interactive interface(s)          |   | Sim          | simulation(s)                     |
-| Img          | image processing                  |   | Str          | strings patterns and manipulation |
-| LR           | linear regression                 |   | TS           | time series                       |
-| LSA          | latent semantic analysis          |   | Vis          | visualization                     |
-| MF           | matrix factorization(s)           |   |              |                                   |
+|--------------|-----------------------------------|---|--------------|-----------------------------------| 
+| BofW         | bag of words (model)              |   | NA           | numerical analysis                |
+| Cl           | (machine learning) classification |   | NLP          | natural language processing       |
+| DA           | data analysis                     |   | Opt          | optimization                      |
+| DIng         | data ingestion                    |   | Outl         | outliers                          |
+| DWrang       | data wrangling                    |   | Par          | parallel computing                |
+| Gr           | graphs                            |   | QR           | quantile regression               |
+| HPC          | High Performance Computing        |   | RLink        | Mathematica's RLink`              |
+| Img          | image processing                  |   | ROC          | receiver operating characteristic |
+| IUI          | interactive user interface(s)     |   | Sim          | simulation(s)                     |
+| Rgr          | regression                        |   | Str          | strings patterns and manipulation |
+| LSA          | latent semantic analysis          |   | TS           | time series                       |
+| MF           | matrix factorization(s)           |   | Vis          | visualization                     |
+
+
 
 ### Projects overview table
-| Project                                              | BofW | Cl | DA | DIng | DWrang | II | Img | LR | LSA | MF | NLP | Outl | Par | QR | RLink | Sim | Str | TS | Vis |
-|------------------------------------------------------|------|----|----|------|--------|----|-----|----|-----|----|-----|------|-----|----|-------|-----|-----|----|-----|
-| HandwrittenDigitsClassificationByMatrixFactorization |      | X  |    | X    |        |    |  X  |    | X   | X  |     |      | X   |    |       |     |     |    | X   |
-| ODEsWithSeasonalities                                |      |    |    |      |        | X  |     |    |     |    |     |      |     |    |       | X   |     |    | X   |
-| StatementsSaliencyInPodcasts                         | X    |    |    | X    |        | X  |     |    |     |    | X   |      |     |    |       |     | X   |    |     |
-| TimeSeriesAnalysisWithQuantileRegression             |      |    | X  | X    |        |    |     |    |     |    |     | X    |     | X  |       |     |     | X  | X   |
+| Project                                              | BofW | Cl | DA | DIng | DWrang | Gr | Img | IUI | Rgr | LSA | MF | NA | NLP | Opt | Outl | Par | QR | RLink | ROC | Sim | Str | TS | Vis |
+|------------------------------------------------------|------|----|----|------|--------|----|-----|-----|-----|-----|----|----|-----|-----|------|-----|----|-------|-----|-----|-----|----|-----|
+| HandwrittenDigitsClassificationByMatrixFactorization |      | X  |    | X    |        |    | X   |     |     | X   | X  |    |     |     |      | X   |    |       |     |     |     |    | X   |
+| LinearRegressionWithROC                              |      | X  |    |      |        |    |     |     | X   |     |    |    |     |     |      |     |    |       | X   |     |     |    | X   |
+| ODEsWithSeasonalities                                |      |    |    |      |        |    |     | X   |     |     |    | X  |     |     |      |     |    |       |     | X   |     |    | X   |
+| StatementsSaliencyInPodcasts                         | X    |    |    | X    |        |    |     | X   |     |     |    |    | X   |     |      |     |    |       |     |     | X   |    |     |
+| TimeSeriesAnalysisWithQuantileRegression             |      |    | X  | X    |        |    |     |     |     |     |    |    |     |     | X    |     | X  |       |     |     |     | X  | X   |
+
   
-
-
 
   
 
