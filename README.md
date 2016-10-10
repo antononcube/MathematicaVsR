@@ -61,19 +61,20 @@ is probably a good start.
 ### Abbreviations table
 
 | Abbreviation | Definition                        |   | Abbreviation | Definition                        |
-|--------------|-----------------------------------|---|--------------|-----------------------------------| 
-| BofW         | bag of words (model)              |   | NA           | numerical analysis                |
-| Cl           | (machine learning) classification |   | NLP          | natural language processing       |
-| DA           | data analysis                     |   | Opt          | optimization                      |
-| DIng         | data ingestion                    |   | Outl         | outliers                          |
-| DWrang       | data wrangling                    |   | Par          | parallel computing                |
-| Gr           | graphs                            |   | QR           | quantile regression               |
+|--------------+-----------------------------------|---|--------------+-----------------------------------|
+| BofW         | bag of words (model)              |   | NLP          | natural language processing       |
+| Cl           | (machine learning) classification |   | Opt          | optimization                      |
+| DA           | data analysis                     |   | Outl         | outliers                          |
+| DIng         | data ingestion                    |   | Par          | parallel computing                |
+| DWrang       | data wrangling                    |   | QR           | quantile regression               |
+| Gr           | graphs                            |   | Rgr          | regression                        |
 | HPC          | High Performance Computing        |   | RLink        | Mathematica's RLink`              |
 | Img          | image processing                  |   | ROC          | receiver operating characteristic |
 | IUI          | interactive user interface(s)     |   | Sim          | simulation(s)                     |
-| Rgr          | regression                        |   | Str          | strings patterns and manipulation |
-| LSA          | latent semantic analysis          |   | TS           | time series                       |
-| MF           | matrix factorization(s)           |   | Vis          | visualization                     |
+| LSA          | latent semantic analysis          |   | Str          | strings patterns and manipulation |
+| MF           | matrix factorization(s)           |   | TS           | time series                       |
+| NA           | numerical analysis                |   | Vis          | visualization                     |
+
 
 
 
