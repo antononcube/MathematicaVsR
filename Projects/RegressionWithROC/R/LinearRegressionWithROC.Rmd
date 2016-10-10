@@ -1,0 +1,176 @@
+---
+title: "Linear regression with ROC"
+author: "Anton Antonov"
+date: "10/10/2016"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Introduction
+
+This document demonstrates how to do in R linear regression (easily using the built-in function `lm`) and to tune the binary classification with the derived model through the so called [Receiver Operating Characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) (ROC) framework, [5, 6].
+
+The data used in this document is from [1] and it has been analyzed in more detail in [2]. In this document we only show to how to ingest and do very basic analysis of that data before proceeding with the linear regression model and its tuning. The package ROCR, [3], (introduced with [4]) provides the needed ROC functionalities.
+
+### Libraries needed to run the Rmd file:
+
+```{r}
+library(plyr)
+library(ROCR)
+library(lattice)
+library(reshape2)
+library(ggplot2)
+```
+
+
+## Data ingestion
+
+The code below imports the data from [1].
+
+```{r}
+data <- read.table( "~/Datasets/adult/adult.data", sep = ",", stringsAsFactors = FALSE )  
+testData <- read.table( "~/Datasets/adult/adult.test", fill = TRUE, sep = ",", stringsAsFactors = FALSE )  
+testData <- testData[-1,]
+testData[,1] <- as.numeric(testData[,1])
+
+columnNames<-
+  strsplit(paste0("age,workclass,fnlwgt,education,education.num,marital.status,occupation,",
+                  "relationship,race,sex,capital.gain,capital.loss,hours.per.week,native.country,income"), ",")[[1]]
+
+names(data) <- columnNames
+names(testData) <- columnNames
+
+data$income <- gsub( pattern = "\\s", replacement = "", data$income )
+testData$income <- gsub( pattern = "\\s", replacement = "", testData$income )
+testData$income <- gsub( pattern = ".", replacement = "", testData$income, fixed = TRUE )
+```
+
+## Assignment of training and tuning data
+
+As usual in classification and regression problems we work with two data sets: a training data set and a testing data set. Here we split the original training set into two sets a training set and a tuning set. The tuning set is going to be used to find a good value of a tuning parameter through ROC.
+
+```{r}
+trainingInds <- sample( 1:nrow(data), ceiling( 0.8*nrow(data) ) )
+tuningInds <- setdiff( 1:nrow(data), trainingInds )
+trainingData <- data[ trainingInds, ]
+tuningData <- data[ tuningInds, ]
+```
+
+## Basic data analysis
+
+Before doing regression it is a good idea to do some preliminary analysis of the data. 
+
+Here is the summary of the training data:
+```{r}
+summary(as.data.frame(unclass(data)))
+```
+
+And here is the summary of the test data:
+```{r}
+summary(as.data.frame(unclass(testData)))
+```
+
+For the code below we are going to use the following variables
+
+```{r}
+columnNameResponseVar <- "income"
+columnNamesExplanatoryVars <- c("age", "education.num", "hours.per.week")
+columnNamesForAnalysis <- c( columnNamesExplanatoryVars, columnNameResponseVar )
+```
+
+With this plot we can see that ```r columnNamesExplanatoryVars``` correlate (can explain) with ```r columnNameResponseVar```:
+
+```{r}
+dataLong <- melt( data = data[, columnNamesForAnalysis], id.vars = columnNameResponseVar  )
+ggplot(dataLong, aes(x = income, y = value, fill = income)) + geom_violin() + facet_wrap( ~variable, ncol = 3)
+```
+
+On the plot above we see that higher values of ```r columnNamesExplanatoryVars``` are associated closer with ">50K". For more detailed analysis see [2].
+
+## Linear regression
+
+```{r}
+dataReg <- trainingData[,columnNamesForAnalysis]
+unique(dataReg$income)
+dataReg$income <- ifelse( dataReg$income == ">50K", 1, 0 )
+
+lmRes <- lm( income ~ age + education.num + hours.per.week, data = dataReg )  
+```
+
+## Linear regression with ROC
+
+In this section we take a systematic approach of determining the best threshold to be used to separate the regression model values. 
+
+We will consider ">50" to be the more important class label for the classifiers built below. As a result, we are going to call *positive* the income values ">50K" and *negative* the income values "<=50K".
+
+The used ROC functionalities are employed through the package [3].
+
+### Computations to find the best threshold
+
+```{r}
+modelValues <- predict(lmRes, newdata = tuningData[, columnNamesExplanatoryVars], type="response")
+
+## unique(tuningData$income)
+
+pr <- prediction( modelValues, ifelse( tuningData$income == ">50K", 1, 0) )
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+ggplot( data.frame( FPR = prf@x.values[[1]], TPR = prf@y.values[[1]] ) ) + aes( x = FPR, y = TPR) + geom_line()
+```
+
+After looking at ```r str(prf)``` we can come up with the following code that plots the ROC functions "PPV", "NPV", "TPR", "ACC", and "SPC"/"SPEC".
+```{r}
+rocDF <- 
+  ldply( c("ppv", "npv", "tpr", "acc", "spec"), function(x) {
+    res <- performance(pr, measure = x, x.measure = "cutoff")
+    data.frame( Measure = x, Cutoff = as.numeric(res@x.values[[1]]), Value = as.numeric(res@y.values[[1]]), stringsAsFactors = FALSE)
+  })
+rocDF <- rocDF[ !is.na(rocDF$Value), ]
+ggplot(rocDF) + aes( x = Cutoff, y = Value, color = Measure) + geom_line() + coord_fixed(ratio = 1/1.2)
+```
+
+From the plot we can select the best cutoff value, in this case $\approx 0.3$.
+
+### Accuracy over the test data
+
+We split the original training data into two parts for training and tuning. Using the found threshold, let us use evaluate the classification process over the test data.
+
+```{r}
+modelValues <- predict(lmRes, newdata = testData[, columnNamesExplanatoryVars], type="response")
+
+threshold <- 0.3
+classDF <- data.frame( Actual = testData[, columnNameResponseVar], Predicted = ifelse( modelValues >= threshold, ">50K", "<=50K" ), stringsAsFactors = FALSE )
+```
+
+Here is the overall accuracy:
+```{r}
+mean( classDF$Actual == classDF$Predicted)
+```
+
+And here is the confusion matrix
+```{r}
+xtabs( ~ Actual + Predicted, classDF )
+```
+Here are the corresponding frequencies:
+```{r}
+xtabs( ~ Actual + Predicted, classDF ) / count( classDF, .(Actual))[,2]
+```
+
+## References
+
+[1] Bache, K. & Lichman, M. (2013). [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml). Irvine, CA: University of California, School of Information and Computer Science. [Census Income Data Set](http://archive.ics.uci.edu/ml/datasets/Census+Income), URL: http://archive.ics.uci.edu/ml/datasets/Census+Income .
+
+[2] Anton Antonov, "Classification and association rules for census income data", (2014), MathematicaForPrediction at WordPress.com , URL: https://mathematicaforprediction.wordpress.com/2014/03/30/classification-and-association-rules-for-census-income-data/ .
+
+[3] [ROCR web site](http://rocr.bioinf.mpi-sb.mpg.de) [http://rocr.bioinf.mpi-sb.mpg.de](http://rocr.bioinf.mpi-sb.mpg.de).
+
+[4] Tobias Sing, Oliver Sander, Niko Beerenwinkel, Thomas Lengauer. [ROCR: visualizing classifier performance in R](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/21/20/3940), (2005), Bioinformatics 21(20):3940-3941.
+
+[5] Wikipedia entry, Receiver operating characteristic. URL: http://en.wikipedia.org/wiki/Receiver_operating_characteristic .
+
+[6] Tom Fawcett, An introduction to ROC analysis, (2006), Pattern Recognition Letters, 27, 861–874. ([Link to PDF](https://ccrma.stanford.edu/workshops/mir2009/references/ROCintro.pdf).)
