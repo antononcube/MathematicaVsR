@@ -59,7 +59,6 @@ is probably a good start.
 ## Projects overview
 
 ### Abbreviations table
-
 | Abbreviation | Definition                        |   | Abbreviation | Definition                        |
 |--------------+-----------------------------------|---|--------------+-----------------------------------|
 | BofW         | bag of words (model)              |   | NLP          | natural language processing       |
@@ -74,9 +73,6 @@ is probably a good start.
 | LSA          | latent semantic analysis          |   | Str          | strings patterns and manipulation |
 | MF           | matrix factorization(s)           |   | TS           | time series                       |
 | NA           | numerical analysis                |   | Vis          | visualization                     |
-
-
-
 
 ### Projects overview table
 | Project                                              | BofW | Cl | DA | DIng | DWrang | Gr | Img | IUI | Rgr | LSA | MF | NA | NLP | Opt | Outl | Par | QR | RLink | ROC | Sim | Str | TS | Vis |
