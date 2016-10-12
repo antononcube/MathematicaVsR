@@ -46,7 +46,7 @@ Since *Mathematica* ships with R some projects would have only a
 outputs into one *Mathematica* notebook.
 
 Some projects have only *Mathematica* or only R parts. This is because
-there are equivalent counter-parts.
+there are no equivalent counter-parts.
 
 ## Where to begin
 
@@ -55,6 +55,13 @@ This presentation,
 given at the
 [Wolfram Technology Conference 2015](https://www.wolfram.com/events/technology-conference/2015/)
 is probably a good start.
+
+As a warm-up of how to do the comparison see this mind-map (which is
+made for *Mathematica* users):
+
+[!["Mathematica-vs-R-mind-map-for-Mathematica-users"](http://i.imgur.com/oZobBxfm.png)](https://github.com/antononcube/MathematicaVsR/raw/master/Mathematica-vs-R-mind-map.pdf)
+
+
 
 ## Projects overview
 
