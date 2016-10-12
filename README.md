@@ -59,7 +59,7 @@ is probably a good start.
 As a warm-up of how to do the comparison see this mind-map (which is
 made for *Mathematica* users):
 
-[!["Mathematica-vs-R-mind-map-for-Mathematica-users"](http://i.imgur.com/oZobBxfm.png)](https://github.com/antononcube/MathematicaVsR/raw/master/Mathematica-vs-R-mind-map.pdf)
+[!["Mathematica-vs-R-mind-map-for-Mathematica-users"](http://i.imgur.com/oZobBxfm.png)](https://github.com/antononcube/MathematicaVsR/blob/master/Mathematica-vs-R-mind-map.pdf)
 
 
 
