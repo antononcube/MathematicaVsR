@@ -26,7 +26,7 @@ This generates the part for X:
     dataX = RandomVariate[fSurvivalGompertzDistRand[0.016, 0.65], {20000}];
     Histogram[dataX, 50, PlotTheme -> "Detailed"]
 
-![ExtactionFromGaussianNoisedMixture-X](http://imgur.com/i.UbFyVrp.png)
+![ExtactionFromGaussianNoisedMixture-X](http://i.imgur.com/UbFyVrpl.png)
 
 Then we add some Gaussian noise:
 
@@ -34,7 +34,7 @@ Then we add some Gaussian noise:
     dataNoise = dataX + RandomVariate[NormalDistribution[0, \[Sigma]], {20000}];
     Histogram[dataNoise, 50, PlotTheme -> "Detailed"]
 
-![ExtactionFromGaussianNoisedMixture-Z](http://i.imgur.com/1WWarFX.png)
+![ExtactionFromGaussianNoisedMixture-Z](http://i.imgur.com/1WWarFXl.png)
 
 # Solution
 
