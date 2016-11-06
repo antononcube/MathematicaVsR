@@ -51,8 +51,13 @@
 
       https://github.com/antononcube/MathematicaVsR
 
-    The data browser was made with the intent to be useful. Because of this the code is probably not that easy
-    to read for beginners in Mathematica.
+    The project comparison task is:
+
+      Make an interactive data browser for data tables; each data table row is visualized with a Chernoff face.
+
+    The data browser in this file was made with the intent to be useful. Because of this the code is probably
+    not that easy to read for beginners in Mathematica. (The code for a simple data browser is also part of this
+    project.)
 
     A version of the function ChernoffFaceAutoColored should be probably included in the ChernoffFaces.m package.
 
@@ -67,8 +72,8 @@
 (*
   TODO:
     1. Better explanations
-    2. Make a simpler version of the browser code for didactic purposes.
-    3. Consider optimizing the browser.
+    2. DONE Make a simpler version of the browser code for didactic purposes.
+    3. Consider optimizing the browser. Probably using non-Manipulate implementation.
     4. DONE Add standardization with median and quartile distance.
     5. DONE Add optional outlier identification and removal. (e.g. "Clip outliers" checkbox.)
 *)
@@ -213,7 +218,7 @@ Manipulate[
         "Summary" -> Pane[
           Grid[{{"Dataset name", dname},
             {"Dimensions", Dimensions[data]},
-            {"Summary:",
+            {"Summary",
               Multicolumn[RecordsSummary[N@data, columnNames], 5,
                 Appearance -> "Horizontal", Alignment -> Top, Dividers -> All,
                 FrameStyle -> GrayLevel[0.8]]}
