@@ -69,8 +69,8 @@
     1. Better explanations
     2. Make a simpler version of the browser code for didactic purposes.
     3. Consider optimizing the browser.
-    4. Add, commit, remove standardization with median and quartile distance.
-    5. Add optional outlier identification and removal. (e.g. "Clip outliers" checkbox.)
+    4. DONE Add standardization with median and quartile distance.
+    5. DONE Add optional outlier identification and removal. (e.g. "Clip outliers" checkbox.)
 *)
 
 (* Created with Mathematica Plugin for IntelliJ IDEA *)
@@ -119,10 +119,19 @@ Manipulate[
 
     (* Find, separate, and standardize numerical variables. *)
     numCols = Pick[Range[1, Dimensions[data][[2]]], VectorQ[#, NumericQ] & /@ Transpose[data]];
-    If[normalizationType == "MeanVar",
+    Which[
+      normalizationType == "MeanVar" && !clipOutliers,
       rdata = VariablesRescale[N@data[[All, numCols]]],
+      normalizationType == "MeanVar" && clipOutliers,
       rdata = VariablesRescale[N@data[[All, numCols]],
-        "StandardizingFunction" -> (Standardize[#1, Median, QuartileDeviation] &)]
+        "RescaleRangeFunction" -> ({-3, 3} QuartileDeviation[#] &)],
+      normalizationType == "MedianQuartile" && !clipOutliers,
+      rdata = VariablesRescale[N@data[[All, numCols]],
+        "StandardizingFunction" -> (Standardize[#1, Median, QuartileDeviation] &)],
+      normalizationType == "MedianQuartile" && clipOutliers,
+      rdata = VariablesRescale[N@data[[All, numCols]],
+        "StandardizingFunction" -> (Standardize[#1, Median, QuartileDeviation] &),
+        "RescaleRangeFunction" -> ({-3, 3} QuartileDeviation[#] &)]
     ];
 
     (* Make record names to be used as labels in the Chernoff face images. *)
@@ -231,7 +240,8 @@ Manipulate[
   ],
   {{dname, {"Statistics", "FisherIris"}, "Dataset name:"}, ExampleData[ "Statistics"], ControlType -> PopupMenu},
   {{normalizationType, "MeanVar", "Data normalization type:"},
-    {"MeanVar" -> "by mean & standard deivation", "MedianQuart" -> "by median & quartile deviation"}},
+    {"MeanVar" -> "by mean & standard deivation", "MedianQuartile" -> "by median & quartile deviation"}},
+  {{clipOutliers, False, "Clip outliers:"}, {False,True}},
   {{colorDataScheme, "BrightBands", "Faces color scheme"},
     {"None", "BrightBands", "CoffeeTones",
      "IslandColors", "Rainbow", "RedBlueTones", "SouthwestColors",
