@@ -34,7 +34,7 @@
 
 (* :Title: DataBrowserWithChernoffFaces *)
 (* :Context: DataBrowserWithChernoffFaces` *)
-(* :Author: antonov *)
+(* :Author: Anton Antonov *)
 (* :Date: 2016-11-05 *)
 
 (* :Package Version: 1 *)
@@ -51,9 +51,17 @@
 
       https://github.com/antononcube/MathematicaVsR
 
-    The data browser was made with the intent to be useful. Because of this the code is probably
-    not that easy to read for beginners.
+    The data browser was made with the intent to be useful. Because of this the code is probably not that easy
+    to read for beginners in Mathematica.
 
+    A version of the function ChernoffFaceAutoColored should be probably included in the ChernoffFaces.m package.
+
+    That function had also an implementation with Association data argument. I removed it because I consider
+    the Association argument implementation redundant for the purposes of this source code/file.
+
+    Anton Antonov
+    Windermere, FL, USA
+    2016-11-05
 *)
 
 (*
@@ -92,34 +100,6 @@ ChernoffFaceAutoColored[vec_?VectorQ, cdf_ColorDataFunction, opts : OptionsPatte
           "MouthColor" -> cdf[Mean@vec[[1 ;; 3]]],
           "IrisColor" -> cdf[Mean@vec[[4 ;; 6]]],
           "NoseColor" -> cdf[Mean@vec[[7 ;; -1]]]|>]
-      ];
-      ChernoffFace[asc, opts]
-    ];
-
-ChernoffFaceAutoColored[ascArg_Association, cdf_ColorDataFunction, opts : OptionsPattern[]] :=
-    Block[{asc = ascArg, props},
-      props = Keys[asc];
-      Which[
-        Length[props] == 1,
-        asc = Merge[{asc, <|"FaceColor" -> cdf[asc["FaceLength"]]|>}, First],
-        Length[props] <= 2,
-        asc = Merge[{asc, <|"FaceColor" -> cdf[asc["FaceLength"]], "IrisColor" -> cdf[asc["ForeheadShape"]]|>}, First],
-        Length[props] <= 6,
-        asc = Merge[{asc, <|
-          "FaceColor" -> cdf[Mean@Map[asc, {"FaceLength", "ForeheadShape"}]],
-          "IrisColor" -> cdf[Mean@Map[asc, Complement[Keys[asc], {"FaceLength", "ForeheadShape"}]]]|>}, First],
-        True,
-        asc = Merge[{asc, <|
-
-          "FaceColor" -> cdf[Mean@Map[asc, {"FaceLength", "ForeheadShape"}]],
-          "MouthColor" ->
-              cdf[Mean@Map[asc, {"FaceLength", "ForeheadShape", "EyesVerticalPosition"}]],
-          "IrisColor" ->
-              cdf[Mean@Map[asc, {"EyeSize", "EyeSlant", "LeftEyebrowSlant"}]],
-          "NoseColor" ->
-              cdf[Mean@Map[asc, Complement[Keys[asc], {"FaceLength", "ForeheadShape",
-                  "EyesVerticalPosition", "EyeSize", "EyeSlant",
-                  "LeftEyebrowSlant"}]]]|>}, First]
       ];
       ChernoffFace[asc, opts]
     ];
