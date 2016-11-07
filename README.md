@@ -72,21 +72,148 @@ made for *Mathematica* users):
 
 ### Abbreviations table
 
-| Abbreviation | Definition                        | | Abbreviation | Definition                        |
-|--------------|-----------------------------------|-|--------------|-----------------------------------|
-| BofW         | bag of words (model)              | | NA           | numerical analysis                |
-| Cl           | (machine learning) classification | | NLP          | natural language processing       |
-| DA           | data analysis                     | | Opt          | optimization                      |
-| DIng         | data ingestion                    | | Outl         | outliers                          |
-| Distr        | distributions of variables        | | Par          | parallel computing                |
-| DWrang       | data wrangling                    | | QR           | quantile regression               |
-| GoF          | goodness of fit                   | | Rgr          | regression                        |
-| Gr           | graphs                            | | RLink        | Mathematica's RLink`              |
-| HPC          | High Performance Computing        | | ROC          | receiver operating characteristic |
-| Img          | image processing                  | | Sim          | simulation(s)                     |
-| IUI          | interactive user interface(s)     | | Str          | strings patterns and manipulation |
-| LSA          | latent semantic analysis          | | TS           | time series                       |
-| MF           | matrix factorization(s)           | | Vis          | visualization                     |
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Abbreviation</th>
+<th scope="col" class="left">Definition</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Abbreviation</th>
+<th scope="col" class="left">Definition</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">BofW</td>
+<td class="left">bag of words (model)</td>
+<td class="left">&#xa0;</td>
+<td class="left">NA</td>
+<td class="left">numerical analysis</td>
+</tr>
+
+
+<tr>
+<td class="left">Cl</td>
+<td class="left">(machine learning) classification</td>
+<td class="left">&#xa0;</td>
+<td class="left">NLP</td>
+<td class="left">natural language processing</td>
+</tr>
+
+
+<tr>
+<td class="left">DA</td>
+<td class="left">data analysis</td>
+<td class="left">&#xa0;</td>
+<td class="left">Opt</td>
+<td class="left">optimization</td>
+</tr>
+
+
+<tr>
+<td class="left">DIng</td>
+<td class="left">data ingestion</td>
+<td class="left">&#xa0;</td>
+<td class="left">Outl</td>
+<td class="left">outliers</td>
+</tr>
+
+
+<tr>
+<td class="left">Distr</td>
+<td class="left">disributions of variables</td>
+<td class="left">&#xa0;</td>
+<td class="left">Par</td>
+<td class="left">parallel computing</td>
+</tr>
+
+
+<tr>
+<td class="left">DWrang</td>
+<td class="left">data wrangling</td>
+<td class="left">&#xa0;</td>
+<td class="left">QR</td>
+<td class="left">quantile regression</td>
+</tr>
+
+
+<tr>
+<td class="left">GoF</td>
+<td class="left">goodness of fit</td>
+<td class="left">&#xa0;</td>
+<td class="left">Rgr</td>
+<td class="left">regression</td>
+</tr>
+
+
+<tr>
+<td class="left">Gr</td>
+<td class="left">graphs</td>
+<td class="left">&#xa0;</td>
+<td class="left">RLink</td>
+<td class="left">Mathematica's RLink\`</td>
+</tr>
+
+
+<tr>
+<td class="left">HPC</td>
+<td class="left">High Performance Computing</td>
+<td class="left">&#xa0;</td>
+<td class="left">ROC</td>
+<td class="left">receiver operating characteristic</td>
+</tr>
+
+
+<tr>
+<td class="left">Img</td>
+<td class="left">image processing</td>
+<td class="left">&#xa0;</td>
+<td class="left">Sim</td>
+<td class="left">simulation(s)</td>
+</tr>
+
+
+<tr>
+<td class="left">IUI</td>
+<td class="left">interactive user interface(s)</td>
+<td class="left">&#xa0;</td>
+<td class="left">Str</td>
+<td class="left">strings patterns and manipulation</td>
+</tr>
+
+
+<tr>
+<td class="left">LSA</td>
+<td class="left">latent semantic analysis</td>
+<td class="left">&#xa0;</td>
+<td class="left">TS</td>
+<td class="left">time series</td>
+</tr>
+
+
+<tr>
+<td class="left">MF</td>
+<td class="left">matrix factorization(s)</td>
+<td class="left">&#xa0;</td>
+<td class="left">Vis</td>
+<td class="left">visualization</td>
+</tr>
+</tbody>
+</table>
 
 
 ### Projects overview table
