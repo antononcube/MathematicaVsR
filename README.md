@@ -48,6 +48,11 @@ outputs into one *Mathematica* notebook.
 Some projects have only *Mathematica* or only R parts. This is because
 there are no equivalent counter-parts.
 
+There is an attempt the corresponding Mathematica and R codes to be
+very close in structure and steps flow. Often enough the structures
+would be different because the each programming language would make certain
+particular techniques easier to apply or because of certain language idioms.
+
 ## Where to begin
 
 This presentation,
@@ -67,36 +72,36 @@ made for *Mathematica* users):
 
 ### Abbreviations table
 
-| Abbreviation | Definition                        | | Abbreviation | Definition                        |
-|--------------|-----------------------------------|-|--------------|-----------------------------------|
-| BofW         | bag of words (model)              | | NA           | numerical analysis                |
-| Cl           | (machine learning) classification | | NLP          | natural language processing       |
-| DA           | data analysis                     | | Opt          | optimization                      |
-| DIng         | data ingestion                    | | Outl         | outliers                          |
-| Distr        | disributions of variables         | | Par          | parallel computing                |
-| DWrang       | data wrangling                    | | QR           | quantile regression               |
-| GoF          | goodness of fit                   | | Rgr          | regression                        |
-| Gr           | graphs                            | | RLink        | Mathematica's RLink`              |
-| HPC          | High Performance Computing        | | ROC          | receiver operating characteristic |
-| Img          | image processing                  | | Sim          | simulation(s)                     |
-| IUI          | interactive user interface(s)     | | Str          | strings patterns and manipulation |
-| LSA          | latent semantic analysis          | | TS           | time series                       |
-| MF           | matrix factorization(s)           | | Vis          | visualization                     |
+| Abbreviation | Definition                        |  | Abbreviation | Definition                        |
+|--------------|-----------------------------------|--|--------------|-----------------------------------|
+| BofW         | bag of words (model)              |  | NA           | numerical analysis                |
+| Cl           | (machine learning) classification |  | NLP          | natural language processing       |
+| DA           | data analysis                     |  | Opt          | optimization                      |
+| DIng         | data ingestion                    |  | Outl         | outliers                          |
+| Distr        | disributions of variables         |  | Par          | parallel computing                |
+| DWrang       | data wrangling                    |  | QR           | quantile regression               |
+| GoF          | goodness of fit                   |  | Rgr          | regression                        |
+| Gr           | graphs                            |  | RLink        | Mathematica's RLink`              |
+| HPC          | High Performance Computing        |  | ROC          | receiver operating characteristic |
+| Img          | image processing                  |  | Sim          | simulation(s)                     |
+| IUI          | interactive user interface(s)     |  | Str          | strings patterns and manipulation |
+| LSA          | latent semantic analysis          |  | TS           | time series                       |
+| MF           | matrix factorization(s)           |  | Vis          | visualization                     |
 
 
 ### Projects overview table
 
 | Project                                              | BofW | Cl | DA | DIng | Distr | DWrang | GoF | Gr | Img | IUI | Rgr | LSA | MF | NA | NLP | Opt | Outl | Par | QR | RLink | ROC | Sim | Str | TS | Vis |
 |------------------------------------------------------|------|----|----|------|-------|--------|-----|----|-----|-----|-----|-----|----|----|-----|-----|------|-----|----|-------|-----|-----|-----|----|-----|
-| [Browsing data with Chernoff faces](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/BrowsingDataWithChernoffFaces)                        |      |    | X  | X    | X     | X      |     |    |     |     |     |     |    |    |     |     | X    |     |    |       |     |     |     |    | X   |
-| [Data wrangling](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DataWrangling)                                        |      |    | X  | X    |       | X      |     |    |     |     |     |     |    |    |     |     |      |     |    |       |     |     |     |    | X   |
-| [Distribution extraction from a Gaussian noised mixture](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DistributionExtractionFromAGaussianNoisedMixture)     |      |    |    |      | X     |        | X   |    |     |     |     |     |    |    |     | X   |      |     |    |       |     |     |     |    |     |
-| [Handwritten digits classification by Matrix factorization](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization) |      | X  |    | X    |       |        |     |    | X   |     |     | X   | X  |    |     |     |      | X   |    |       |     |     |     |    | X   |
-| [ODEs with seasonalities](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ODEsWithSeasonalities)                                |      |    |    |      |       |        |     |    |     | X   |     |     |    | X  |     |     |      |     |    |       |     | X   |     |    | X   |
-| [Progressive jackpot modeling](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ProgressiveJackpotModeling)                           |      |    |    |      | X     |        |     |    |     |     |     |     |    |    |     |     |      |     |    |       |     | X   |     |    |     |
-| [Regression with ROC](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/RegressionWithROC)                                    |      | X  |    |      |       |        |     |    |     |     | X   |     |    |    |     |     |      |     |    |       | X   |     |     |    | X   |
-| [Statements saliency in podcasts](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts)                         | X    |    |    | X    |       |        |     |    |     | X   |     |     |    |    | X   |     |      |     |    |       |     |     | X   |    |     |
-| [Time series analysis with Quantile regression](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/TimeSeriesAnalysisWithQuantileRegression)             |      |    | X  | X    |       |        |     |    |     |     |     |     |    |    |     |     | X    |     | X  |       |     |     |     | X  | X   |
+| [BrowsingDataWithChernoffFaces](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/BrowsingDataWithChernoffFaces)                        |      |    | X  | X    | X     | X      |     |    |     |     |     |     |    |    |     |     | X    |     |    |       |     |     |     |    | X   |
+| [DataWrangling](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DataWrangling)                                        |      |    | X  | X    |       | X      |     |    |     |     |     |     |    |    |     |     |      |     |    |       |     |     |     |    | X   |
+| [DistributionExtractionFromAGaussianNoisedMixture](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DistributionExtractionAFromGaussianNoisedMixture)     |      |    |    |      | X     |        | X   |    |     |     |     |     |    |    |     | X   |      |     |    |       |     |     |     |    |     |
+| [HandwrittenDigitsClassificationByMatrixFactorization](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization) |      | X  |    | X    |       |        |     |    | X   |     |     | X   | X  |    |     |     |      | X   |    |       |     |     |     |    | X   |
+| [ODEsWithSeasonalities](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ODEsWithSeasonalities)                                |      |    |    |      |       |        |     |    |     | X   |     |     |    | X  |     |     |      |     |    |       |     | X   |     |    | X   |
+| [ProgressiveJackpotModeling](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ProgressiveJackpotModeling)                           |      |    |    |      | X     |        |     |    |     |     |     |     |    |    |     |     |      |     |    |       |     | X   |     |    |     |
+| [RegressionWithROC](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/RegressionWithROC)                                    |      | X  |    |      |       |        |     |    |     |     | X   |     |    |    |     |     |      |     |    |       | X   |     |     |    | X   |
+| [StatementsSaliencyInPodcasts](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts)                         | X    |    |    | X    |       |        |     |    |     | X   |     |     |    |    | X   |     |      |     |    |       |     |     | X   |    |     |
+| [TimeSeriesAnalysisWithQuantileRegression](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/TimeSeriesAnalysisWithQuantileRegression)             |      |    | X  | X    |       |        |     |    |     |     |     |     |    |    |     |     | X    |     | X  |       |     |     |     | X  | X   |
 
 
 
