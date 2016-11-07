@@ -5,7 +5,7 @@
 
 Chernoff faces are an interesting way of visualizing data. The idea to use human faces in order to understand, evaluate, or easily discern (the records of) multidimensional data is very creative and inspirational. It is an interesting question how useful this approach is and it seems that there at least several articles discussing that; for example, see [7]. For more references and more extensive technical explanations see the blog post [[1](https://mathematicaforprediction.wordpress.com/2016/06/03/making-chernoff-faces-for-data-visualization/)].
 
-The comparison task is the following problem formulation:
+The comparison task is for the following problem formulation:
 
 > Make an interactive data browser for data tables; each data table row is visualized with a Chernoff face.
 
@@ -33,14 +33,15 @@ A list of the most significant improvements follows.
    - This both helps and optimizes the data browsing.   
 
 2. Showing a legend table for the correspondence between face features and data columns.
-   - Very useful to have if we want to interpret the individual faces not just to visualy group or cluster them.
+   - Very useful to have if we want to interpret the individual faces not just to visually group or cluster them.
 
 3. Plot labels for the faces derived from the categorical variables.
 
 4. Coloring the faces according to row values or unique labels.
-   - This is done in the R package "aplpack" so it had to be made in the Mathematica part too.
-   - The face coloring does make the visualization more engaging, and
-   - it is sometimes very useful with done according to the values of the categorical variables. 
+   - The R package "aplpack" does face coloring according to averages of the value subsets,
+   - so it had to be made for the Mathematica part of the project too.
+   - The face coloring does make the visualizations more engaging, and
+   - it is sometimes very useful if done according to the values of the categorical variables. 
 
 5. Showing a legend of faces based on statistics over the entire dataset. (E.g. median face.)
    - The (abstract of) article [7] says that people comprehend Chernoff faces collections better by examining the relative differences.  
@@ -62,12 +63,12 @@ Here is an album with all screenshots for this section : [http://imgur.com/a/AoL
 
 ## Comparison
 
-The Mathematica interface was made over a larger set of datasets. Because of that its usefulness was repeatedly examined and evaluated 
-during the development process to much fuller the degree that the R package Shiny (R-Shiny) interface in [4,5]. 
+The Mathematica interface was made over a larger set of datasets. Because of that its usefulness was repeatedly examined and evaluated during the development process. From the exposition in [4] we assume that a similar level of evaluation effort has been made for the R package Shiny (R-Shiny) interface [5]. 
 
 * Pages of faces
   - R-Shiny handles pages of items with its built-in functionality (e.g. data table). 
-  - For the Mathematica part a special implementation of handling pages had to be done.    
+  - For the Mathematica part a special implementation of handling pages had to be done.
+  - For both implementations using pages of faces optimizes the browsing. (See the section "Paginated faces" in [4].)
 
 * Face coloring   
   - The automatic coloring of Chernoff faces is not a functionality the Mathematica package [2] provides. So it had to be programmed. 
@@ -88,7 +89,7 @@ during the development process to much fuller the degree that the R package Shin
 
 [4] Lee Pang, ["Facing your data"](http://oddhypothesis.blogspot.com/2015/10/facing-your-data.html), (2015), [Oddhypothesis at Blogspot](http://oddhypothesis.blogspot.com).
 
-[5] Lee Pang, [DFaceR](https://oddhypothesis.shinyapps.io/DFaceR/), Shiny app.
+[5] Lee Pang, [DFaceR](https://github.com/wleepang/DFaceR), (2015), GitHub. [Deployed Shiny app](https://oddhypothesis.shinyapps.io/DFaceR/).
 
 [6] Hans Peter Wolf, Uni Bielefeld, [Package ‘aplpack’](https://cran.r-project.org/web/packages/aplpack/aplpack.pdf), (2015), CRAN.
 
