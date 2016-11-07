@@ -73,7 +73,7 @@ made for *Mathematica* users):
 ### Abbreviations table
 
 | Abbreviation | Definition                        | | Abbreviation | Definition                        |
-|--------------|-----------------------------------| |--------------|-----------------------------------|
+|--------------|-----------------------------------|-|--------------|-----------------------------------|
 | BofW         | bag of words (model)              | | NA           | numerical analysis                |
 | Cl           | (machine learning) classification | | NLP          | natural language processing       |
 | DA           | data analysis                     | | Opt          | optimization                      |
