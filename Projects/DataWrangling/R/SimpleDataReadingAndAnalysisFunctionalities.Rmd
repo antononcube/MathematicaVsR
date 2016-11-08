@@ -1,0 +1,141 @@
+---
+title: "Simple data reading and analysis functionalities"
+author: "Anton Antonov"
+date: "November 2016"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+This document illustrates the use of base R functions for data reading and rudimentary data analysis.
+
+## Data summary
+
+Let us read a dataset provided with R's base system and print its summary:
+
+```{r cars, echo = TRUE}
+data("attitude")
+summary(attitude)
+```
+
+In some cases we get not very useful results if some of the variables are with strings values:
+```{r titanic, echo = TRUE}
+library(titanic)
+summary(titanic_train)
+```
+
+For these situations we can convert the string valued variables into factors and call `summary` again:
+
+```{r, echo = TRUE}
+summary(as.data.frame(unclass(titanic_train)))
+```
+
+Let us combine the training and testing data from the "titanic" package into one data frame:
+```{r, echo = TRUE}
+commonColNames <- intersect(names(titanic_train), names(titanic_test) )
+titanicAll <- rbind( titanic_train[, commonColNames], titanic_test[, commonColNames])
+cat("dim(titanicAll) = ", dim(titanicAll), "\n" )
+summary(as.data.frame(unclass(titanicAll)))
+```
+
+We see that the resulting data frame does not have the column "Survival" because the data frame "titanic_test" does not have it.
+Since we want to work with the survival data we are going to ignore `titanic_test` below. 
+
+(In general, in R very often package creators take decisions that produce incomplete or unintuitive functionality and data. Those decisions are often undocumented or hard to understand.)
+
+## Mosaic plots
+
+Using a mosaic plot we can get (quickly) an impression of the co-dependencies of the categorical variables in a dataset.
+We can get better looking results using `mosaic` of the package "vcd" instead of the base function `mosaicplot`.
+
+```{r, echo = TRUE}
+## mosaicplot( Survived ~ Sex + Pclass, titanic_train )
+library(vcd)
+mosaic( Survived ~ Sex + Pclass, titanic_train )
+```
+
+## Contingency values
+
+Given the Titanic passengers data let us find the average age of the passengers in each combination of values of the variables "Sex" and "Survival".
+
+1. First we find the passenger counts:
+
+```{r, echo = TRUE}
+pCountsDF <- xtabs( ~ Sex + Pclass, titanic_train )
+pCountsDF
+```
+
+2. Then we find the total of passenger ages:
+
+```{r, echo = TRUE}
+pTotalAgesDF <- xtabs( Age ~ Sex + Pclass, titanic_train )
+pTotalAgesDF
+```
+
+3. Finally we divide the total ages data frame by the counts data frame:
+
+```{r, echo = TRUE}
+pTotalAgesDF / pCountsDF
+```
+
+## Distributions plots
+
+It is a good idea to get an impression of the numerical variables distributions in a given dataset.
+
+There are several approaches for doing this (in R and in general.)
+
+### Using base functions
+
+First we can simply use the base function `boxplot`, e.g. `boxplot( attitude )`.
+In the command below the function `boxplot` rotates and prints all column names by the argument `las=2` and uses alternating coloring by the argument `col=...`.
+
+```{r, echo=TRUE}
+boxplot( attitude, las=2, col = c("royalblue1","royalblue4") )
+```
+
+Alternatively, we can plot a histograms for all numerical columns.
+
+### Using the package "lattice"
+
+```{r, echo=TRUE}
+library(lattice)
+histogram( ~ values | ind, stack(attitude) )
+```
+
+### Using the package "ggplot2"
+
+Let us get fencier. Note that is this a much harder to specify plot compared to the one made with "lattice" above.
+
+```{r, echo=TRUE}
+library(ggplot2)
+ggplot(stack(attitude)) + aes( x = values, fill = ind ) + 
+  geom_histogram( aes(y = ..density..), binwidth=10, alpha = 0.3) + 
+  geom_density(alpha = 0,linetype=3) + 
+  facet_grid( . ~ ind)
+```
+
+
+## Cross correllations plots
+
+It useful to visualize scatter plots made by pairs of numerical variables in a dataset. 
+This can be easily (readily) done with the function `pairs`:
+
+```{r, echo = TRUE}
+pairs(attitude)
+```
+
+Prettier and more informative plots can be obtained with other, non-base package functions.
+
+### Using the package "GGally" based on "ggplot2"
+
+```{r, echo=TRUE, fig.width=14, fig.height=12}
+library(GGally)
+ggpairs(attitude)
+```
+
+For more details and related plots see ["ggcorr: correlation matrixes with ggplot2"](https://briatte.github.io/ggcorr/).
