@@ -29,7 +29,7 @@ A list of some basic comparison documents and codes.
 
 - R
 
-  - "Simple data reading and analysis functionalities"(https://cdn.rawgit.com/antononcube/MathematicaVsR/master/Projects/DataWrangling/R/SimpleDataReadingAndAnalysisFunctionalities.html), ([RMarkdown file](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DataWrangling/R/SimpleDataReadingAndAnalysisFunctionalities.Rmd))
+  - ["Simple data reading and analysis functionalities"](https://cdn.rawgit.com/antononcube/MathematicaVsR/master/Projects/DataWrangling/R/SimpleDataReadingAndAnalysisFunctionalities.html), ([RMarkdown file](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DataWrangling/R/SimpleDataReadingAndAnalysisFunctionalities.Rmd))
 
   - *"Automatically generated data ingestion report"*
 
