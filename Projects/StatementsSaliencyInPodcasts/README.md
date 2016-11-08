@@ -1,6 +1,8 @@
 # Statements saliency in podcasts
-#### Anton Antonov
-#### September, 2016
+Anton Antonov  
+[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction)  
+[MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR/tree/master/Projects)  
+September, 2016
 
 ## Mission statement
 
