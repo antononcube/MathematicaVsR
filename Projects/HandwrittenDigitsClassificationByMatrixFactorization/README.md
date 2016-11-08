@@ -1,7 +1,9 @@
 
 ## Handwritten digits recognition by matrix factorization
-#### Anton Antonov
-#### September, 2016
+Anton Antonov  
+[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction)  
+[MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR/tree/master/Projects)  
+September, 2016
 
 
 ## Introduction
