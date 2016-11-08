@@ -21,7 +21,7 @@ A list of some basic comparison documents and codes.
 
 - Mathematica
 
-  - *"Simple missing functionalities in Mathematica"*
+  - ["Simple missing functionalities in Mathematica"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DataWrangling/Mathematica/Simple-missing-functionalities.pdf)
 
   - ["Contingency tables creation examples"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DataWrangling/Mathematica/Contingency-tables-creation-examples.md)
 
