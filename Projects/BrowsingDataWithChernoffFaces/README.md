@@ -1,5 +1,9 @@
 
 # Browsing data with Chernoff faces
+Anton Antonov  
+[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction)  
+[MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR/tree/master/Projects)  
+November, 2016
 
 ## Introduction
 
