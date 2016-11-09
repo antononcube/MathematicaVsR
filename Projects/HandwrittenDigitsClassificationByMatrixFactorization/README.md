@@ -12,11 +12,6 @@ This project is for comparing *Mathematica* and R for the tasks of classifier cr
 evaluation using the [MNIST database](http://yann.lecun.com/exdb/mnist/) of images of
 handwritten digits.
 
-The blog post
-["Classification of handwritten digits"](https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/)
-has a related more elaborated discussion over a much smaller database
-of handwritten digits.
-
 Here are the bases built with two different classifiers:
 
 - Singular Value Decomposition (SVD)
@@ -36,6 +31,11 @@ Here are the confusion matrices of the two classifiers:
 - NNMF
 
 [!["NNMF-confusion-matrix"](http://i.imgur.com/k42FmHCl.png)](http://i.imgur.com/k42FmHC.png)
+
+The blog post
+["Classification of handwritten digits"](https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/)
+has a related more elaborated discussion over a much smaller database
+of handwritten digits.
 
 ## Concrete steps
 
