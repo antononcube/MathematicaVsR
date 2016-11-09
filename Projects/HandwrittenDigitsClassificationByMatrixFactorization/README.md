@@ -102,7 +102,7 @@ Same in Mathematica and R for for SVD and NNMF. (As expected.)
 
 ### NNMF
 
-NNMF classifiers use the [MathematicaForPrediction at GitHub]((https://github.com/antononcube/MathematicaForPrediction/)
+NNMF classifiers use the [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction/)
 implementations:
 [NonNegativeMatrixFactorization.m](https://github.com/antononcube/MathematicaForPrediction/blob/master/NonNegativeMatrixFactorization.m)
 and [NonNegativeMatrixFactorization.R](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/NonNegativeMatrixFactorization.R).
@@ -119,7 +119,7 @@ comes to plot labeling.
 
 ## Going further
 
-### Comparing with other classifer
+### Comparing with other classifiers
 
 Using Mathematica's built-in classifiers it was easy to compare the
 SVD and NNMF classifiers with neural network ones and others. (The SVD
