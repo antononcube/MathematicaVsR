@@ -17,6 +17,25 @@ The blog post
 has a related more elaborated discussion over a much smaller database
 of handwritten digits.
 
+Here are the bases built with two different classifiers:
+
+- Singular Value Decomposition (SVD)
+
+[!["SVD-basis-for-5](http://i.imgur.com/nqyjjPjl.png)](http://i.imgur.com/nqyjjPj.png)
+
+- Non-Negative Matrix Factorization (NNMF)
+
+[!["NNMF-basis-for-5"](http://i.imgur.com/chAojFul.png)](http://i.imgur.com/chAojFu.png)
+
+Here are the confusion matrices of the two classifiers:
+
+- SVD
+
+[!["SVD-confusion-matrix"](http://i.imgur.com/odFdCmXl.png)](http://i.imgur.com/odFdCmX.png)
+
+- NNMF
+
+[!["NNMF-confusion-matrix"](http://i.imgur.com/k42FmHCl.png)](http://i.imgur.com/k42FmHC.png)
 
 ## Concrete steps
 
