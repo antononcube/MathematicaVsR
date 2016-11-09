@@ -121,7 +121,7 @@ comes to plot labeling.
 
 ### Comparing with other classifiers
 
-Using Mathematica's built-in classifiers it was easy to compare the
+Using Mathematica's built-in classifiers it was easy [to compare](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/Mathematica/Handwritten-digits-classification-by-matrix-factorization.md#comparison-with-the-built-in-classifiers) the
 SVD and NNMF classifiers with neural network ones and others. (The SVD
 and NNMF are much faster to built and bring comparable precision.)
 
