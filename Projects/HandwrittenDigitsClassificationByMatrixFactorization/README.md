@@ -85,6 +85,68 @@ reading and following of steps and corresponding results.
 ["./R/HandwrittenDigitsClassificationByMatrixFactorization.html"](https://cdn.rawgit.com/antononcube/MathematicaVsR/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/R/HandwrittenDigitsClassificationByMatrixFactorization.html).
   
   
-## Comparison observations
+## Observations
 
-TBD
+### Ingestion
+
+I figured out first in R how to ingest the data in the binary files of the
+[MNIST database](http://yann.lecun.com/exdb/mnist/). There were at
+least several online resources (blog posts, GitHub repositories) that
+discuss the MNIST binary files ingestion.
+
+After that making the corresponding code in Mathematica was easy.
+
+### Classification results
+
+Same in Mathematica and R for for SVD and NNMF. (As expected.)
+
+### NNMF
+
+NNMF classifiers use the [MathematicaForPrediction at GitHub]((https://github.com/antononcube/MathematicaForPrediction/)
+implementations:
+[NonNegativeMatrixFactorization.m](https://github.com/antononcube/MathematicaForPrediction/blob/master/NonNegativeMatrixFactorization.m)
+and [NonNegativeMatrixFactorization.R](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/NonNegativeMatrixFactorization.R).
+ 
+### Parallel computations
+
+Both Mathematica and R have relatively simple set-up of parallel computations.
+
+### Graphics
+
+It was not very straightforward to come up MNIST images visualization
+in R. The Mathematica visualization is much more flexible when it
+comes to plot labeling.
+
+## Going further
+
+### Comparing with other classifer
+
+Using Mathematica's built-in classifiers it was easy to compare the
+SVD and NNMF classifiers with neural network ones and others. (The SVD
+and NNMF are much faster to built and bring comparable precision.)
+
+It would be nice to repeat that in R using one or several of neural
+network classifiers provided by Google, Microsoft, H2O, Baidu, etc.
+
+### Classifier ensembles
+
+Another possible extension is to use [classifier ensembles and Receiver Operation Characteristic
+(ROC)](https://mathematicaforprediction.wordpress.com/2016/10/15/roc-for-classifier-ensembles-bootstrapping-damaging-and-interpolation/) to create better classifiers. (Both in Mathematica and R.)
+
+
+### Importance of variables
+
+Using
+[classifier agnostic importance of variables procedure](https://mathematicaforprediction.wordpress.com/2016/01/11/importance-of-variables-investigation/)
+we can figure out :
+
+- which NNMF basis vectors (images) are most important for
+classification precision,
+
+- which image rows or columns are most important for each digit, or similarly
+
+- which image squares of a 3x3 image grid are most important.
+
+
+
+
