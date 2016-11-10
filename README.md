@@ -2,7 +2,7 @@
 
 ## In brief
 
-This repository has examples, code, and documents for comparing
+This repository has example projects, code, and documents for comparing
 [*Mathematica*](http://www.wolfram.com/mathematica/) with
 [R](https://www.r-project.org).
 
@@ -11,11 +11,11 @@ This repository has examples, code, and documents for comparing
 
 The development in this code repository aims to provide a collection
 of relatively simple but non-trivial example projects that illustrate
-the use of *Mathematica* and R in different statistical, machine
+the use of Mathematica and R in different statistical, machine
 learning, scientific, and software engineering programming activities.
 
 Each of the projects has implementations and documents made with both
-*Mathematica* and R -- hopefully that would allow comparison and
+Mathematica and R -- hopefully that would allow comparison and
 knowledge transfer.
 
 
@@ -41,17 +41,18 @@ observations and development history.
 Each project (generally) has two directories named "Mathematica" and
 "R" that have corresponding documents and code.
 
-Since *Mathematica* ships with R some projects would have only a
-*Mathematica*-centric exposition of combining *Mathematica* and R
-outputs into one *Mathematica* notebook.
+Since Mathematica ships with R some projects would have only a
+Mathematica-centric exposition of combining Mathematica and R
+outputs into one Mathematica notebook.
 
-Some projects have only *Mathematica* or only R parts. This is because
+Some projects have only Mathematica parts or only R parts. This is because
 there are no equivalent counter-parts.
 
 There is an attempt the corresponding Mathematica and R codes to be
 very close in structure and steps flow. Often enough the structure and
 flow would be different because each programming language would make certain
 particular techniques easier to apply or because of certain language idioms.
+
 
 ## Where to begin
 
@@ -62,7 +63,7 @@ given at the
 is probably a good start.
 
 As a warm-up of how to do the comparison see this mind-map (which is
-made for *Mathematica* users):
+made for Mathematica users):
 
 [!["Mathematica-vs-R-mind-map-for-Mathematica-users"](http://i.imgur.com/oZobBxfm.png)](https://github.com/antononcube/MathematicaVsR/blob/master/Mathematica-vs-R-mind-map.pdf)
 
@@ -235,7 +236,7 @@ they have only a Mathematica or an R part.
 
 
 
-## *Mathematica*'s [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
+## Mathematica's [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
 
 For more information about *Mathematica*'s [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
 see
