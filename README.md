@@ -235,7 +235,6 @@ they have only a Mathematica or an R part.
 | [TimeSeriesAnalysisWithQuantileRegression](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/TimeSeriesAnalysisWithQuantileRegression)             |      |    | X  | X    |       |        |     |    |     |     |     |     |    |    |     |     | X    |     | X  |       |     |     |     | X  | X   |
 
 
-
 ## Mathematica's [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
 
 For more information about *Mathematica*'s [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
@@ -244,5 +243,27 @@ see
 - the YouTube video ["RLink: Linking Mathematica and R"](https://www.youtube.com/watch?v=5ppY7cTy71o),
 
 - the set-up web page guide [Setting up RLink for Mathematica](http://szhorvat.net/pelican/setting-up-rlink-for-mathematica.html).
+
+
+## Future projects
+
+The future projects are listed in order of their completion time
+proximity -- the highest in the list would be committed the soonest.
+
+- Personal banking data obfuscation
+
+- Independent Component Analysis (ICA)
+
+- Prefix trees (tries) programming and basic application
+
+- Comparison of SVD, NNMF, and ICA over image de-noising
+
+- Functional parsers programming and basic applications
+
+- Recommendation engines
+
+- Numerical integration
+
+- Conversational engines
 
 
