@@ -252,18 +252,25 @@ proximity -- the highest in the list would be committed the soonest.
 
 - Personal banking data obfuscation
 
-- Independent Component Analysis (ICA)
+- [Independent Component Analysis (ICA) programming and basic applications]
+  (https://mathematicaforprediction.wordpress.com/?s=ICA)
 
-- Prefix trees (tries) programming and basic application
+- [Prefix trees (tries) programming and basic applications](https://mathematicaforprediction.wordpress.com/2013/12/06/tries-with-frequencies-for-data-mining/)
 
-- Comparison of SVD, NNMF, and ICA over image de-noising
+- High Performance Computing (HPC) projects -- Spark, H2O, etc. 
 
-- Functional parsers programming and basic applications
+- [Comparison of PCA, NNMF, and ICA over image de-noising](https://mathematicaforprediction.wordpress.com/2016/05/26/comparison-of-pca-nnmf-and-ica-over-image-de-noising/)
+
+- Informal verification of time series co-dependency
+
+- [Functional parsers programming and basic applications](https://mathematicaforprediction.wordpress.com/?s=functional+parsers)
 
 - Recommendation engines
 
-- Numerical integration
+- [Lebesgue numerical integration](https://mathematicaforprediction.wordpress.com/2016/07/01/adaptive-numerical-lebesgue-integration-by-set-measure-estimates/)
 
-- Conversational engines
+- [Conversational engines](https://mathematicaforprediction.wordpress.com/2014/11/29/simple-time-series-conversational-engine/)
+
+
 
 
