@@ -75,7 +75,7 @@ There are scripts going through the steps listed above:
 
 ## Documents
 
-The following documents give an exposition that is suitable for
+The following documents give expositions that are suitable for
 reading and following of steps and corresponding results.
 
 - *Mathematica* : ["./Mathematica/Handwritten-digits-classification-by-matrix-factorization.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/Mathematica/Handwritten-digits-classification-by-matrix-factorization.pdf).
@@ -113,19 +113,19 @@ Both Mathematica and R have relatively simple set-up of parallel computations.
 
 ### Graphics
 
-It was not very straightforward to come up MNIST images visualization
-in R. The Mathematica visualization is much more flexible when it
-comes to plot labeling.
+It was not very straightforward to come up in R with visualizations
+for MNIST images. The Mathematica visualization is much more flexible
+when it comes to plot labeling.
 
 ## Going further
 
-### Comparing with other classifiers
+### Comparison with other classifiers
 
 Using Mathematica's built-in classifiers it was easy [to compare](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization/Mathematica/Handwritten-digits-classification-by-matrix-factorization.md#comparison-with-the-built-in-classifiers) the
 SVD and NNMF classifiers with neural network ones and others. (The SVD
-and NNMF are much faster to built and bring comparable precision.)
+and NNMF are much faster to built and they bring comparable precision.)
 
-It would be nice to repeat that in R using one or several of neural
+It would be nice to repeat that in R using one or several of the neural
 network classifiers provided by Google, Microsoft, H2O, Baidu, etc.
 
 ### Classifier ensembles
@@ -140,12 +140,12 @@ Using
 [classifier agnostic importance of variables procedure](https://mathematicaforprediction.wordpress.com/2016/01/11/importance-of-variables-investigation/)
 we can figure out :
 
-- which NNMF basis vectors (images) are most important for
+- which NNMF basis vectors (images) are most important for the
 classification precision,
 
 - which image rows or columns are most important for each digit, or similarly
 
-- which image squares of a 3x3 image grid are most important.
+- which image squares of a, say, 4x4 image grid are most important.
 
 
 
