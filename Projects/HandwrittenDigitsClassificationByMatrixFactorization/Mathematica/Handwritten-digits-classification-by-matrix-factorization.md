@@ -380,7 +380,7 @@ The classification process for NMF is slower and in order to speed it up we are 
 
     nnmfClResDT = Transpose[{testImagesLabels, nnmfClResInv[[All, 1]]}];
 
-### #Total accuracy
+#### Total accuracy
 
     N@Mean[(Equal @@@ nnmfClResDT) /. {True -> 1, False -> 0}]
 
