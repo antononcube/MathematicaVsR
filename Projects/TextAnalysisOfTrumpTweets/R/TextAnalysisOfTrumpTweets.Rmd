@@ -1,0 +1,149 @@
+---
+title: "Text analysis of Trump tweets"
+output: html_notebook
+---
+
+Anton Antonov   
+[MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR)   
+November, 2016
+
+# Introduction
+
+This R-Markdown notebook was made for the R-part of the [MathematicaVsR](https://github.com/antononcube/MathematicaVsR) project ["Text analysis of Trump tweets"](https://github.com/antononcube/MathematicaVsR/Projects/TextAnalysisOfTrumpTweets).
+
+The project is based in the blog post [1], and this R-notebook uses the data from [1] and provide statistics extensions or alternatives. For conclusions over those statistics see [1].
+
+# Load libraries
+
+Here are the libraries used in this R-notebook. In addition to those in [1] the libraries "vcd" and "arules" are used.
+
+```{r}
+library(plyr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+library(vcd)
+library(arules)
+```
+
+# Getting data
+
+We are not going to repeat the Twitter messages ingestion done in [1] -- we are going to use the data frame ingestion result provided in [1].
+
+```{r}
+load(url("http://varianceexplained.org/files/trump_tweets_df.rda"))
+#load("./trump_tweets_df.rda")
+```
+
+# Data wrangling -- extracting source devices and adding time tags
+
+As it is done in the blog post [1] we project and clean the data:
+
+```{r}
+tweets <- trump_tweets_df %>%
+  select(id, statusSource, text, created) %>%
+  extract(statusSource, "source", "Twitter for (.*?)<") %>%
+  filter(source %in% c("Android", "iPhone"))
+```
+
+Next we add time tags derived from the time-stamp column "created". For the analysis that follows only the dates, hours, and the weekdays are needed.
+
+```{r}
+tweets <- cbind( tweets, date = as.Date(tweets$created), hour = hour(with_tz(tweets$created, "EST")), weekday = weekdays(as.Date(tweets$created)) )
+```
+
+```{r}
+summary(as.data.frame(unclass(tweets)))
+```
+
+# Time series and time related distributions
+
+Simple time series with moving average.
+
+```{r}
+qdf <- ddply( tweets, c("source","date"), function(x) { data.frame( source = x$source[1], date = x$date[1], count = nrow(x), fraction = nrow(x) / nrow(tweets) ) } )
+windowSize <- 6
+qdf <- 
+  ddply( qdf, "source", function(x) { 
+    x = x[ order(x$date), ]; cs <- cumsum(x$fraction); 
+    cbind( x[1:(nrow(x)-windowSize),], fma = ( cs[(windowSize+1):length(cs)] - cs[1:(length(cs)-windowSize)] ) / windowSize ) } 
+  )
+ggplot(qdf) + geom_line( aes( x = date, y = fma, color = source ) ) + labs(x = "date", y = "% of tweets", color = "")
+```
+
+
+```{r}
+qdf <- ddply( tweets, c("source", "hour"), function(x) { data.frame( source = x$source[1], hour = x$hour[1], count = nrow(x), fraction = nrow(x) / nrow(tweets) ) } ) 
+ggplot(qdf) + geom_line( aes( x = hour, y = fraction, color = source ) ) + labs(x = "Hour of day (EST)", y = "% of tweets", color = "")
+```
+
+At this point we can also plot a mosaic plot of tweets` creation hours or weekdays with respect to device sources:
+
+```{r}
+mosaicplot( hour ~ source, tweets, dir = "h", color = TRUE )
+```
+
+```{r}
+mosaicplot( weekday ~ source, tweets, dir = "h", color = TRUE )
+```
+
+
+# Comparison by used words
+
+This section demonstrates a way to derive word-device associations that is alternative to the approach in [1]. 
+The [Association rules learning](https://en.wikipedia.org/wiki/Association_rule_learning) algorithm Apriori is used through the package ["arules"](https://cran.r-project.org/web/packages/arules/index.html).
+
+First we split the tweet messages into bags of words (baskets).
+
+```{r}
+sres <- strsplit( iconv(tweets$text),"\\s")
+sres <- llply( sres, function(x) { x <- unique(x); x[nchar(x)>2] })
+```
+
+The package "arules" does not work directly with lists of lists. (In this case with a list of bags or words or baskets.)
+We have to derive a binary incidence matrix from the bags of words.
+
+Here we  add the device tags to those bags of words and derive a long form of tweet-index and word pairs:
+
+```{r}
+sresDF <- 
+  ldply( 1:length(sres), function(i) {
+    data.frame( index = i, word = c( tweets$source[i], sres[i][[1]]) )
+  })
+```
+
+Next we find the contingency matrix for index vs. word:
+```{r}
+wordsCT <- xtabs( ~ index + word, sresDF, sparse = TRUE)
+```
+
+At this point we can use the Apriori algorithm of the package:
+
+```{r}
+rulesRes <- apriori( as.matrix(wordsCT), parameter = list(supp = 0.01, conf = 0.6, maxlen = 2, target = "rules"))
+```
+
+Here are association rules for "Android" sorted by confidence in descending order:
+
+```{r}
+inspect( subset( sort(rulesRes, by="confidence"), subset = rhs %in% "Android" & confidence > 0.78) )
+```
+
+And here are association rules for "iPhone" sorted by confidence in descending order:
+
+```{r}
+iphRules <- inspect( subset( sort(rulesRes, by="confidence"), subset = rhs %in% "iPhone" & support > 0.01) )
+```
+
+Generally speaking, the package "arules" is somewhat awkward to use. For example, extracting the words of the column "lhs" would require some wrangling:
+
+```{r}
+ws <- as.character(unclass(as.character(iphRules$lhs)))
+gsub(pattern = "\\{|\\}", "", ws)
+```
+
+# References
+
+[1] David Robinson, ["Text analysis of Trump's tweets confirms he writes only the (angrier) Android half"](http://varianceexplained.org/r/trump-tweets/), (2016), [VarianceExplained.org](http://varianceexplained.org).
+
