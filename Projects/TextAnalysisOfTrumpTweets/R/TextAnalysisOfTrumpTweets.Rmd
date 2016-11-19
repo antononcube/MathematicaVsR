@@ -9,7 +9,7 @@ November, 2016
 
 # Introduction
 
-This R-Markdown notebook was made for the R-part of the [MathematicaVsR](https://github.com/antononcube/MathematicaVsR) project ["Text analysis of Trump tweets"](https://github.com/antononcube/MathematicaVsR/Projects/TextAnalysisOfTrumpTweets).
+This R-Markdown notebook was made for the R-part of the [MathematicaVsR](https://github.com/antononcube/MathematicaVsR) project ["Text analysis of Trump tweets"](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/TextAnalysisOfTrumpTweets).
 
 The project is based in the blog post [1], and this R-notebook uses the data from [1] and provide statistics extensions or alternatives. For conclusions over those statistics see [1].
 
