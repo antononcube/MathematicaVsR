@@ -9,7 +9,7 @@ November, 2016
 
 In this project we compare Mathematica and R over text analyses of Twitter messages made by Donald Trump (and his staff) before the USA president elections in 2016.
 
-This project follows and extends the exposition and analysis of the R-based blog post ["Text analysis of Trump's tweets confirms he writes only the (angrier) Android half"]((http://varianceexplained.org/r/trump-tweets/) by David Robinson at [VarianceExplained.org](http://varianceexplained.org); see [1].
+This project follows and extends the exposition and analysis of the R-based blog post ["Text analysis of Trump's tweets confirms he writes only the (angrier) Android half"](http://varianceexplained.org/r/trump-tweets/) by David Robinson at [VarianceExplained.org](http://varianceexplained.org); see [1].
 
 The blog post \[[1](http://varianceexplained.org/r/trump-tweets/)\] links to several sources that claim that during the election campaign Donald Trump tweeted from his Android phone and his campaign staff tweeted from an iPhone. The blog post [1] examines this hypothesis in a quantitative way (using various R packages.) 
 
@@ -28,13 +28,13 @@ The hypothesis in question is well summarized with the tweet:
 
    - the blog post \[[1](http://varianceexplained.org/r/trump-tweets/)\], and
 
-   - the R-notebook given as [Markdown]() and [HTML]().
+   - the R-notebook given as [Markdown](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TextAnalysisOfTrumpTweets/R/TextAnalysisOfTrumpTweets.Rmd) and [HTML](https://cdn.rawgit.com/antononcube/MathematicaVsR/master/Projects/TextAnalysisOfTrumpTweets/R/TextAnalysisOfTrumpTweets.nb.html).
 
 ## Concrete steps
 
-The Mathematica-part of this project does not follow closely the R-part, [1].
+The Mathematica-part of this project does not follow closely the blog post [1]. After the ingestion of the data provided in [1], the Mathematica-part applies alternative algorithms to support and extend the analysis in [1].
 
-After the ingestion of the data provide in [1], the Mathematica-part applies alternative algorithms to support and extend the analysis in [1].
+The sections in the [R-notebook](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TextAnalysisOfTrumpTweets/R/TextAnalysisOfTrumpTweets.Rmd) correspond to some -- not all -- of the sections in the Mathematica-part.
 
 The following list of steps is for the Mathematica-part. 
 
@@ -69,15 +69,26 @@ The following list of steps is for the Mathematica-part.
 
     - This association rule mining is done mostly to support and extend the text analysis in [1] and, of course, for comparison purposes.
 
+In [1] the sentiments are derived from the obtained device-word associations, so the order of steps is 1-2-4-3. In Mathematica we can do not need the 4th step in order to get the sentiments in the 3d step.
+
 ## Comparison
 
 Using Mathematica for sentiment analysis is much more direct because of the built-in classifiers.
 
-The R-based blog post [1] uses heavily the "pipeline" operator `%>%` which is kind of a recent addition to R (and it is both fashionable and covenient to use it.) In Mathematica the related operators are `Postfix` (`//`), `Prefix` (`@`), `Infix` (`~~`), `Composition` (`@*`), and `RightComposition` (`/*`).
+The R-based blog post [1] uses heavily the "pipeline" operator `%>%` which is kind of a recent addition to R (and it is both fashionable and convenient to use it.) In Mathematica the related operators are `Postfix` (`//`), `Prefix` (`@`), `Infix` (`~~`), `Composition` (`@*`), and `RightComposition` (`/*`).
+
+Making the time series plots with the R package "ggplot2" requires making special data frames -- I find the Mathematica plotting of time series much more direct.
+
+Generally speaking, the R package "arules" for Associations rule learning is somewhat awkward to use:
+
+- it is data frame centric, does not work directly with lists of lists, and
+
+- requires the use of factors.
+
 
 
 ## References
 
 \[1\] David Robinson, ["Text analysis of Trump's tweets confirms he writes only the (angrier) Android half"](http://varianceexplained.org/r/trump-tweets/), (2016), [VarianceExplained.org](http://varianceexplained.org).
 
-\[2\] Anton Antonov, Mosaic plots, (2013).
+\[2\] Anton Antonov, ["Mosaic plots for data visualization"](https://mathematicaforprediction.wordpress.com/2014/03/17/mosaic-plots-for-data-visualization/), (2014), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).
