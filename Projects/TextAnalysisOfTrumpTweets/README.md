@@ -53,7 +53,7 @@ The following list of steps is for the Mathematica-part.
     - The blog post [1] shows how the ingestion of Twitter data of Donald Trump messages is done in R.
 
     - That can be done in Mathematica too using the built-in function `ServiceConnect`,
-      but since [1] provides a link to the ingested data used [1]:
+      but that is not necessary since [1] provides a link to the ingested data used [1]:
 
        load(url("http://varianceexplained.org/files/trump_tweets_df.rda"))
 
