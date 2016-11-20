@@ -99,8 +99,8 @@ made for Mathematica users):
 
 <tbody>
 <tr>
-<td class="left">BofW</td>
-<td class="left">bag of words (model)</td>
+<td class="left">ARL</td>
+<td class="left">Association rules learning</td>
 <td class="left">&#xa0;</td>
 <td class="left">NA</td>
 <td class="left">numerical analysis</td>
@@ -108,8 +108,8 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">Cl</td>
-<td class="left">(machine learning) classification</td>
+<td class="left">BofW</td>
+<td class="left">bag of words (model)</td>
 <td class="left">&#xa0;</td>
 <td class="left">NLP</td>
 <td class="left">natural language processing</td>
@@ -117,8 +117,8 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">DA</td>
-<td class="left">data analysis</td>
+<td class="left">Cl</td>
+<td class="left">(machine learning) classification</td>
 <td class="left">&#xa0;</td>
 <td class="left">Opt</td>
 <td class="left">optimization</td>
@@ -126,8 +126,8 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">DIng</td>
-<td class="left">data ingestion</td>
+<td class="left">DA</td>
+<td class="left">data analysis</td>
 <td class="left">&#xa0;</td>
 <td class="left">Outl</td>
 <td class="left">outliers</td>
@@ -135,8 +135,8 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">Distr</td>
-<td class="left">disributions of variables</td>
+<td class="left">DIng</td>
+<td class="left">data ingestion</td>
 <td class="left">&#xa0;</td>
 <td class="left">Par</td>
 <td class="left">parallel computing</td>
@@ -144,8 +144,8 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">DWrang</td>
-<td class="left">data wrangling</td>
+<td class="left">Distr</td>
+<td class="left">distributions of variables</td>
 <td class="left">&#xa0;</td>
 <td class="left">QR</td>
 <td class="left">quantile regression</td>
@@ -153,8 +153,8 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">GoF</td>
-<td class="left">goodness of fit</td>
+<td class="left">DWrang</td>
+<td class="left">data wrangling</td>
 <td class="left">&#xa0;</td>
 <td class="left">Rgr</td>
 <td class="left">regression</td>
@@ -162,17 +162,17 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">Gr</td>
-<td class="left">graphs</td>
+<td class="left">GoF</td>
+<td class="left">goodness of fit</td>
 <td class="left">&#xa0;</td>
 <td class="left">RLink</td>
-<td class="left">Mathematica's RLink\`</td>
+<td class="left">Mathematica's RLink</td>
 </tr>
 
 
 <tr>
-<td class="left">HPC</td>
-<td class="left">High Performance Computing</td>
+<td class="left">Gr</td>
+<td class="left">graphs</td>
 <td class="left">&#xa0;</td>
 <td class="left">ROC</td>
 <td class="left">receiver operating characteristic</td>
@@ -180,8 +180,8 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">Img</td>
-<td class="left">image processing</td>
+<td class="left">HPC</td>
+<td class="left">High Performance Computing</td>
 <td class="left">&#xa0;</td>
 <td class="left">Sim</td>
 <td class="left">simulation(s)</td>
@@ -189,8 +189,8 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">IUI</td>
-<td class="left">interactive user interface(s)</td>
+<td class="left">Img</td>
+<td class="left">image processing</td>
 <td class="left">&#xa0;</td>
 <td class="left">Str</td>
 <td class="left">strings patterns and manipulation</td>
@@ -198,8 +198,8 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">LSA</td>
-<td class="left">latent semantic analysis</td>
+<td class="left">IUI</td>
+<td class="left">interactive user interface(s)</td>
 <td class="left">&#xa0;</td>
 <td class="left">TS</td>
 <td class="left">time series</td>
@@ -207,11 +207,20 @@ made for Mathematica users):
 
 
 <tr>
-<td class="left">MF</td>
-<td class="left">matrix factorization(s)</td>
+<td class="left">LSA</td>
+<td class="left">latent semantic analysis</td>
 <td class="left">&#xa0;</td>
 <td class="left">Vis</td>
 <td class="left">visualization</td>
+</tr>
+
+
+<tr>
+<td class="left">MF</td>
+<td class="left">matrix factorization(s)</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
@@ -222,17 +231,20 @@ made for Mathematica users):
 In the following table the projects in italics are partially completed --
 they have only a Mathematica or an R part.
 
-| Project                                              | BofW | Cl | DA | DIng | Distr | DWrang | GoF | Gr | Img | IUI | Rgr | LSA | MF | NA | NLP | Opt | Outl | Par | QR | RLink | ROC | Sim | Str | TS | Vis |
-|------------------------------------------------------|------|----|----|------|-------|--------|-----|----|-----|-----|-----|-----|----|----|-----|-----|------|-----|----|-------|-----|-----|-----|----|-----|
-| [BrowsingDataWithChernoffFaces](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/BrowsingDataWithChernoffFaces)                        |      |    | X  | X    | X     | X      |     |    |     |     |     |     |    |    |     |     | X    |     |    |       |     |     |     |    | X   |
-| [DataWrangling](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DataWrangling)                                        |      |    | X  | X    |       | X      |     |    |     |     |     |     |    |    |     |     |      |     |    |       |     |     |     |    | X   |
-| [*DistributionExtractionFromAGaussianNoisedMixture*](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DistributionExtractionAFromGaussianNoisedMixture)     |      |    |    |      | X     |        | X   |    |     |     |     |     |    |    |     | X   |      |     |    |       |     |     |     |    |     |
-| [HandwrittenDigitsClassificationByMatrixFactorization](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization) |      | X  |    | X    |       |        |     |    | X   |     |     | X   | X  |    |     |     |      | X   |    |       |     |     |     |    | X   |
-| [ODEsWithSeasonalities](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ODEsWithSeasonalities)                                |      |    |    |      |       |        |     |    |     | X   |     |     |    | X  |     |     |      |     |    |       |     | X   |     |    | X   |
-| [*ProgressiveJackpotModeling*](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ProgressiveJackpotModeling)                           |      |    |    |      | X     |        |     |    |     |     |     |     |    |    |     |     |      |     |    |       |     | X   |     |    |     |
-| [RegressionWithROC](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/RegressionWithROC)                                    |      | X  |    |      |       |        |     |    |     |     | X   |     |    |    |     |     |      |     |    |       | X   |     |     |    | X   |
-| [StatementsSaliencyInPodcasts](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts)                         | X    |    |    | X    |       |        |     |    |     | X   |     |     |    |    | X   |     |      |     |    |       |     |     | X   |    |     |
-| [TimeSeriesAnalysisWithQuantileRegression](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/TimeSeriesAnalysisWithQuantileRegression)             |      |    | X  | X    |       |        |     |    |     |     |     |     |    |    |     |     | X    |     | X  |       |     |     |     | X  | X   |
+| Project                                              | ARL | BofW | Cl | DA | DIng | Distr | DWrang | GoF | Gr | Img | IUI | Rgr | LSA | MF | NA | NLP | Opt | Outl | Par | QR | RLink | ROC | Sim | Str | TS | Vis |
+|------------------------------------------------------|-----|------|----|----|------|-------|--------|-----|----|-----|-----|-----|-----|----|----|-----|-----|------|-----|----|-------|-----|-----|-----|----|-----|
+| [BrowsingDataWithChernoffFaces](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/BrowsingDataWithChernoffFaces)                        |     |      |    | X  | X    | X     | X      |     |    |     |     |     |     |    |    |     |     | X    |     |    |       |     |     |     |    | X   |
+| [DataWrangling](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DataWrangling)                                        |     |      |    | X  | X    |       | X      |     |    |     |     |     |     |    |    |     |     |      |     |    |       |     |     |     |    | X   |
+| [DistributionExtractionAFromGaussianNoisedMixture](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DistributionExtractionAFromGaussianNoisedMixture)     |     |      |    |    |      | X     |        | X   |    |     |     |     |     |    |    |     | X   |      |     |    |       |     |     |     |    |     |
+| [HandwrittenDigitsClassificationByMatrixFactorization](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/HandwrittenDigitsClassificationByMatrixFactorization) |     |      | X  |    | X    |       |        |     |    | X   |     |     | X   | X  |    |     |     |      | X   |    |       |     |     |     |    | X   |
+| [ODEsWithSeasonalities](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ODEsWithSeasonalities)                                |     |      |    |    |      |       |        |     |    |     | X   |     |     |    | X  |     |     |      |     |    |       |     | X   |     |    | X   |
+| [ProgressiveJackpotModeling](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ProgressiveJackpotModeling)                           |     |      |    |    |      | X     |        |     |    |     |     |     |     |    |    |     |     |      |     |    |       |     | X   |     |    |     |
+| [RegressionWithROC](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/RegressionWithROC)                                    |     |      | X  |    |      |       |        |     |    |     |     | X   |     |    |    |     |     |      |     |    |       | X   |     |     |    | X   |
+| [StatementsSaliencyInPodcasts](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/StatementsSaliencyInPodcasts)                         |     | X    |    |    | X    |       |        |     |    |     | X   |     |     |    |    | X   |     |      |     |    |       |     |     | X   |    |     |
+| [TextAnalysisOfTrumpTweets](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/TextAnalysisOfTrumpTweets)                            | X   | X    | X  | X  | X    |       | X      |     |    |     |     |     |     |    |    |     |     |      |     |    | X     |     |     | X   |    | X   |
+| [TimeSeriesAnalysisWithQuantileRegression](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/TimeSeriesAnalysisWithQuantileRegression)             |     |      |    | X  | X    |       |        |     |    |     |     |     |     |    |    |     |     | X    |     | X  |       |     |     |     | X  | X   |
+
+
 
 
 ## Mathematica's [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
