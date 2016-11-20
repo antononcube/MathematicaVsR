@@ -50,7 +50,7 @@ The following list of steps is for the Mathematica-part.
 
 1. Data ingestion
  
-    - The blog post [1] shows how the ingestion of Twitter data of Donald Trump messages is done in R.
+    - The blog post [1] shows how to do in R the ingestion of Twitter data of Donald Trump messages.
 
     - That can be done in Mathematica too using the built-in function `ServiceConnect`,
       but that is not necessary since [1] provides a link to the ingested data used [1]:
@@ -71,7 +71,7 @@ The following list of steps is for the Mathematica-part.
 
     - In [1] the results of this step are derived in several stages. 
 
-4. Device-word associations
+4. Device-word association rules
 
     - Using [Association rule learning](https://en.wikipedia.org/wiki/Association_rule_learning) device tags are associated with words in the tweets.
 
@@ -79,7 +79,7 @@ The following list of steps is for the Mathematica-part.
 
     - This association rule mining is done mostly to support and extend the text analysis in [1] and, of course, for comparison purposes.
 
-In [1] the sentiments are derived from the obtained device-word associations, so the order of steps is 1-2-4-3. In Mathematica we can do not need the 4th step in order to get the sentiments in the 3d step.
+In [1] the sentiments are derived from computed device-word associations, so in [1] the order of steps is 1-2-4-3. In Mathematica we do not need the 4th step in order to get the sentiments in the 3d step.
 
 ## Comparison
 
