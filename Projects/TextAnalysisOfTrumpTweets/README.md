@@ -19,6 +19,16 @@ The hypothesis in question is well summarized with the tweet:
 > Every hyperbolic tweet is from Android (from him). [pic.twitter.com/GWr6D8h5ed](pic.twitter.com/GWr6D8h5ed)  
 > -- Todd Vaziri (@tvaziri) August 6, 2016
 
+This conjecture is fairly well supported by the following [mosaic plots](https://mathematicaforprediction.wordpress.com/2014/03/17/mosaic-plots-for-data-visualization/), \[[2](https://mathematicaforprediction.wordpress.com/2014/03/17/mosaic-plots-for-data-visualization/)\]:
+
+[![TextAnalysisOfTrumpTweets-iPhone-MosaicPlot-Sentiment-Device](http://i.imgur.com/eKjxlTvm.png)](http://i.imgur.com/eKjxlTv.png) [![TextAnalysisOfTrumpTweets-iPhone-MosaicPlot-Device-Weekday-Sentiment](http://i.imgur.com/RMfuNNtm.png)](http://i.imgur.com/RMfuNNt.png)
+
+We can see the Twitter messages from iPhone are much more likely to be neutral, and the ones from Android are much more polarized. As
+Christian Rudder (one of the founders of OkCupid, a dating website) explains in the chapter "Death by a Thousand Mehs" of the book ["Dataclysm"](http://dataclysm.org), \[[3](http://dataclysm.org)\], polarization as a very good strategy to engage online audience:
+
+> [...] And the effect isn't small-being highly polarizing will in fact get you about 70 percent more messages. That means variance allows you to effectively jump several "leagues" up in the dating pecking order - [...]
+
+(The mosaic plots above were made for the Mathematica-part of this project. Mosaic plots and weekdays tags are not used in [1].)
 
 ### Links
 
@@ -92,3 +102,5 @@ Generally speaking, the R package "arules" for Associations rule learning is som
 \[1\] David Robinson, ["Text analysis of Trump's tweets confirms he writes only the (angrier) Android half"](http://varianceexplained.org/r/trump-tweets/), (2016), [VarianceExplained.org](http://varianceexplained.org).
 
 \[2\] Anton Antonov, ["Mosaic plots for data visualization"](https://mathematicaforprediction.wordpress.com/2014/03/17/mosaic-plots-for-data-visualization/), (2014), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).
+
+\[3\] Christian Rudder, [Dataclysm](http://dataclysm.org), Crown, 2014. ASIN: B00J1IQUX8 .
