@@ -24,7 +24,7 @@ This conjecture is fairly well supported by the following [mosaic plots](https:/
 [![TextAnalysisOfTrumpTweets-iPhone-MosaicPlot-Sentiment-Device](http://i.imgur.com/eKjxlTvm.png)](http://i.imgur.com/eKjxlTv.png) [![TextAnalysisOfTrumpTweets-iPhone-MosaicPlot-Device-Weekday-Sentiment](http://i.imgur.com/RMfuNNtm.png)](http://i.imgur.com/RMfuNNt.png)
 
 We can see the Twitter messages from iPhone are much more likely to be neutral, and the ones from Android are much more polarized. As
-Christian Rudder (one of the founders of OkCupid, a dating website) explains in the chapter "Death by a Thousand Mehs" of the book ["Dataclysm"](http://dataclysm.org), \[[3](http://dataclysm.org)\], polarization as a very good strategy to engage online audience:
+Christian Rudder (one of the founders of [OkCupid](https://www.okcupid.com), a dating website) explains in the chapter "Death by a Thousand Mehs" of the book ["Dataclysm"](http://dataclysm.org), \[[3](http://dataclysm.org)\], that polarization as a very good strategy to engage online audience:
 
 > [...] And the effect isn't small-being highly polarizing will in fact get you about 70 percent more messages. That means variance allows you to effectively jump several "leagues" up in the dating pecking order - [...]
 
@@ -32,7 +32,7 @@ Christian Rudder (one of the founders of OkCupid, a dating website) explains in 
 
 ### Links
 
-- The Mathematica part: [PDF file](), [Markdown file]().
+- The Mathematica part: [PDF file](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TextAnalysisOfTrumpTweets/Mathematica/Text-analysis-of-Trump-tweets.pdf), *Markdown file*.
 
 - The R part is comprised of :
 
