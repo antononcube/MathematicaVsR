@@ -23,18 +23,18 @@ This conjecture is fairly well supported by the following [mosaic plots](https:/
 
 [![TextAnalysisOfTrumpTweets-iPhone-MosaicPlot-Sentiment-Device](http://i.imgur.com/eKjxlTvm.png)](http://i.imgur.com/eKjxlTv.png) [![TextAnalysisOfTrumpTweets-iPhone-MosaicPlot-Device-Weekday-Sentiment](http://i.imgur.com/RMfuNNtm.png)](http://i.imgur.com/RMfuNNt.png)
 
-We can see the Twitter messages from iPhone are much more likely to be neutral, and the ones from Android are much more polarized. As
-Christian Rudder (one of the founders of [OkCupid](https://www.okcupid.com), a dating website) explains in the chapter "Death by a Thousand Mehs" of the book ["Dataclysm"](http://dataclysm.org), \[[3](http://dataclysm.org)\], that polarization as a very good strategy to engage online audience:
+We can see the that Twitter messages from iPhone are much more likely to be neutral, and the ones from Android are much more polarized. As
+Christian Rudder (one of the founders of [OkCupid](https://www.okcupid.com), a dating website) explains in the chapter "Death by a Thousand Mehs" of the book ["Dataclysm"](http://dataclysm.org), \[[3](http://dataclysm.org)\], having a polarizing image (online persona) is as a very good strategy to engage online audience:
 
 > [...] And the effect isn't small-being highly polarizing will in fact get you about 70 percent more messages. That means variance allows you to effectively jump several "leagues" up in the dating pecking order - [...]
 
-(The mosaic plots above were made for the Mathematica-part of this project. Mosaic plots and weekdays tags are not used in [1].)
+(The mosaic plots above were made for the Mathematica-part of this project. Mosaic plots and weekday tags are not used in [1].)
 
 ### Links
 
 - The Mathematica part: [PDF file](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TextAnalysisOfTrumpTweets/Mathematica/Text-analysis-of-Trump-tweets.pdf), *Markdown file*.
 
-- The R part is comprised of :
+- The R part is consists of :
 
    - the blog post \[[1](http://varianceexplained.org/r/trump-tweets/)\], and
 
@@ -44,7 +44,7 @@ Christian Rudder (one of the founders of [OkCupid](https://www.okcupid.com), a d
 
 The Mathematica-part of this project does not follow closely the blog post [1]. After the ingestion of the data provided in [1], the Mathematica-part applies alternative algorithms to support and extend the analysis in [1].
 
-The sections in the [R-notebook](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TextAnalysisOfTrumpTweets/R/TextAnalysisOfTrumpTweets.Rmd) correspond to some -- not all -- of the sections in the Mathematica-part.
+The sections in the [R-part notebook](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TextAnalysisOfTrumpTweets/R/TextAnalysisOfTrumpTweets.Rmd) correspond to some -- not all -- of the sections in the Mathematica-part.
 
 The following list of steps is for the Mathematica-part. 
 
@@ -55,17 +55,17 @@ The following list of steps is for the Mathematica-part.
     - That can be done in Mathematica too using the built-in function `ServiceConnect`,
       but that is not necessary since [1] provides a link to the ingested data used [1]:
 
-       load(url("http://varianceexplained.org/files/trump_tweets_df.rda"))
+        load(url("http://varianceexplained.org/files/trump_tweets_df.rda"))
 
     - Which leads to the ingesting of an R data frame in the Mathematica-part using RLink.
 
 2. Adding tags
 
-    - We have extract device tags for the messages : each message is associated with one of the tags "Android", "iPad", or "iPhone".
+    - We have to extract device tags for the messages -- each message is associated with one of the tags "Android", "iPad", or "iPhone".
 
-    - Using the messages time-stamps each message is associated with time tags like month, hour, weekday, etc.
+    - Using the message time-stamps each message is associated with time tags corresponding to the creation time month, hour, weekday, etc.
 
-3. Classification into sentiment and Facebook topics
+3. Classification into sentiments and Facebook topics
 
     - Using the built-in classifiers of Mathematica each tweet message is associated with a sentiment tag and a Facebook topic tag.
 
@@ -75,9 +75,9 @@ The following list of steps is for the Mathematica-part.
 
     - Using [Association rule learning](https://en.wikipedia.org/wiki/Association_rule_learning) device tags are associated with words in the tweets.
 
-    - In the Mathematica-part these associations rules are not needed for the sentiment analysis (because of the built-in classifiers). 
+    - In the Mathematica-part these associations rules are not needed for the sentiment analysis (because of the built-in classifiers.) 
 
-    - This association rule mining is done mostly to support and extend the text analysis in [1] and, of course, for comparison purposes.
+    - The association rule mining is done mostly to support and extend the text analysis in [1] and, of course, for comparison purposes.
 
 In [1] the sentiments are derived from computed device-word associations, so in [1] the order of steps is 1-2-4-3. In Mathematica we do not need the 4th step in order to get the sentiments in the 3d step.
 
@@ -87,7 +87,7 @@ Using Mathematica for sentiment analysis is much more direct because of the buil
 
 The R-based blog post [1] uses heavily the "pipeline" operator `%>%` which is kind of a recent addition to R (and it is both fashionable and convenient to use it.) In Mathematica the related operators are `Postfix` (`//`), `Prefix` (`@`), `Infix` (`~~`), `Composition` (`@*`), and `RightComposition` (`/*`).
 
-Making the time series plots with the R package "ggplot2" requires making special data frames -- I find the Mathematica plotting of time series much more direct.
+Making the time series plots with the R package "ggplot2" requires making special data frames. I inclined to think that the Mathematica plotting of time series more direct, but the data wrangling codes in Mathematica and R for this task are comparable.
 
 Generally speaking, the R package "arules" for Associations rule learning is somewhat awkward to use:
 
