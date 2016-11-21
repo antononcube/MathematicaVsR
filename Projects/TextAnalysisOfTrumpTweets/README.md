@@ -1,7 +1,7 @@
 # Text analysis of Trump tweets
 Anton Antonov  
 [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction)  
-[MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR/tree/master/Projects)  
+[MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR)  
 November, 2016
 
 
