@@ -34,7 +34,7 @@ Christian Rudder (one of the founders of [OkCupid](https://www.okcupid.com), a d
 
 - The Mathematica part: [PDF file](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TextAnalysisOfTrumpTweets/Mathematica/Text-analysis-of-Trump-tweets.pdf), *Markdown file*.
 
-- The R part is consists of :
+- The R part consists of :
 
    - the blog post \[[1](http://varianceexplained.org/r/trump-tweets/)\], and
 
@@ -111,15 +111,15 @@ Using Mathematica for sentiment analysis is much more direct because of the buil
 
 The R-based blog post [1] uses heavily the "pipeline" operator `%>%` which is kind of a recent addition to R (and it is both fashionable and convenient to use it.) In Mathematica the related operators are `Postfix` (`//`), `Prefix` (`@`), `Infix` (`~~`), `Composition` (`@*`), and `RightComposition` (`/*`).
 
-Making the time series plots with the R package "ggplot2" requires making special data frames. I am inclined to think that the Mathematica plotting of time series is more direct, but for this task the data wrangling codes in Mathematica and R fairly are comparable.
+Making the time series plots with the R package "ggplot2" requires making special data frames. I am inclined to think that the Mathematica plotting of time series is more direct, but for this task the data wrangling codes in Mathematica and R are fairly comparable.
 
-Generally speaking, the R package "arules" for Associations rule learning is somewhat awkward to use:
+Generally speaking, the R package ["arules"](https://cran.r-project.org/web/packages/arules/index.html) -- used in this project for Associations rule learning -- is somewhat awkward to use:
 
 - it is data frame centric, does not work directly with lists of lists, and
 
 - requires the use of factors.
 
-
+The Apriori implementation in ["arules"](https://cran.r-project.org/web/packages/arules/index.html) is much faster than the one in ["AprioriAlgorithm.m"](https://github.com/antononcube/MathematicaForPrediction/blob/master/AprioriAlgorithm.m) -- "arules" uses a more efficient algorithm [implemented in C](http://www.borgelt.net/fpm.html).
 
 ## References
 
