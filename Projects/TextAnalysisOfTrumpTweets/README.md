@@ -87,7 +87,7 @@ Using Mathematica for sentiment analysis is much more direct because of the buil
 
 The R-based blog post [1] uses heavily the "pipeline" operator `%>%` which is kind of a recent addition to R (and it is both fashionable and convenient to use it.) In Mathematica the related operators are `Postfix` (`//`), `Prefix` (`@`), `Infix` (`~~`), `Composition` (`@*`), and `RightComposition` (`/*`).
 
-Making the time series plots with the R package "ggplot2" requires making special data frames. I inclined to think that the Mathematica plotting of time series more direct, but the data wrangling codes in Mathematica and R for this task are comparable.
+Making the time series plots with the R package "ggplot2" requires making special data frames. I am inclined to think that the Mathematica plotting of time series is more direct, but for this task the data wrangling codes in Mathematica and R fairly are comparable.
 
 Generally speaking, the R package "arules" for Associations rule learning is somewhat awkward to use:
 
