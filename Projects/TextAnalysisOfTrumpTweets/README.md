@@ -125,6 +125,6 @@ Generally speaking, the R package "arules" for Associations rule learning is som
 
 \[1\] David Robinson, ["Text analysis of Trump's tweets confirms he writes only the (angrier) Android half"](http://varianceexplained.org/r/trump-tweets/), (2016), [VarianceExplained.org](http://varianceexplained.org).
 
-\[2\] Anton Antonov, ["Mosaic plots for data�visualization"](https://mathematicaforprediction.wordpress.com/2014/03/17/mosaic-plots-for-data-visualization/), (2014), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).
+\[2\] Anton Antonov, ["Mosaic plots for data visualization"](https://mathematicaforprediction.wordpress.com/2014/03/17/mosaic-plots-for-data-visualization/), (2014), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).
 
 \[3\] Christian Rudder, [Dataclysm](http://dataclysm.org), Crown, 2014. ASIN: B00J1IQUX8 .
