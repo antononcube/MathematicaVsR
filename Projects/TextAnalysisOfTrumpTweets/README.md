@@ -48,7 +48,7 @@ The sections in the [R-part notebook](https://github.com/antononcube/Mathematica
 
 The following list of steps is for the Mathematica-part. 
 
-1. Data ingestion
+1. **Data ingestion**
  
     - The blog post [1] shows how to do in R the ingestion of Twitter data of Donald Trump messages.
 
@@ -59,19 +59,39 @@ The following list of steps is for the Mathematica-part.
 
     - Which leads to the ingesting of an R data frame in the Mathematica-part using RLink.
 
-2. Adding tags
+2. **Adding tags**
 
     - We have to extract device tags for the messages -- each message is associated with one of the tags "Android", "iPad", or "iPhone".
 
     - Using the message time-stamps each message is associated with time tags corresponding to the creation time month, hour, weekday, etc.
 
-3. Classification into sentiments and Facebook topics
+    - Here is summary of the data at this stage:
+
+       [!["trumpTweetsTbl-Summary"](http://i.imgur.com/yMtdphT.png)](http://i.imgur.com/yMtdphT.png)
+
+3. **Time series and time related distributions**
+
+    - We can make several types of time series plots for general insight and to support the main conjecture.
+
+    - Here is a Mathematica made plot for the same statistic computed in [1] that shows differences in tweet posting behavior:
+
+       [!["TimeSeries"](http://i.imgur.com/oDv5Cm0l.png)](http://i.imgur.com/oDv5Cm0.png)
+
+    - Here are distributions plots of tweets per weekday:
+
+       [!["ViolinPlots"](http://i.imgur.com/UGMy4EWl.png)](http://i.imgur.com/UGMy4EW.png)
+
+4. **Classification into sentiments and Facebook topics**
 
     - Using the built-in classifiers of Mathematica each tweet message is associated with a sentiment tag and a Facebook topic tag.
 
     - In [1] the results of this step are derived in several stages. 
 
-4. Device-word association rules
+    - Here is a mosaic plot for conditional probabilities of devices, topics, and sentiments:
+
+       [!["Device-Topic-Sentiment-MosaicPlot"](http://i.imgur.com/dMxSpHal.png)](http://i.imgur.com/dMxSpHa.png)
+
+5. **Device-word association rules**
 
     - Using [Association rule learning](https://en.wikipedia.org/wiki/Association_rule_learning) device tags are associated with words in the tweets.
 
@@ -79,7 +99,11 @@ The following list of steps is for the Mathematica-part.
 
     - The association rule mining is done mostly to support and extend the text analysis in [1] and, of course, for comparison purposes.
 
-In [1] the sentiments are derived from computed device-word associations, so in [1] the order of steps is 1-2-4-3. In Mathematica we do not need the 4th step in order to get the sentiments in the 3d step.
+    - Here is an example of derived association rules together with their most important measures:
+
+       [!["iPhone-Association-Rules"](http://i.imgur.com/dSSb4KDl.png)](http://i.imgur.com/dSSb4KD.png)
+
+In [1] the sentiments are derived from computed device-word associations, so in [1] the order of steps is 1-2-3-5-4. In Mathematica we do not need the steps 3 and 5 in order to get the sentiments in the 4th step.
 
 ## Comparison
 
@@ -101,6 +125,6 @@ Generally speaking, the R package "arules" for Associations rule learning is som
 
 \[1\] David Robinson, ["Text analysis of Trump's tweets confirms he writes only the (angrier) Android half"](http://varianceexplained.org/r/trump-tweets/), (2016), [VarianceExplained.org](http://varianceexplained.org).
 
-\[2\] Anton Antonov, ["Mosaic plots for data visualization"](https://mathematicaforprediction.wordpress.com/2014/03/17/mosaic-plots-for-data-visualization/), (2014), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).
+\[2\] Anton Antonov, ["Mosaic plots for dataï¿½visualization"](https://mathematicaforprediction.wordpress.com/2014/03/17/mosaic-plots-for-data-visualization/), (2014), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).
 
 \[3\] Christian Rudder, [Dataclysm](http://dataclysm.org), Crown, 2014. ASIN: B00J1IQUX8 .
