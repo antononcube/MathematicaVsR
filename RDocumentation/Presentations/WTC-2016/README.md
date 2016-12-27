@@ -12,7 +12,7 @@ The [Markdown file](https://github.com/antononcube/MathematicaVsR/blob/master/RD
 
 - Wolfram Research : http://www.wolfram.com/broadcast/video.php?v=1745 .
 
-### Notes to presentation video
+### Notes to the presentation video
 
 - Here is a link to the GitHub repository referenced in that presentation: https://github.com/antononcube/MathematicaVsR . (GitHub was down because of the DDoS attack on 21.10.2016 .)
 
