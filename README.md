@@ -62,6 +62,16 @@ given at the
 [Wolfram Technology Conference 2015](https://www.wolfram.com/events/technology-conference/2015/)
 is probably a good start.
 
+This presentation, ["Mathematica vs. R–Advanced Use Cases"](https://github.com/antononcube/MathematicaVsR/tree/master/RDocumentation/Presentations/WTC-2016) 
+was given at
+ [Wolfram Technology Conference 2016](https://www.wolfram.com/events/technology-conference/2016/) 
+ was recorded: 
+
+- YouTube : https://www.youtube.com/watch?v=NKpeOKxCUl4 .
+
+- Wolfram Research : http://www.wolfram.com/broadcast/video.php?v=1745 .
+
+
 As a warm-up of how to do the comparison see this mind-map (which is
 made for Mathematica users):
 
