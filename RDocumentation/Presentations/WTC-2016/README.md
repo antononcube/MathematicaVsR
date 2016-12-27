@@ -30,3 +30,4 @@ The [Markdown file](https://github.com/antononcube/MathematicaVsR/blob/master/RD
 
 - 'Shiny' are 'knitr' are developed and maintained by [RStudio Inc](https://en.wikipedia.org/wiki/RStudio). RStudio has the Markdown and Pandoc functionalities and utilization. (In the presentation video I attributed those to R not RStudio.)
 
+- Here is a link to the essay ["The Lisp Curse"](http://winestockwebdesign.com/Essays/Lisp_Curse.html). 
