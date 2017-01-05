@@ -256,17 +256,6 @@ they have only a Mathematica or an R part.
 
 
 
-
-## Mathematica's [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
-
-For more information about *Mathematica*'s [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
-see
-
-- the YouTube video ["RLink: Linking Mathematica and R"](https://www.youtube.com/watch?v=5ppY7cTy71o),
-
-- the set-up web page guide [Setting up RLink for Mathematica](http://szhorvat.net/pelican/setting-up-rlink-for-mathematica.html).
-
-
 ## Future projects
 
 The future projects are listed in order of their completion time
@@ -274,8 +263,7 @@ proximity -- the highest in the list would be committed the soonest.
 
 - Personal banking data obfuscation
 
-- [Independent Component Analysis (ICA) programming and basic applications]
-  (https://mathematicaforprediction.wordpress.com/?s=ICA)
+- [Independent Component Analysis (ICA) programming and basic applications](https://mathematicaforprediction.wordpress.com/?s=ICA)
 
 - [Prefix trees (tries) programming and basic applications](https://mathematicaforprediction.wordpress.com/2013/12/06/tries-with-frequencies-for-data-mining/)
 
@@ -296,3 +284,12 @@ proximity -- the highest in the list would be committed the soonest.
 
 
 
+
+## Mathematica's [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
+
+For more information about *Mathematica*'s [`RLink`](https://reference.wolfram.com/language/RLink/tutorial/Introduction.html)
+see
+
+- the YouTube video ["RLink: Linking Mathematica and R"](https://www.youtube.com/watch?v=5ppY7cTy71o),
+
+- the set-up web page guide [Setting up RLink for Mathematica](http://szhorvat.net/pelican/setting-up-rlink-for-mathematica.html).
