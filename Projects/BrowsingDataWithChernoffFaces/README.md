@@ -87,7 +87,7 @@ The Mathematica interface was made over a larger set of datasets. Because of tha
 
 [1] Anton Antonov, ["Making Chernoff faces for data visualization"](https://mathematicaforprediction.wordpress.com/2016/06/03/making-chernoff-faces-for-data-visualization/), (2016), [MathematicaForPrediction at WordPress blog](https://mathematicaforprediction.wordpress.com).
 
-[2] Anton Antonov, [Chernoff Faces implementation in Mathematica](https://github.com/antononcube/MathematicaForPrediction/blob/master/ChernoffFaces.m), (2016), source code at [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction), package [ChernofFacess.m](https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/ChernoffFaces.m).
+[2] Anton Antonov, [Chernoff Faces implementation in Mathematica](https://github.com/antononcube/MathematicaForPrediction/blob/master/ChernoffFaces.m), (2016), source code at [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction), package [ChernoffFaces.m](https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/ChernoffFaces.m).
 
 [3] Nathan Yau, ["How to visualize data with cartoonish faces ala Chernoff"](http://flowingdata.com/2010/08/31/how-to-visualize-data-with-cartoonish-faces/), (2010), [Flowingdata](http://flowingdata.com).
 
