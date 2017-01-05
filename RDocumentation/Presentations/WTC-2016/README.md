@@ -24,7 +24,7 @@ The [Markdown file](https://github.com/antononcube/MathematicaVsR/blob/master/RD
 
 - The package 'lattice' is written and maintained by Deepayan Sarkar.
 
-- The package 'weatherdata' is written and maintained by Ram Narasimhan; see https://ram-n.github.io/weatherData/ .
+- The package 'weatherdata' is written and maintained by [Ram Narasimhan](https://ramnarasimhan.wordpress.com); see https://ram-n.github.io/weatherData/ .
 
 - The package 'quantreg' is written and maintained by professor [Roger Koenker](https://en.wikipedia.org/wiki/Roger_Koenker).
 
