@@ -295,7 +295,7 @@ We can make a similar conditional probabilities plot sentiments and using time t
 
     GraphicsGrid[
      {{MosaicPlot[trumpTweetsTbl[[All, aTrumpTweetsTblColNames /@ {"sentiment", "hour"}]]],
-   MosaicPlot[trumpTweetsTbl[[All, aTrumpTweetsTblColNames /@ {"sentiment", "weekday"}]], "LabelRotation" -> {{1, 0.6}, {0, 1}}]}}, ImageSize -> 600]
+    MosaicPlot[trumpTweetsTbl[[All, aTrumpTweetsTblColNames /@ {"sentiment", "weekday"}]], "LabelRotation" -> {{1, 0.6}, {0, 1}}]}}, ImageSize -> 600]
 
 [![Mosaic-TimSentiments][12]][12]
 
