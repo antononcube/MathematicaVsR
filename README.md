@@ -64,8 +64,7 @@ is probably a good start.
 
 This presentation, ["Mathematica vs. R–Advanced Use Cases"](https://github.com/antononcube/MathematicaVsR/tree/master/RDocumentation/Presentations/WTC-2016) 
 was given at
- [Wolfram Technology Conference 2016](https://www.wolfram.com/events/technology-conference/2016/) 
- was recorded: 
+ [Wolfram Technology Conference 2016](https://www.wolfram.com/events/technology-conference/2016/). Here are recorded videos: 
 
 - YouTube : https://www.youtube.com/watch?v=NKpeOKxCUl4 .
 
