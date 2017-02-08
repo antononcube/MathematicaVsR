@@ -36,9 +36,14 @@ The concrete steps taken in the documents and scripts in this project are the fo
 
 ## Documents
 
-- *Mathematica* : ["./Mathematica/Time-series-analysis-with-Quantile-Regression.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TimeSeriesAnalysisWithQuantileRegression/Mathematica/Time-series-analysis-with-Quantile-Regression.pdf).
+- Mathematica :
  
-- R : ["./R/TimeSeriesAnalysisWithQuantileRegression.html"](https://cdn.rawgit.com/antononcube/MathematicaVsR/master/Projects/TimeSeriesAnalysisWithQuantileRegression/R/TimeSeriesAnalysisWithQuantileRegression.html), ["./R/TimeSeriesAnalysisWithQuantileRegression.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TimeSeriesAnalysisWithQuantileRegression/R/TimeSeriesAnalysisWithQuantileRegression.pdf).
+    - ["./Mathematica/Time-series-analysis-with-Quantile-Regression.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TimeSeriesAnalysisWithQuantileRegression/Mathematica/Time-series-analysis-with-Quantile-Regression.pdf),
+    - ["./Mathematica/Time-series-analysis-with-Quantile-Regression.md"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TimeSeriesAnalysisWithQuantileRegression/Mathematica/Time-series-analysis-with-Quantile-Regression.md).
+ 
+- R 
+    - ["./R/TimeSeriesAnalysisWithQuantileRegression.html"](https://cdn.rawgit.com/antononcube/MathematicaVsR/master/Projects/TimeSeriesAnalysisWithQuantileRegression/R/TimeSeriesAnalysisWithQuantileRegression.html),
+    - ["./R/TimeSeriesAnalysisWithQuantileRegression.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/TimeSeriesAnalysisWithQuantileRegression/R/TimeSeriesAnalysisWithQuantileRegression.pdf).
 
 ## Comparison
 
