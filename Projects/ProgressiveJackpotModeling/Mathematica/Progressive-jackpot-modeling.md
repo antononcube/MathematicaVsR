@@ -1,8 +1,8 @@
 # **Progressive jackpot modeling**
 
 #### Anton Antonov   
-#### [MathematicaForPrediction project at GitHub](https://github.com/antononcube/MathematicaForPrediction)  
-#### [MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR)  
+#### [MathematicaForPrediction project at GitHub](https://github.com/antononcube/MathematicaForPrediction)   
+#### [MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR)   
 #### October 2016
 
 # Introduction
@@ -39,11 +39,11 @@ The game is structured as follows. The value of the jackpot following the $n$-th
 
 You are required to design a new slot or lottery game with a progressive jackpot.
 
--- The start value is \$ 30000.
+-- The start value is \$30000\$.
 
--- The contribution from each bet (player hand) is 10%. Assume all bets are \$ 1.
+-- The contribution from each bet (player hand) is 10%. Assume all bets are \$1\$.
 
--- The expected value of the jackpot is planned to be \$ 1000000. 
+-- The expected value of the jackpot is planned to be \$1000000\$. 
 
 ## Questions
 
