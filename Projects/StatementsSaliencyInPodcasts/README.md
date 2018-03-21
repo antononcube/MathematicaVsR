@@ -26,11 +26,9 @@ The following concrete steps are taken.
 
 4. Mapping of a selected document into linear vector space using the Bag-of-words model.
 
-5. Finding sentence/statement saliency using matrix algebra.
+5. Finding sentence/statement salience using matrix algebra.
 
-6. Experimenting with the saliency algorithm over the data and making a suitable interactive interface. 
-
-(*All code and documents of this project GitHub directory are under GPL 3.0 -- see the last section.*)
+6. Experimenting with the salience algorithm over the data and making a suitable interactive interface. 
 
 ## Comparison
 
@@ -45,7 +43,7 @@ The following scripts can be executed to go through all the steps listed above.
 
 ### Documents
 
-- See the PDF document ["./Mathematica/StatementsSaliencyInPodcasts.pdf"]() for using *Mathematica*. 
+- See the Markdown document ["./Mathematica/StatementsSaliencyInPodcasts.md"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/StatementsSaliencyInPodcasts/Mathematica/StatementsSaliencyInPodcasts.md) for using *Mathematica*. 
 
 - See the HTML document ["./R/StatementsSaliencyInPodcasts.html"](https://rawgit.com/antononcube/MathematicaVsR/master/Projects/StatementsSaliencyInPodcasts/R/StatementsSaliencyInPodcasts.html) for using R.
 
@@ -61,5 +59,12 @@ After executing the scripts listed above the executing following scripts would p
 
 TBD
 
-## License
 
+## License matters
+
+All code files and executable documents are with the license GPL 3.0.
+For details  see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/) .
+
+All documents are with the license Creative Commons Attribution 4.0
+International (CC BY 4.0). For details see
+[https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/) .
