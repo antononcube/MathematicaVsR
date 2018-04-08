@@ -147,7 +147,7 @@ GetMachineLearningDataset[dataName_String, opts:OptionsPattern[]] :=
 
       ds = ds[All, AssociationThread[dsVarNames -> #] &];
 
-      ds = ds[MapIndexed[<|#, "id" -> #2[[1]]|> &]];
+      ds = ds[MapIndexed[<|"id" -> #2[[1]], #|> &]];
 
       If[dataName == "Titanic",
         ds = ds[Map[<|#, "passengerAge" -> If[! NumberQ[#passengerAge], -1, Round[#passengerAge/10]*10]|> &]];
