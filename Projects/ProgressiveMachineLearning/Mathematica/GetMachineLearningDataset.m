@@ -38,12 +38,16 @@
   This Mathematica package has a function for getting machine learning data-sets and transforming them
   into Dataset objects with named rows and columns.
 
+  The purpose of the function GetMachineLearningDataset is to produce data sets that easier to deal with
+  in both Mathematica and R.
+
 
   # Details
 
   Some additional transformations are done do some variables for some data-sets.
 
-  For example for "Titanic" the passenger ages are rounded to multiples of 10. See below the line:
+  For example for "Titanic" the passenger ages are rounded to multiples of 10; missing ages are given the value -1.
+  See below the line:
 
       ds = ds[Map[<|#, "passengerAge" -> If[! NumberQ[#passengerAge], -1, Round[#passengerAge/10]*10]|> &]];
 
@@ -52,15 +56,21 @@
 
   This gets the "Titanic" dataset:
 
-      dsTitanic = GetDataset["Titanic"];
+      dsTitanic = GetMachineLearningDataset["Titanic", "RowIDs" -> True];
       Dimensions[dsTitanic]
       (* {1309, 5} *)
+
+
+  Here is a summary using the package [1]:
+
+      RecordsSummary[dsTitanic[Values]]
 
 
   Here is a summary in long form with the packages [1] and [2]:
 
       smat = ToSSparseMatrix[dsTitanic];
       RecordsSummary[SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}]
+
 
 
   # References
@@ -89,11 +99,21 @@ Some additional transformations are done do some variables for some data-sets."
 Begin["`Private`"]
 
 Clear[GetMachineLearningDataset]
-GetMachineLearningDataset[dataName_String] :=
-    Block[{exampleGroup, data, ds, varNames, dsVarNames},
+
+Options[GetMachineLearningDataset] = {"RowIDs" -> False, "MissingToNA" -> True};
+
+GetMachineLearningDataset[dataName_String, opts:OptionsPattern[]] :=
+    Block[{rowNamesQ, missingToNAQ, exampleGroup, data, ds, varNames, dsVarNames},
+
+      rowNamesQ = TrueQ[OptionValue[GetMachineLearningDataset,"RowIDs"]];
+      missingToNAQ = TrueQ[OptionValue[GetMachineLearningDataset,"MissingToNA"]];
+
       exampleGroup = "MachineLearning";
+
       data = ExampleData[{exampleGroup, dataName}, "Data"];
+
       ds = Dataset[Flatten@*List @@@ ExampleData[{exampleGroup, dataName}, "Data"]];
+
       dsVarNames =
           Flatten[List @@
               ExampleData[{exampleGroup, dataName}, "VariableDescriptions"]];
@@ -133,7 +153,13 @@ GetMachineLearningDataset[dataName_String] :=
         ds = ds[Map[<|#, "passengerAge" -> If[! NumberQ[#passengerAge], -1, Round[#passengerAge/10]*10]|> &]];
       ];
 
-      ds = Dataset[AssociationThread[ToString /@ Normal[ds[All, "id"]], Normal[ds]]];
+      If[ rowNamesQ,
+        ds = Dataset[AssociationThread[ToString /@ Normal[ds[All, "id"]], Normal[ds]]];
+      ];
+
+      If[ missingToNAQ,
+        ds = ds /. _Missing -> "NA"
+      ];
 
       ds
     ]
