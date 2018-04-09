@@ -1,0 +1,262 @@
+---
+title: "Progressive Machine Learning Examples"
+author: "Anton Antonov, [MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR)"   
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_notebook:
+    toc: true
+---
+
+
+```{r, eval=TRUE, include=FALSE}
+library(plyr)
+library(reshape2)
+library(devtools)
+source_url("https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/R/TriesWithFrequencies.R")
+source_url("https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/R/VariableImportanceByClassifiers.R")
+```
+
+
+*(This R notebook is part of the [MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR) project [ProgressiveMachineLearning](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ProgressiveMachineLearning).)*
+
+# Introduction
+
+In this R notebook we show how to do progressive machine learning using Tries with Frequencies, [AAp2, AA1].
+(I plan in the near future to extend the notebook with an example using the Sparse Matrix Recommender framework [AAp4].)
+
+## What is Progressive Machine Learning?
+
+[Progressive learning](https://en.wikipedia.org/wiki/Online_machine_learning#Progressive_learning) is a type of [Online machine learning](https://en.wikipedia.org/wiki/Online_machine_learning). 
+For more details see [[Wk1](https://en.wikipedia.org/wiki/Online_machine_learning)]. Progressive learning is defined as follows.
+
+- Assume that the data is sequentially available. 
+
+    - Meaning, at a given time only part of the data is available, and after a certain time interval new data is obtained. 
+
+    - In view of classification, it is assumed that at a given time not all class labels are presented in the data already obtained.
+
+    - Let us call this a data stream.
+
+- Consider (the making of) a machine learning algorithm that updates its model continuously or sequentially in time over a given data stream.
+
+    - Let us call such an algorithm a Progressive Learning Algorithm (PLA).
+
+In comparison, the typical (classical) machine learning algorithms assume that representative training data is available and after training that data is no longer needed to make predictions. Progressive machine learning has more general assumptions about the data and its problem formulation is closer to how humans learn to classify objects.
+
+Below we are going to see the application of a Trie with Frequencies (TF) based classifier as PLAs.
+
+### Definition from Wikipedia
+
+Here is the definition of Progressive learning from [Wk1]:
+
+Progressive learning is an effective learning model which is demonstrated by the human learning process. It is the process of learning continuously from direct experience. Progressive learning technique (PLT) in machine learning can learn new classes/labels dynamically on the run. Though online learning can learn new samples of data that arrive sequentially, they cannot learn new classes of data being introduced to the model. The learning paradigm of progressive learning, is independent of the number of class constraints and it can learn new classes while still retaining the knowledge of previous classes. Whenever a new class (non-native to the knowledge learnt thus far) is encountered, the classifier gets remodeled automatically and the parameters are calculated in such a way that it retains the knowledge learnt thus far. This technique is suitable for real-world applications where the number of classes is often unknown and online learning from real-time data is required.
+
+# Data
+
+In this section we obtain and summarize the well known "Titanic" data-set.
+
+(The data for this project has been prepared with the Mathematica (Wolfram Language) package [AAp1].)
+
+```{r}
+dfTitanic <- read.csv("https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Data/MathematicaVsR-Data-Titantic.csv", stringsAsFactors = F)
+dim(dfTitanic)
+```
+
+```{r}
+head(dfTitanic)
+```
+
+```{r}
+summary(as.data.frame(unclass(dfTitanic)))
+```
+
+Here is the summary of the long form:
+
+```{r}
+summary(setNames(melt(as.matrix(dfTitanic)),c("RowID", "Variable", "Value")), maxsum = 12)
+```
+
+
+# General progressive learning simulation loop
+
+In this notebook we simulate the data stream given to a Progressive learning algorithm.
+
+We are going to use the following steps:
+
+1. Get a data-set.
+
+2. Split data-set into training and test data-sets.
+
+3. Split training data-set into disjoint data-sets.
+
+4. Make an initial trie `t1`.
+
+5. Get a new data subset.
+
+6. Make a new trie `t2` with the new data-set.
+
+7. Merge trie `t1` with trie `t2`.
+
+8. Classify the test data-set using `t1`.
+
+9. Output sizes of `t1` and classification success rates.
+
+10. Accumulate ROC statistics.
+
+11. Are there more training data subsets?
+
+    - If "Yes" go to step 5.
+    
+    - If "No" go to step 12.
+    
+12. Display ROC plots.
+
+The flow chart below follows the sequence of steps given above.
+
+```{r, echo=FALSE, fig.width=6}
+knitr::include_graphics( path = "https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ProgressiveMachineLearning/Diagrams/Progressive-machine-learning-with-Tries.jpg" )
+```
+
+
+# Data sorting
+
+We are going to sort the training data and the training and the sample indices in order to exaggerate the progressive learning effect. 
+
+With the data stream based on sorted data in the initial progressive learning stages not all class labels and
+variable correlations would be seen.
+
+```{r}
+dfTitanic <- dfTitanic[do.call(order,dfTitanic),]
+```
+
+
+# Progressive learning with Tries with frequencies
+
+## Data separation
+
+Here we separate the indices of the data.
+
+```{r}
+set.seed(2344)
+trainingInds <- sample( 1:nrow(dfTitanic), round(0.75*nrow(dfTitanic)))
+testInds <- setdiff(1:nrow(dfTitanic), trainingInds)
+```
+
+Here we make the data easier for using with Tries. 
+Note that we drop the "id" column.
+
+```{r}
+trainingData <- dlply( dfTitanic[sort(trainingInds),], "id", function(x) { as.character(x[1,-1]) } )
+testData <- dlply( dfTitanic[sort(testInds),], "id", function(x) { as.character(x[1,-1]) } )
+```
+
+## Basic trie creation and classisification
+
+```{r}
+tr <- TrieCreate( trainingData )
+ptr <- TrieNodeProbabilities(tr)
+```
+
+Classification of a single test record:
+
+```{r}
+record <- testData[[120]]
+TrieClassify( ptr, record[1:(length(record)-1)], type = "Probabilities" )
+```
+
+Here we do the classification for all test records:
+
+```{r}
+records <- llply( testData, function(x) x[-length(x)])
+clRes <- laply( records, function(x) TrieClassify(ptr, x, default = "NA"))
+```
+
+Here we cross tabulate the actual and predicted class labels:
+
+```{r}
+ctMat <- xtabs( ~ Actual + Predicted, data.frame( Actual = dfTitanic[testInds, ncol(dfTitanic)], Predicted = clRes), addNA = T )
+ctMat
+```
+
+Success rates:
+
+```{r}
+ctMat / rowSums(ctMat)
+```
+
+## The Progressive learning loop
+
+Here is data frame that is used to split the training data:
+
+```{r}
+bs <- unique(c(seq(0,300,100), seq(300,length(trainingInds),200),length(trainingData)))
+splitRanges <- data.frame( Begin = bs[-length(bs)]+1, End = bs[-1] )
+splitRanges
+```
+
+Below is given the Progressive learning loop. The comments mark the individual steps. 
+
+```{r}
+# Make initial trie
+tr <- TrieCreate( trainingData[ splitRanges$Begin[[1]]:splitRanges$End[[1]] ] )
+
+# The main loop
+for( i in 2:nrow(splitRanges) ) {
+  # Make trie with new dara
+  tr2 <- TrieCreate( trainingData[ splitRanges$Begin[[i]]:splitRanges$End[[i]] ] ) 
+  
+  # Merge the current trie with the new trie
+  tr <- TrieMerge( tr, tr2 )
+  
+  # Turn frequencies into probabilities and assign class attribute
+  ptr <- TrieNodeProbabilities( tr )
+  class(ptr) <- "TrieWithFrequencies"
+  
+  # Turn test data into a data frame
+  df <- setNames(do.call(rbind.data.frame, testData), NULL)
+  
+  # Classify
+  clRes <- predict( ptr, df[,1:(ncol(df)-1)] )
+  
+  # Cross tabulate actuabl and predicted labels
+  ctMat <- xtabs( ~ Actual + Predicted, data.frame( Actual = dfTitanic[testInds, ncol(dfTitanic)], Predicted = clRes), addNA = T )
+  
+  # Proclaim
+  cat("\n\n\t\ti = ", i, "\n")
+  print(TrieNodeCounts(ptr)); cat("\n")
+  print(ctMat); cat("\n")
+  print(ctMat / rowSums(ctMat))
+  
+  # Accumulate probabilities for ROC plots
+  clRes <- predict( ptr, df[,1:(ncol(df)-1)], type = "Probabilities", default = "NA" )
+  clROC <- ROCValues( classResMat = clRes, testLabels = dfTitanic[testInds, ncol(dfTitanic)], range = seq(0,1,0.05) )
+  clROC <- cbind( clROC, Model = as.character(i) )
+  if (i == 2) { rocDF <- clROC }
+  else { rocDF <- rbind(rocDF, clROC) }
+}
+```
+
+Here we plot the ROC curves using package [AAp3]:
+
+```{r}
+ROCPlot( rocDF = rocDF, point.text = FALSE ) + theme( aspect.ratio = 1 )
+```
+
+
+# References
+
+## Packages
+
+[AAp1] Anton Antonov, Obtain and transform Mathematica machine learning data-sets, [GetMachineLearningDataset.m](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/ProgressiveMachineLearning/Mathematica/GetMachineLearningDataset.m), (2018), [MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR).   
+
+[AAp2] Anton Antonov, Tries with frequencies R package, [TriesWithFrequencies.R](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/TriesWithFrequencies.R), (2014), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).   
+
+[AAp3] Anton Antonov, Variable importance determination by classifiers implementation in R, [VariableImportanceByClassifiers.R](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/VariableImportanceByClassifiers.R), (2017), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).   
+
+[AAp4] Anton Antonov, "Sparse matrix recommender framework in R", [SparseMatrixRecommender.R](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/SparseMatrixRecommender.R), (2014), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).     
+
+## Articles
+
+[Wk1] Wikipedia entry, [Online machine learning](https://en.wikipedia.org/wiki/Online_machine_learning).   
+
+[AA1] Anton Antonov, ["Tries with frequencies in Java"](https://mathematicaforprediction.wordpress.com/2017/01/31/tries-with-frequencies-in-java/), (2017), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).   
