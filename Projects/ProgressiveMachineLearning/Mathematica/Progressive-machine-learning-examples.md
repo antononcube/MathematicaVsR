@@ -77,20 +77,25 @@ Here is  a sample of the dataset:
 
     RandomSample[dsTitanic, 6]
 
-[![]()]()
+[!["PLA-dsTitanic-sample"](https://i.imgur.com/Ju8zEocm.png)](https://i.imgur.com/Ju8zEoc.png)
 
 Here is the dataset summary:
 
     RecordsSummary[dsTitanic]
+
+[!["PLA-dsTitanic-summary"](https://i.imgur.com/QmDJvHHm.png)](https://i.imgur.com/QmDJvHH.png)
 
 Here is the summary of the dataset in long form:
 
     smat = ToSSparseMatrix[dsTitanic];
     RecordsSummary[SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}]
 
+[!["PLA-dsTitanic-long-form-summary"](https://i.imgur.com/fQbwiL4,.png)](https://i.imgur.com/fQbwiL4.png)
+
 The dataset was ingested with row IDs; here we drop them:
 
     dsTitanic = dsTitanic[Values];
+
 
 ### Mushroom
 
@@ -102,10 +107,14 @@ Here is a random record of the dataset:
 
     RandomSample[dsMushroom, 1] // First
 
+[!["PLA-dsMushroom-random-record"](https://i.imgur.com/1I7R4Ylm.png)](https://i.imgur.com/1I7R4Yl.png)
+
 Here is the summary of the dataset in long form:
 
     smat = ToSSparseMatrix[dsMushroom];
     RecordsSummary[SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}, "MaxTallies" -> 12]
+
+[!["PLA-dsMushroom-long-form-summary"](https://i.imgur.com/nB6ZxpFm.png)](https://i.imgur.com/nB6ZxpF.png)
 
 The dataset was ingested with row IDs; here we drop them:
 
@@ -125,13 +134,16 @@ Here is random sample of records:
 
     Magnify[RandomSample[dsWine, 6], 0.6]
 
+[!["PLA-dsWine-sample"](https://i.imgur.com/Pq7x5tAm.png)](https://i.imgur.com/Pq7x5tA.png)
+
 Here is the summary of the dataset in long form:
 
     smat = ToSSparseMatrix[dsWine];
     RecordsSummary[SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}, "MaxTallies" -> 12]
 
-The dataset was ingested with row IDs; here we drop them:
+[!["PLA-dsWine-long-form-summary"](https://i.imgur.com/HSlWFnxm.png)](https://i.imgur.com/HSlWFnx.png)
 
+The dataset was ingested with row IDs; here we drop them:
 
     dsWine = dsWine[Values];
 
@@ -171,7 +183,7 @@ We are going to use the following steps (based on Tries with Frequencies, [AA1])
 
 The flow chart below follows the sequence of steps given above.
 
-[!["Progressive-machine-learning-with-Tries-flow-chart"](https://i.imgur.com/R1aPpQrl.png)](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ProgressiveMachineLearning/Diagrams/Progressive-machine-learning-with-Tries.jpg)
+[!["Progressive-machine-learning-with-Tries-flow-chart"](https://i.imgur.com/cVpugALl.jpg)](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ProgressiveMachineLearning/Diagrams/Progressive-machine-learning-with-Tries.jpg)
 
 ## Data sorting
 
