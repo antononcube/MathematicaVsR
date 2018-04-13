@@ -77,20 +77,20 @@ Here is  a sample of the dataset:
 
     RandomSample[dsTitanic, 6]
 
-[!["PLA-dsTitanic-sample"](https://i.imgur.com/Ju8zEocm.png)](https://i.imgur.com/Ju8zEoc.png)
+[!["PLA-dsTitanic-sample"](https://i.imgur.com/Ju8zEocl.png)](https://i.imgur.com/Ju8zEoc.png)
 
 Here is the dataset summary:
 
     RecordsSummary[dsTitanic]
 
-[!["PLA-dsTitanic-summary"](https://i.imgur.com/QmDJvHHm.png)](https://i.imgur.com/QmDJvHH.png)
+[!["PLA-dsTitanic-summary"](https://i.imgur.com/QmDJvHHl.png)](https://i.imgur.com/QmDJvHH.png)
 
 Here is the summary of the dataset in long form:
 
     smat = ToSSparseMatrix[dsTitanic];
     RecordsSummary[SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}]
 
-[!["PLA-dsTitanic-long-form-summary"](https://i.imgur.com/fQbwiL4,.png)](https://i.imgur.com/fQbwiL4.png)
+[!["PLA-dsTitanic-long-form-summary"](https://i.imgur.com/fQbwiL4l.png)](https://i.imgur.com/fQbwiL4.png)
 
 The dataset was ingested with row IDs; here we drop them:
 
@@ -134,7 +134,7 @@ Here is random sample of records:
 
     Magnify[RandomSample[dsWine, 6], 0.6]
 
-[!["PLA-dsWine-sample"](https://i.imgur.com/Pq7x5tAm.png)](https://i.imgur.com/Pq7x5tA.png)
+[!["PLA-dsWine-sample"](https://i.imgur.com/Pq7x5tAl.png)](https://i.imgur.com/Pq7x5tA.png)
 
 Here is the summary of the dataset in long form:
 
