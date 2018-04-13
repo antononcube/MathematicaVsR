@@ -52,8 +52,6 @@ We can see that, in general, PLA's can be derived from different "standard" mach
 
 Here we load the packages used in this notebook. (See [AAp1-AAp9].)
 
-
-
     Import["https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/MathematicaForPredictionUtilities.m"]
     Import["https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/DocumentTermMatrixConstruction.m"]
     Import["https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/SSparseMatrix.m"]
@@ -73,34 +71,24 @@ The data for this project has been prepared with the Mathematica (Wolfram Langua
 
 This obtains the "Titanic" dataset (using [AAp1]):
 
-
-
-    dsTitanic = 
-      GetMachineLearningDataset["Titanic", "RowIDs" -> True];
+    dsTitanic = GetMachineLearningDataset["Titanic", "RowIDs" -> True];
 
 Here is  a sample of the dataset:
 
-
-
     RandomSample[dsTitanic, 6]
 
+[![]()]()
+
 Here is the dataset summary:
-
-
 
     RecordsSummary[dsTitanic]
 
 Here is the summary of the dataset in long form:
 
-
-
     smat = ToSSparseMatrix[dsTitanic];
-    RecordsSummary[
-     SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}]
+    RecordsSummary[SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}]
 
 The dataset was ingested with row IDs; here we drop them:
-
-
 
     dsTitanic = dsTitanic[Values];
 
@@ -108,29 +96,18 @@ The dataset was ingested with row IDs; here we drop them:
 
 This obtains the "Mushroom" dataset using [AAp1]:
 
-
-
-    dsMushroom = 
-      GetMachineLearningDataset["Mushroom", "RowIDs" -> True];
+    dsMushroom = GetMachineLearningDataset["Mushroom", "RowIDs" -> True];
 
 Here is a random record of the dataset:
-
-
 
     RandomSample[dsMushroom, 1] // First
 
 Here is the summary of the dataset in long form:
 
-
-
     smat = ToSSparseMatrix[dsMushroom];
-    RecordsSummary[
-     SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}, 
-     "MaxTallies" -> 12]
+    RecordsSummary[SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}, "MaxTallies" -> 12]
 
 The dataset was ingested with row IDs; here we drop them:
-
-
 
     dsMushroom = dsMushroom[Values];
 
@@ -138,37 +115,22 @@ The dataset was ingested with row IDs; here we drop them:
 
 In this sub-section is ingested an additional dataset -- "WineQuality".
 
-
-
-    dsWine = GetMachineLearningDataset["WineQuality", 
-       "RowIDs" -> True];
+    dsWine = GetMachineLearningDataset["WineQuality", "RowIDs" -> True];
 
 Here we modify the class label column to be categorical (and binary):
 
-
-
-    dsWine = dsWine[All, 
-       Join[#, <|
-          "wineQuality" -> 
-           If[#wineQuality >= 7, "high", "low"]|>] &];
+    dsWine = dsWine[All, Join[#, <|"wineQuality" -> If[#wineQuality >= 7, "high", "low"]|>] &];
 
 Here is random sample of records:
-
-
 
     Magnify[RandomSample[dsWine, 6], 0.6]
 
 Here is the summary of the dataset in long form:
 
-
-
     smat = ToSSparseMatrix[dsWine];
-    RecordsSummary[
-     SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}, 
-     "MaxTallies" -> 12]
+    RecordsSummary[SSparseMatrixToTriplets[smat], {"RowID", "Variable", "Value"}, "MaxTallies" -> 12]
 
 The dataset was ingested with row IDs; here we drop them:
-
 
 
     dsWine = dsWine[Values];
@@ -209,9 +171,7 @@ We are going to use the following steps (based on Tries with Frequencies, [AA1])
 
 The flow chart below follows the sequence of steps given above.
 
-    img = Import["https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ProgressiveMachineLearning/Diagrams/Progressive-machine-learning-with-Tries.jpg"];
-    Show[img, ImageSize -> 500]
-    AutoCollapse[]
+!["Progressive-machine-learning-with-Tries-flow-chart"](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ProgressiveMachineLearning/Diagrams/Progressive-machine-learning-with-Tries.jpg)
 
 ## Data sorting
 
@@ -255,21 +215,27 @@ Here we create a trie with a sample of records of the "Titanic" dataset, dsTitan
     tr = TrieCreate[Normal[dsTitanic[rInds, trainingColumnNames][Values]]];
     TrieForm[tr, ImageSize -> {Automatic, 250}]
 
+[!["PLA-Trie-classification-with-small-trie-1"](https://i.imgur.com/nwwRMhJl.png)](https://i.imgur.com/nwwRMhJ.png)
+
 Let us add a new record to that first trie. Here is another record:
 
     newInd = {RandomInteger[{301, 400}]};
     Normal[dsTitanic[newInd, trainingColumnNames][Values]]
+    (* {{"2nd", "female", "survived"}} *)
 
 And here is how the new, updated trie looks like:
 
     tr2 = TrieMerge[tr, TrieCreate[Normal[dsTitanic[newInd, trainingColumnNames][Values]]]];
     TrieForm[tr2, ImageSize -> {Automatic, 250}]
 
+[!["PLA-Trie-classification-with-small-trie-2"](https://i.imgur.com/jAPIwrCl.png)](https://i.imgur.com/jAPIwrC.png)
+
 **Remark:** Note that TF can be used to find conditional probabilities of the record elements.
 
 Here we classify a (made up, partial) record with the trie made so far:
 
     TrieClassify[tr2, {"1st", "male"}, "Probabilities"] // N
+    (* <|"died" -> 0.695652, "survived" -> 0.304348|> *)
 
 (The function TrieClassify behaves like [Classify](https://reference.wolfram.com/language/ref/Classify.html) with built-in classifiers.)
 
@@ -281,25 +247,31 @@ In this sub-section we are going to present a PLA algorithm based on Nearest Nei
 
 The procedure in this sub-section is supported by methods of the Sparse Matrix Recommender objects of the package [AAp4].
 
-Here are  6 random records of the "Titanic" dataset, dsTitanic.
+Here are 6 random records of the "Titanic" dataset, dsTitanic.
 
     SeedRandom[143]
     rInds = RandomInteger[{1, Length[dsTitanic]}, 10];
     dsTitanic[TakeDrop[rInds, 6][[1]]]
 
+[!["PLA-Trie-small-NNs-classification-1"](https://i.imgur.com/CewT9MHl.png)](https://i.imgur.com/CewT9MH.png)
+
 Assume that these records are the only records our PLA has seen so far.
 
 Consider the following matrix made from those records. Each row corresponds of to a record and the values of the "id" column are row names. Note that the unique values of each column are "unfolded" into separate columns.
 
-    smat = ColumnBind @@ 
+    smat = ColumnBind @@
        Map[ToSSparseMatrix[CrossTabulate[dsTitanic[TakeDrop[rInds, 6][[1]], {"id", #}]]] &, Rest[Normal[Keys[dsTitanic[1]]]]];
     MatrixForm[smat]
 
+[!["PLA-Trie-small-NNs-classification-2"](https://i.imgur.com/GdZYiN6l.png)](https://i.imgur.com/GdZYiN6.png)
+
 Assume we see a new set of records and make the corresponding matrix:
 
-    smat2 = ColumnBind @@ 
+    smat2 = ColumnBind @@
        Map[ToSSparseMatrix[CrossTabulate[dsTitanic[TakeDrop[rInds, 6][[2]], {"id", #}]]] &, Rest[Normal[Keys[dsTitanic[1]]]]];
     MatrixForm[smat2]
+
+[!["PLA-Trie-small-NNs-classification-3"](https://i.imgur.com/j9K4M8M.png)](https://i.imgur.com/j9K4M8M.png)
 
 Let us combine by *row binding* the old matrix and the new matrix into one. For this we need to make sure they have the same column names in both matrices.
 
@@ -309,6 +281,8 @@ Let us combine by *row binding* the old matrix and the new matrix into one. For 
     smat = RowBind[smat, smat2];
     MatrixForm[smat]
 
+[!["PLA-Trie-small-NNs-classification-4"](https://i.imgur.com/EYHEJel.png)](https://i.imgur.com/EYHEJel.png)
+
 Here the matrix making command above is repeated for a certain single record from the dataset:
 
     newInd = RandomSample[Complement[Range[Length[dsTitanic]], rInds], 1];
@@ -316,10 +290,14 @@ Here the matrix making command above is repeated for a certain single record fro
        Map[ToSSparseMatrix[CrossTabulate[dsTitanic[newInd, {"id", #}]]] &, Rest[Normal[Keys[dsTitanic[1]]]]];
     MatrixForm[svec]
 
+[!["PLA-Trie-small-NNs-classification-5"](https://i.imgur.com/wylrOYs.png)](https://i.imgur.com/wylrOYs.png)
+
 Let us drop the survival columns:
 
     svec = svec[[All, Complement[ColumnNames[svec], {"died", "survived"}]]];
     MatrixForm[svec]
+
+[!["PLA-Trie-small-NNs-classification-6"](https://i.imgur.com/bXqFutL.png)](https://i.imgur.com/bXqFutL.png)
 
 Here we combine the column names of smat and svec:
 
@@ -332,16 +310,22 @@ Here we the single row matrix, svec, is extended to have all of the columns:
     svec = ImposeColumnNames[svec, allColNames];
     MatrixForm[svec]
 
+[!["PLA-Trie-small-NNs-classification-7"](https://i.imgur.com/nH2WaQm.png)](https://i.imgur.com/nH2WaQm.png)
+
 Here is how we find the NNs scores for the search vector svec:
 
     res = smat.Transpose[svec];
     MatrixForm[res]
+    
+[!["PLA-Trie-small-NNs-classification-8"](https://i.imgur.com/Zobuy9U.png)](https://i.imgur.com/Zobuy9U.png)
 
 Let us extract the actual records from the "Titanic" dataset.
 
     TakeLargest[RowSumsAssociation[res], 2]
 
     dsTitanic[Select[MemberQ[ToExpression /@ Keys[%], #id] &]]
+
+[!["PLA-Trie-small-NNs-classification-9"](https://i.imgur.com/E4iayEx.png)](https://i.imgur.com/E4iayEx.png)
 
 With the obtained records above we determine the class label to be assigned to the record represented with svec. (In this case "died".)
 
@@ -358,7 +342,8 @@ Here we set the classification label column:
 Here we determine the class label to focus on:
 
     focusLabel = SortBy[Normal[Tally[ds[All, labelColumnName]]], #[[2]] &][[1, 1]]
-
+    (* survived *)
+    
 ### Data separation and preparation
 
 Here we split the data into training and test parts.
@@ -371,6 +356,7 @@ That is why here we select a permutation. (And make sure that the selected class
 
     perm = Complement[Range[1, Dimensions[ds][[2]]], Flatten[Position[Normal@Keys@ds[1], "id" | labelColumnName]]];
     perm = Join[perm, Flatten[Position[Normal@Keys@ds[1], labelColumnName]]]
+    (* {2, 3, 4, 5} *)
 
     trTraining = Normal@dsTraining[[All, perm]][Values];
     trTest = Normal@dsTest[[All, perm]][Values];
@@ -380,13 +366,17 @@ That is why here we select a permutation. (And make sure that the selected class
 
     Dimensions[trTraining]
     Dimensions[trTest]
-
+    (* {981, 4}
+       {328, 4} *)
+    
 ### Classification
 
 Here are the training data splitting ranges:
 
     splitRanges = Map[# + {1, 0} &, Partition[Union@Join[Range[0, 300, 100], Range[300, Length[dsTraining], 200], {Length[dsTraining]}], 2, 1]];
     MatrixForm@ToSSparseMatrix[SparseArray@splitRanges, "ColumnNames" -> {"Begin", "End"}]
+
+[!["PLA-Trie-run-training-data-split-ranges"](https://i.imgur.com/ceFzvEgl.png)](https://i.imgur.com/ceFzvEg.png)
 
     (*Inital trie creation.*)
     
@@ -436,11 +426,16 @@ Here are the training data splitting ranges:
 
      {rng, Rest@splitRanges}]
 
+
+[!["PLA-Trie-run"](https://i.imgur.com/II7lM1Hl.png)](https://i.imgur.com/II7lM1H.png)
+
 ### Plot ROC curves
 
 Here we plot the Receiver Operating Characteristic (ROC) curves using the package [[AAp7](https://github.com/antononcube/MathematicaForPrediction/blob/master/ROCFunctions.m)]:
 
     ROCPlot[aROCStats, GridLines -> Automatic, PlotRange -> {{0, 1}, {0, 1}}]
+
+[!["PLA-Trie-ROCs-thresholds"](https://i.imgur.com/ZSgHFUvl.png)](https://i.imgur.com/ZSgHFUv.png)
 
 We can see that with the Progressive learning process does improve its success rates in time.
 
@@ -539,15 +534,21 @@ Here are the training data splitting ranges:
 
      {rng, Rest@splitRanges}]
 
+[!["PLA-SMR-run"](https://i.imgur.com/bMJkYpal.png)](https://i.imgur.com/bMJkYpa.png)
+
 ### ROC curves
 
 Here are ROC plots for the threshold of selection.
 
     ROCPlot[aROCStats, "PlotJoined" -> True, GridLines -> Automatic, PlotRange -> {{0, 1}, {0, 1}}]
 
+[!["PLA-SMR-ROCs-thresholds"](https://i.imgur.com/S6CPNMgl.png)](https://i.imgur.com/S6CPNMg.png)
+
 Here are ROC plots over the number of top NNs used to determine the predicted class label.
 
     ROCPlot[aNNsROCStats, "PlotJoined" -> False, GridLines -> Automatic, PlotRange -> {{0, 1}, {0, 1}}]
+
+[!["PLA-SMR-ROCs-NNs"](https://i.imgur.com/7ukpZJMl.png)](https://i.imgur.com/7ukpZJM.png)
 
 ## References
 
