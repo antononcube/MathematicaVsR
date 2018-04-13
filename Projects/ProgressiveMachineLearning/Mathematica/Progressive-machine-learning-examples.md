@@ -171,7 +171,7 @@ We are going to use the following steps (based on Tries with Frequencies, [AA1])
 
 The flow chart below follows the sequence of steps given above.
 
-!["Progressive-machine-learning-with-Tries-flow-chart"](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ProgressiveMachineLearning/Diagrams/Progressive-machine-learning-with-Tries.jpg)
+[!["Progressive-machine-learning-with-Tries-flow-chart"](https://i.imgur.com/R1aPpQrl.png)](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ProgressiveMachineLearning/Diagrams/Progressive-machine-learning-with-Tries.jpg)
 
 ## Data sorting
 
@@ -253,7 +253,7 @@ Here are 6 random records of the "Titanic" dataset, dsTitanic.
     rInds = RandomInteger[{1, Length[dsTitanic]}, 10];
     dsTitanic[TakeDrop[rInds, 6][[1]]]
 
-[!["PLA-Trie-small-NNs-classification-1"](https://i.imgur.com/CewT9MHl.png)](https://i.imgur.com/CewT9MH.png)
+[!["PLA-Trie-small-NNs-classification-1"](https://i.imgur.com/CewT9MHm.png)](https://i.imgur.com/CewT9MH.png)
 
 Assume that these records are the only records our PLA has seen so far.
 
@@ -263,7 +263,7 @@ Consider the following matrix made from those records. Each row corresponds of t
        Map[ToSSparseMatrix[CrossTabulate[dsTitanic[TakeDrop[rInds, 6][[1]], {"id", #}]]] &, Rest[Normal[Keys[dsTitanic[1]]]]];
     MatrixForm[smat]
 
-[!["PLA-Trie-small-NNs-classification-2"](https://i.imgur.com/GdZYiN6l.png)](https://i.imgur.com/GdZYiN6.png)
+[!["PLA-Trie-small-NNs-classification-2"](https://i.imgur.com/GdZYiN6m.png)](https://i.imgur.com/GdZYiN6.png)
 
 Assume we see a new set of records and make the corresponding matrix:
 
@@ -271,7 +271,7 @@ Assume we see a new set of records and make the corresponding matrix:
        Map[ToSSparseMatrix[CrossTabulate[dsTitanic[TakeDrop[rInds, 6][[2]], {"id", #}]]] &, Rest[Normal[Keys[dsTitanic[1]]]]];
     MatrixForm[smat2]
 
-[!["PLA-Trie-small-NNs-classification-3"](https://i.imgur.com/j9K4M8M.png)](https://i.imgur.com/j9K4M8M.png)
+[!["PLA-Trie-small-NNs-classification-3"](https://i.imgur.com/j9K4M8Mm.png)](https://i.imgur.com/j9K4M8M.png)
 
 Let us combine by *row binding* the old matrix and the new matrix into one. For this we need to make sure they have the same column names in both matrices.
 
@@ -281,7 +281,7 @@ Let us combine by *row binding* the old matrix and the new matrix into one. For 
     smat = RowBind[smat, smat2];
     MatrixForm[smat]
 
-[!["PLA-Trie-small-NNs-classification-4"](https://i.imgur.com/EYHEJel.png)](https://i.imgur.com/EYHEJel.png)
+[!["PLA-Trie-small-NNs-classification-4"](https://i.imgur.com/EYHEJelm.png)](https://i.imgur.com/EYHEJel.png)
 
 Here the matrix making command above is repeated for a certain single record from the dataset:
 
@@ -290,14 +290,14 @@ Here the matrix making command above is repeated for a certain single record fro
        Map[ToSSparseMatrix[CrossTabulate[dsTitanic[newInd, {"id", #}]]] &, Rest[Normal[Keys[dsTitanic[1]]]]];
     MatrixForm[svec]
 
-[!["PLA-Trie-small-NNs-classification-5"](https://i.imgur.com/wylrOYs.png)](https://i.imgur.com/wylrOYs.png)
+[!["PLA-Trie-small-NNs-classification-5"](https://i.imgur.com/wylrOYsm.png)](https://i.imgur.com/wylrOYs.png)
 
 Let us drop the survival columns:
 
     svec = svec[[All, Complement[ColumnNames[svec], {"died", "survived"}]]];
     MatrixForm[svec]
 
-[!["PLA-Trie-small-NNs-classification-6"](https://i.imgur.com/bXqFutL.png)](https://i.imgur.com/bXqFutL.png)
+[!["PLA-Trie-small-NNs-classification-6"](https://i.imgur.com/bXqFutLm.png)](https://i.imgur.com/bXqFutL.png)
 
 Here we combine the column names of smat and svec:
 
@@ -310,7 +310,7 @@ Here we the single row matrix, svec, is extended to have all of the columns:
     svec = ImposeColumnNames[svec, allColNames];
     MatrixForm[svec]
 
-[!["PLA-Trie-small-NNs-classification-7"](https://i.imgur.com/nH2WaQm.png)](https://i.imgur.com/nH2WaQm.png)
+[!["PLA-Trie-small-NNs-classification-7"](https://i.imgur.com/nH2WaQmm.png)](https://i.imgur.com/nH2WaQm.png)
 
 Here is how we find the NNs scores for the search vector svec:
 
