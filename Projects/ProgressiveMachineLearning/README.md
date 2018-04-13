@@ -55,7 +55,9 @@ For detailed explanations see any of the notebooks.
 
 ## Mathematica files
 
-TBD...
+- [Progressive-machine-learning-examples.md](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/ProgressiveMachineLearning/Mathematica/Progressive-machine-learning-examples.md)
+
+- [Progressive-machine-learning-examples.pdf](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/ProgressiveMachineLearning/Mathematica/Progressive-machine-learning-examples.pdf)
 
 ## R files
 
@@ -65,7 +67,31 @@ TBD...
 
 # Example runs
 
-TBD...
+(For details see
+[Progressive-machine-learning-examples.md](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/ProgressiveMachineLearning/Mathematica/Progressive-machine-learning-examples.md).)
+
+### Using Tries with Frequencies
+
+Here is an example run with Tries with Frequencies, [AAp2, AA1]:
+
+[!["PLA-Trie-run"](https://i.imgur.com/II7lM1Hl.png)](https://i.imgur.com/II7lM1H.png)
+
+Here are the obtained ROC curves:
+
+[!["PLA-Trie-ROCs-thresholds"](https://i.imgur.com/ZSgHFUvm.png)](https://i.imgur.com/ZSgHFUv.png)
+
+
+### Using an Item-item recommender system
+
+Here is an example run with Tries with Frequencies, [AAp2, AA1]:
+
+[!["PLA-SMR-run"](https://i.imgur.com/bMJkYpam.png)](https://i.imgur.com/bMJkYpa.png)
+
+Here are the obtained ROC curves:
+
+[!["PLA-SMR-ROCs-thresholds"](https://i.imgur.com/S6CPNMgm.png)](https://i.imgur.com/S6CPNMg.png)
+
+
 
 # References
 
