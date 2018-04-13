@@ -13,34 +13,55 @@ In this project we show how to do progressive machine learning using two types o
 
 - Sparse Matrix Recommender framework [AAp4, AA2].
 
-
-## What is Progressive Machine Learning?
-
 [Progressive learning](https://en.wikipedia.org/wiki/Online_machine_learning#Progressive_learning) is a type of [Online machine learning](https://en.wikipedia.org/wiki/Online_machine_learning).
-For more details see [[Wk1](https://en.wikipedia.org/wiki/Online_machine_learning)]. Progressive learning is defined as follows.
+For more details see [[Wk1](https://en.wikipedia.org/wiki/Online_machine_learning)]. The Progressive learning problem is defined as follows.
 
-- Assume that the data is sequentially available.
+**Problem definition:**
 
-    - Meaning, at a given time only part of the data is available, and after a certain time interval new data is obtained.
+   + Assume that the data is sequentially available.
 
-    - In view of classification, it is assumed that at a given time not all class labels are presented in the data already obtained.
+      + Meaning, at a given time only part of the data is available, and after a certain time interval new data can be obtained.
 
-    - Let us call this a data stream.
+      + In view of classification, it is assumed that at a given time not all class labels are presented in the data already obtained.
 
-- Consider (the making of) a machine learning algorithm that updates its model continuously or sequentially in time over a given data stream.
+      + Let us call this a *data stream*.
 
-    - Let us call such an algorithm a Progressive Learning Algorithm (PLA).
+   + Make a machine learning algorithm that updates its model continuously or sequentially in time over a given data stream.
 
-In comparison, the typical (classical) machine learning algorithms assume that representative training data is available and after training that data is no longer needed to make predictions. Progressive machine learning has more general assumptions about the data and its problem formulation is closer to how humans learn to classify objects.
+      + Let us call such an algorithm a Progressive Learning Algorithm (PLA).
 
-Below we are going to see the application of a Trie with Frequencies (TF) based classifier as PLAs.
+In comparison, the typical (classical) machine learning algorithms assume that representative training data is available and after training that data is no longer needed to make predictions.
+Progressive machine learning has more general assumptions about the data and its problem formulation is closer to how humans learn to classify objects.
 
+Below we are shown the applications of two types of classifiers as PLA's. One is based on Tries with Frequencies (TF), [AAp2, AAp3, AA1], the other on a Sparse Matrix Recommender (SMR) framework [AAp4, AA2].
 
-### Definition from Wikipedia
+**Remark:** Note that both TF and SMR come from tackling Unsupervised machine learning tasks, but here they are applied in the context of Supervised machine learning.
 
-Here is the definition of Progressive learning from [[Wk1](https://en.wikipedia.org/wiki/Online_machine_learning)]:
+### Additional introductory notes
 
-> Progressive learning is an effective learning model which is demonstrated by the human learning process. It is the process of learning continuously from direct experience. Progressive learning technique (PLT) in machine learning can learn new classes/labels dynamically on the run. Though online learning can learn new samples of data that arrive sequentially, they cannot learn new classes of data being introduced to the model. The learning paradigm of progressive learning, is independent of the number of class constraints and it can learn new classes while still retaining the knowledge of previous classes. Whenever a new class (non-native to the knowledge learnt thus far) is encountered, the classifier gets remodeled automatically and the parameters are calculated in such a way that it retains the knowledge learnt thus far. This technique is suitable for real-world applications where the number of classes is often unknown and online learning from real-time data is required.
+#### Progressive learning definition from Wikipedia
+
+Here is the definition of Progressive learning from [[Wk1](https://en.wikipedia.org/wiki/Online_machine_learning#Progressive_learning)]:
+
+> Progressive learning is an effective learning model which is demonstrated by the human learning process. It is the process of learning continuously from direct experience.
+Progressive learning technique (PLT) in machine learning can learn new classes/labels dynamically on the run.
+Though online learning can learn new samples of data that arrive sequentially, they cannot learn new classes of data being introduced to the model.
+The learning paradigm of progressive learning, is independent of the number of class constraints and it can learn new classes while still retaining the knowledge of previous classes.
+Whenever a new class (non-native to the knowledge learnt thus far) is encountered, the classifier gets remodeled automatically and the parameters are calculated in such a way that it retains the knowledge learnt thus far.
+This technique is suitable for real-world applications where the number of classes is often unknown and online learning from real-time data is required.
+
+#### On making Progressive learning algorithms
+
+Simple statistical procedures like mean and standard deviation finding can be made "progressive" with recursive definitions.
+This implies that certain outlier finding algorithms can be made "progressive".
+Also, Progressive learning mean computation implies that the [K-means clustering](https://en.wikipedia.org/wiki/K-means_clustering) algorithm, [[Wk2](https://en.wikipedia.org/wiki/K-means_clustering)], can be made progressive too.
+
+Of course, (most) of the Naive Bayes Classifier (NBC) algorithms, [[Wk3](https://en.wikipedia.org/wiki/Naive_Bayes_classifier)], can be made progressive.
+The TF classification algorithm shown below is a NBC algorithm.
+
+We can see that, in general, PLA's can be derived from different "standard" machine learning algorithms.
+A more comprehensive list is given in [[Wk1](https://en.wikipedia.org/wiki/Online_machine_learning#Progressive_learning)].
+
 
 # General workflow
 
