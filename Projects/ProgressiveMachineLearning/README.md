@@ -46,7 +46,7 @@ Here is the definition of Progressive learning from [[Wk1](https://en.wikipedia.
 
 The Mathematica and R notebooks follow the steps in the following flow chart.
 
-!["Progressive-machine-learning-with-Tries"](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ProgressiveMachineLearning/Diagrams/Progressive-machine-learning-with-Tries.jpg)
+[!["Progressive-machine-learning-with-Tries"](https://i.imgur.com/cVpugALl.jpg)](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ProgressiveMachineLearning/Diagrams/Progressive-machine-learning-with-Tries.jpg)
 
 For detailed explanations see any of the notebooks.
 
@@ -80,35 +80,41 @@ Here are the obtained ROC curves:
 
 [!["PLA-Trie-ROCs-thresholds"](https://i.imgur.com/ZSgHFUvm.png)](https://i.imgur.com/ZSgHFUv.png)
 
+We can see that with the Progressive learning process does improve its success rates in time.
 
 ### Using an Item-item recommender system
 
-Here is an example run with Tries with Frequencies, [AAp2, AA1]:
+Here is an example run with an Item-item recommender system, [AAp4, AA2]:
 
-[!["PLA-SMR-run"](https://i.imgur.com/bMJkYpam.png)](https://i.imgur.com/bMJkYpa.png)
+[!["PLA-SMR-run"](https://i.imgur.com/bMJkYpal.png)](https://i.imgur.com/bMJkYpa.png)
 
 Here are the obtained ROC curves:
 
 [!["PLA-SMR-ROCs-thresholds"](https://i.imgur.com/S6CPNMgm.png)](https://i.imgur.com/S6CPNMg.png)
 
 
-
 # References
 
 ## Packages
 
-[AAp1] Anton Antonov, Obtain and transform Mathematica machine learning data-sets, [GetMachineLearningDataset.m](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/ProgressiveMachineLearning/Mathematica/GetMachineLearningDataset.m), (2018), [MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR).
+[AAp1] Anton Antonov, Obtain and transform Mathematica machine learning data-sets, [GetMachineLearningDataset.m](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/ProgressiveMachineLearning/Mathematica/GetMachineLearningDataset.m),
+(2018), [MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR).
 
-[AAp2] Anton Antonov, Java tries with frequencies Mathematica package, [JavaTriesWithFrequencies.m](https://github.com/antononcube/MathematicaForPrediction/blob/master/JavaTriesWithFrequencies.m), (2017), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+[AAp2] Anton Antonov, Java tries with frequencies Mathematica package, [JavaTriesWithFrequencies.m](https://github.com/antononcube/MathematicaForPrediction/blob/master/JavaTriesWithFrequencies.m),
+(2017), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
-[AAp3] Anton Antonov, Tries with frequencies R package, [TriesWithFrequencies.R](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/TriesWithFrequencies.R), (2014), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+[AAp3] Anton Antonov, Tries with frequencies R package, [TriesWithFrequencies.R](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/TriesWithFrequencies.R),
+(2014), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
-[AAp4] Anton Antonov, "Sparse matrix recommender framework in R", [SparseMatrixRecommender.R](https://github.com/antononcube/MathematicaForPrediction/blob/master/R/SparseMatrixRecommender.R), (2014), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+[AAp4] Anton Antonov, Sparse matrix recommender framework in Mathematica, [SparseMatrixRecommenderFramework.m](https://github.com/antononcube/MathematicaForPrediction/blob/master/SparseMatrixRecommenderFramework.m),
+(2014), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
 ## Articles
 
 [Wk1] Wikipedia entry, [Online machine learning](https://en.wikipedia.org/wiki/Online_machine_learning).
 
-[AA1] Anton Antonov, ["Tries with frequencies in Java"](https://mathematicaforprediction.wordpress.com/2017/01/31/tries-with-frequencies-in-java/), (2017), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).
+[AA1] Anton Antonov, ["Tries with frequencies in Java"](https://mathematicaforprediction.wordpress.com/2017/01/31/tries-with-frequencies-in-java/),
+(2017), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).
 
-[AA2] Anton Antonov, ["A Fast and Agile Item-Item Recommender: Design and Implementation"](http://library.wolfram.com/infocenter/Conferences/7964/), (2011), Wolfram Technology Conference 2011.
+[AA2] Anton Antonov, ["A Fast and Agile Item-Item Recommender: Design and Implementation"](http://library.wolfram.com/infocenter/Conferences/7964/),
+(2011), Wolfram Technology Conference 2011.
