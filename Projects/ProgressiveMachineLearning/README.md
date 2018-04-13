@@ -7,11 +7,11 @@ April 2018
 
 # Introduction
 
-In this project we show how to do progressive machine learning using two types of classifiers based on:
+In this [MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR) project we show how to do progressive machine learning using two types of classifiers based on:
 
-- Tries with Frequencies, [AAp2, AAp3, AA1],
+- Tries with Frequencies, [AAp2, AAp3, [AA1](https://mathematicaforprediction.wordpress.com/2017/01/31/tries-with-frequencies-in-java/)],
 
-- Sparse Matrix Recommender framework [AAp4, AA2].
+- Sparse Matrix Recommender framework [AAp4, [AA2](http://library.wolfram.com/infocenter/Conferences/7964/)].
 
 [Progressive learning](https://en.wikipedia.org/wiki/Online_machine_learning#Progressive_learning) is a type of [Online machine learning](https://en.wikipedia.org/wiki/Online_machine_learning).
 For more details see [[Wk1](https://en.wikipedia.org/wiki/Online_machine_learning)]. The Progressive learning problem is defined as follows.
@@ -33,8 +33,8 @@ For more details see [[Wk1](https://en.wikipedia.org/wiki/Online_machine_learnin
 In comparison, the typical (classical) machine learning algorithms assume that representative training data is available and after training that data is no longer needed to make predictions.
 Progressive machine learning has more general assumptions about the data and its problem formulation is closer to how humans learn to classify objects.
 
-Below we are shown the applications of two types of classifiers as PLA's. One is based on Tries with Frequencies (TF), [AAp2, AAp3, AA1],
-the other on a Item-item Recommender (IIR) framework [AAp4, AA2].
+Below we are shown the applications of two types of classifiers as PLA's. One is based on Tries with Frequencies (TF), [AAp2, AAp3, [AA1](https://mathematicaforprediction.wordpress.com/2017/01/31/tries-with-frequencies-in-java/)],
+the other on an Item-item Recommender (IIR) framework [AAp4, [AA2](http://library.wolfram.com/infocenter/Conferences/7964/)].
 
 **Remark:** Note that both TF and IIR come from tackling Unsupervised machine learning tasks, but here they are applied in the context of Supervised machine learning.
 
