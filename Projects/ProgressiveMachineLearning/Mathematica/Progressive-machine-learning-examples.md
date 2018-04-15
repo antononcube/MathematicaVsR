@@ -288,6 +288,13 @@ Consider the following matrix made from those records. Each row corresponds of t
 
 [!["PLA-Trie-small-NNs-classification-2"](https://i.imgur.com/GdZYiN6m.png)](https://i.imgur.com/GdZYiN6.png)
 
+**Remark:** Note that with the code line(s) above we created a contingency matrix.
+For the NNs classification processes we consider we assume that the used contingency matrices consist of 0's and 1's.
+We further might apply matrix term re-weighting based on [Latent Semantic Indexing (LSI) formulas](https://en.wikipedia.org/wiki/Latent_semantic_analysis#Mathematics_of_LSI),
+\[[Wk4](https://en.wikipedia.org/wiki/Latent_semantic_analysis#Mathematics_of_LSI)\].
+If a NNs classifier is made by using LSI formulas and/or general contingency matrices then careful interpretation of the NNs finding algorithm has to be done.
+(In the context of the data.)
+
 Assume we see a new set of records and make the corresponding matrix:
 
     smat2 = ColumnBind @@
@@ -605,6 +612,9 @@ Here are ROC plots over the number of top NNs used to determine the predicted cl
 
 [Wk3] Wikipedia entry, [Naive Bayes classifier](https://en.wikipedia.org/wiki/Naive_Bayes_classifier).
 	URL: https://en.wikipedia.org/wiki/Naive_Bayes_classifier .
+
+[Wk4] Wikipedia entry, [Latent Semantic Analysis](https://en.wikipedia.org/wiki/Latent_semantic_analysis).
+	URL: https://en.wikipedia.org/wiki/Latent_semantic_analysis
 
 [AA1] Anton Antonov, ["Tries with frequencies in Java"](https://mathematicaforprediction.wordpress.com/2017/01/31/tries-with-frequencies-in-java/), (2017), [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com).   
 	URL: https://mathematicaforprediction.wordpress.com/2017/01/31/tries-with-frequencies-in-java/ .
