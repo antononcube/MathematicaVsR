@@ -132,7 +132,21 @@ dfTitanic <- dfTitanic[do.call(order,dfTitanic),]
 
 # Progressive learning with Tries with frequencies
 
-## Data separation
+Here we set the classification label column:
+
+```{r}
+labelColumnName <- "passengerSurvival"
+```
+
+Here we determine the class label to focus on:
+
+```{r}
+focusLabel <- count( dfTitanic[[labelColumnName]] )
+focusLabel <- as.character(focusLabel[which.min(focusLabel$freq),1])
+focusLabel
+```
+
+## Data separation and preparation
 
 Here we separate the indices of the data.
 
@@ -142,12 +156,23 @@ trainingInds <- sample( 1:nrow(dfTitanic), round(0.75*nrow(dfTitanic)))
 testInds <- setdiff(1:nrow(dfTitanic), trainingInds)
 ```
 
+
+In general, when using a trie for classification that process might be sensitive of the order the variables, 
+especially for data with smaller number of records and/or large number of variables.
+That is why here we select a permutation. 
+(And make sure that the selected class label variable is the last index in the permutation.)
+
+```{r}
+perm <- c(1,2,3,4,5)
+```
+
+
 Here we make the data easier for using with Tries. 
 Note that we drop the "id" column.
 
 ```{r}
-trainingData <- dlply( dfTitanic[sort(trainingInds),], "id", function(x) { as.character(x[1,-1]) } )
-testData <- dlply( dfTitanic[sort(testInds),], "id", function(x) { as.character(x[1,-1]) } )
+trainingData <- dlply( dfTitanic[sort(trainingInds), perm], "id", function(x) { as.character(x[1,-1]) } )
+testData <- dlply( dfTitanic[sort(testInds), perm], "id", function(x) { as.character(x[1,-1]) } )
 ```
 
 ## Basic trie creation and classisification
@@ -161,7 +186,7 @@ Classification of a single test record:
 
 ```{r}
 record <- testData[[120]]
-TrieClassify( ptr, record[1:(length(record)-1)], type = "Probabilities" )
+TrieClassify( ptr, record[grep(labelColumnName, colnames(dfTitanic), invert = TRUE)], type = "Probabilities" )
 ```
 
 Here we do the classification for all test records:
@@ -174,7 +199,7 @@ clRes <- laply( records, function(x) TrieClassify(ptr, x, default = "NA"))
 Here we cross tabulate the actual and predicted class labels:
 
 ```{r}
-ctMat <- xtabs( ~ Actual + Predicted, data.frame( Actual = dfTitanic[testInds, ncol(dfTitanic)], Predicted = clRes), addNA = T )
+ctMat <- xtabs( ~ Actual + Predicted, data.frame( Actual = dfTitanic[testInds, labelColumnName], Predicted = clRes), addNA = T )
 ctMat
 ```
 
@@ -214,12 +239,14 @@ for( i in 2:nrow(splitRanges) ) {
   
   # Turn test data into a data frame
   df <- setNames(do.call(rbind.data.frame, testData), NULL)
+  fInds <- sapply(df, is.factor)
+  df[fInds] <- lapply(df[fInds], as.character)
   
   # Classify
-  clRes <- predict( ptr, df[,1:(ncol(df)-1)] )
+  clRes <- predict( ptr, df[, -ncol(df) ] )
   
   # Cross tabulate actuabl and predicted labels
-  ctMat <- xtabs( ~ Actual + Predicted, data.frame( Actual = dfTitanic[testInds, ncol(dfTitanic)], Predicted = clRes), addNA = T )
+  ctMat <- xtabs( ~ Actual + Predicted, data.frame( Actual = df[, ncol(df)], Predicted = clRes), addNA = T )
   
   # Proclaim
   cat("\n\n\t\ti = ", i, "\n")
@@ -229,7 +256,8 @@ for( i in 2:nrow(splitRanges) ) {
   
   # Accumulate probabilities for ROC plots
   clRes <- predict( ptr, df[,1:(ncol(df)-1)], type = "Probabilities", default = "NA" )
-  clROC <- ROCValues( classResMat = clRes, testLabels = dfTitanic[testInds, ncol(dfTitanic)], range = seq(0,1,0.05) )
+  if("NA" %in% colnames(clRes) ) colRes <- colRes[, grep("NA", colnames(clRes), invert = T)]
+  clROC <- ROCValues( classResMat = clRes, testLabels = df[,ncol(df)], range = seq(0,1,0.05) )
   clROC <- cbind( clROC, Model = as.character(i) )
   if (i == 2) { rocDF <- clROC }
   else { rocDF <- rbind(rocDF, clROC) }
@@ -242,6 +270,78 @@ Here we plot the ROC curves using package [AAp3]:
 ROCPlot( rocDF = rocDF, point.text = FALSE ) + theme( aspect.ratio = 1 )
 ```
 
+# Using an Item-item recommender system
+
+## Data preparation
+
+```{r}
+labelColumnName = "passengerSurvival"
+```
+
+```{r}
+trainingData <- dfTitanic[trainingInds,]
+testData <- dfTitanic[testInds,]
+```
+
+
+## The Progressive learning loop
+
+Here is data frame that is used to split the training data:
+
+```{r}
+bs <- unique(c(seq(0,300,100), seq(300,length(trainingInds),200), nrow(trainingData)))
+splitRanges <- data.frame( Begin = bs[-length(bs)]+1, End = bs[-1] )
+splitRanges
+```
+
+Below is given the Progressive learning loop. The comments mark the individual steps. 
+
+```{r}
+# Make initial SMR object
+smr <- SMRCreate( trainingData[ splitRanges$Begin[[1]]:splitRanges$End[[1]], ], 
+                  tagTypes = setdiff( colnames(trainingData), "id" ), 
+                  itemColumnName = "id" )
+
+# The main loop
+for( i in 2:nrow(splitRanges) ) {
+  # Make SMR object with new dara
+  smr2 <- SMRCreate( trainingData[ splitRanges$Begin[[i]]:splitRanges$End[[i]], ], 
+                     tagTypes = setdiff( colnames(trainingData), "id" ), 
+                     itemColumnName = "id" ) 
+  
+  # Merge the current SMR object with the new SMR object
+  smr <- SMRRowBind( smr1 = smr, smr2 = smr2 )
+  
+  # Classify
+  clRes <- predict( smr, 
+                    testData[, grep( labelColumnName, colnames(testData), invert = T )], 
+                    nTopNNs = 40, type = "decision", tagType = labelColumnName )
+  
+  # Cross tabulate actual and predicted labels
+  ctMat <- xtabs( ~ Actual + Predicted, data.frame( Actual = testData[, labelColumnName], Predicted = clRes), addNA = T )
+  
+  # Proclaim
+  cat("\n\n\t\ti = ", i, "\n")
+  print(dim(smr$M01)); cat("\n")
+  print(ctMat); cat("\n")
+  print(ctMat / rowSums(ctMat))
+  
+  # Accumulate scores for ROC plots
+  clRes <- predict( smr, 
+                    testData[, grep( labelColumnName, colnames(testData), invert = T )],
+                    nTopNNs = 40, type = "raw", tagType = labelColumnName )
+  clROC <- ROCValues( classResMat = clRes, testLabels = testData[, labelColumnName], range = seq(0,1,0.05) )
+  clROC <- cbind( clROC, Model = as.character(i) )
+  if (i == 2) { rocDF <- clROC }
+  else { rocDF <- rbind(rocDF, clROC) }
+}
+```
+
+Here we plot the ROC curves using package [AAp3]:
+
+```{r}
+ROCPlot( rocDF = rocDF, point.text = FALSE ) + theme( aspect.ratio = 1 )
+```
 
 # References
 
