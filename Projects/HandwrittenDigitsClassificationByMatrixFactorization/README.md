@@ -24,11 +24,12 @@ Here are the bases built with two different classifiers:
 
 Here are the confusion matrices of the two classifiers:
 
-- SVD
+- SVD (total accuracy: 0.957)
 
 [!["SVD-confusion-matrix"](http://i.imgur.com/odFdCmXl.png)](http://i.imgur.com/odFdCmX.png)
 
-- NNMF
+  
+- NNMF (total accuracy: 0.9663)
 
 [!["NNMF-confusion-matrix"](http://i.imgur.com/k42FmHCl.png)](http://i.imgur.com/k42FmHC.png)
 
