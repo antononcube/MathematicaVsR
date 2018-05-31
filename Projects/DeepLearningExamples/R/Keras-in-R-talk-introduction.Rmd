@@ -1,0 +1,112 @@
+---
+title: "Keras in R talk introduction"
+author: Anton Antonov
+date: 2018-05-28
+output: html_notebook
+---
+
+```{r}
+library(keras)
+```
+
+# Introduction
+
+This notebook is intended to be used as a quick introduction to the talk 
+["Deep Learning series (session 2)"](https://www.meetup.com/Orlando-MLDS/events/250086544/)
+of the meetup
+[Orlando Machine Learning and Data Science](https://www.meetup.com/Orlando-MLDS).
+
+The notebook simply uses the code in [RStudio's Keras page](https://tensorflow.rstudio.com/keras/).
+
+# MNIST example from [RStudio's Keras page](https://tensorflow.rstudio.com/keras/)
+
+## Preparing the data
+
+Following the code in the page...
+
+```{r}
+mnist <- dataset_mnist()
+x_train <- mnist$train$x
+y_train <- mnist$train$y
+x_test <- mnist$test$x
+y_test <- mnist$test$y
+```
+
+```{r}
+# reshape
+x_train <- array_reshape(x_train, c(nrow(x_train), 784))
+x_test <- array_reshape(x_test, c(nrow(x_test), 784))
+# rescale
+x_train <- x_train / 255
+x_test <- x_test / 255
+```
+
+```{r}
+y_train <- to_categorical(y_train, 10)
+y_test <- to_categorical(y_test, 10)
+```
+
+## Defining the model
+
+```{r}
+model <- keras_model_sequential() 
+model %>% 
+  layer_dense(units = 256, activation = 'relu', input_shape = c(784)) %>% 
+  layer_dropout(rate = 0.4) %>% 
+  layer_dense(units = 128, activation = 'relu') %>%
+  layer_dropout(rate = 0.3) %>%
+  layer_dense(units = 10, activation = 'softmax')
+```
+
+
+```{r}
+summary(model)
+```
+
+```{r}
+model %>% compile(
+  loss = 'categorical_crossentropy',
+  optimizer = optimizer_rmsprop(),
+  metrics = c('accuracy')
+)
+```
+
+
+
+## Training an evaluation
+
+```{r}
+history <- model %>% fit(
+  x_train, y_train, 
+  epochs = 30, batch_size = 128, 
+  validation_split = 0.2
+)
+```
+
+```{r}
+plot(history)
+```
+
+## Evaluation
+
+```{r}
+model %>% evaluate(x_test, y_test)
+```
+
+Here is direct application of the model to predict the digits:
+
+```{r}
+model %>% predict_classes(x_test)
+```
+
+### Confusion matrix
+
+```{r}
+xtabs( ~ Actual + Predicted, data.frame( Actual = mnist$test$y, Predicted = model %>% predict_classes(x_test) ) ) 
+```
+
+# Comments
+
+- That was easy to run!
+
+- By the way, we can get similar accuracy with using faster to program methods: [nearest neighbors, SVD, NNMF](http://community.wolfram.com/groups/-/m/t/962203).
