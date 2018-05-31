@@ -1,0 +1,139 @@
+Using Keras with R talk
+========================================================
+author: Anton Antonov
+date: 2018-06-02
+autosize: true
+
+## [Orlando Machine Learning and Data Science meetup](https://www.meetup.com/Orlando-MLDS)
+
+### [Deep Learning series (session 2)](https://www.meetup.com/Orlando-MLDS/events/250086544/)
+
+Very short introduction
+========================================================
+
+Talking about TensorFlow / Keras / R combination:
+
+
+```{r, eval=FALSE}
+library(keras)
+
+model <- keras_model_sequential() 
+model %>% 
+  layer_dense(units = 256, activation = 'relu', input_shape = c(784)) %>% 
+  layer_dropout(rate = 0.4) %>% 
+  layer_dense(units = 128, activation = 'relu') %>%
+  layer_dropout(rate = 0.3) %>%
+  layer_dense(units = 10, activation = 'softmax')
+
+summary(model)
+```
+
+
+Detailed introduction
+========================================================
+
+## Goals (messages to convey)
+
+- Understanding deep learning by comparison 
+
+  - Taking a system analysis approach
+
+  - Analogy with [a man made Machine Learning algorithm]()
+  
+- Deep learning libraries
+ 
+  - TensorFlow, Keras, MXNet.
+
+  - With making neural networks is not so much of [Goldberg machines](https://en.wikipedia.org/wiki/Rube_Goldberg_machine) (anymore); 
+    
+    -  more of a building with a Lego set or Soma cube.
+
+## Keras in R
+
+- Classification with the [MNIST data set](http://yann.lecun.com/exdb/mnist/)
+
+- Classification of IMDB reviews
+
+- Some questions / explorations to consider 
+
+## Other
+
+- The Trojan horse ([MXNet](https://mxnet.incubator.apache.org), [Mathematica](https://www.wolfram.com))
+  
+  - [Powered By](https://mxnet.incubator.apache.org/community/powered_by.html)
+  
+Links
+========================================================
+
+- The book ["Deep learning with R"](https://www.manning.com/books/deep-learning-with-r)
+
+  - First three chapters are free. (And well-worth reading just them.) 
+   
+     - \[[1st](`https://manning-content.s3.amazonaws.com/download/6/3bdf613-e2f6-48fa-8710-b3bd0b7979e6/SampleCh01.pdf`)\], 
+       \[[2nd](`https://manning-content.s3.amazonaws.com/download/4/481437b-2746-4ab1-94a7-c25eab8fae44/SampleCh02.pdf`)\],
+       \[[3rd](`https://manning-content.s3.amazonaws.com/download/9/9a3b0d8-e651-4239-8c4f-94267be64fee/SampleCh03.pdf`)\], 
+
+  - [The book Rmd notebooks](https://github.com/jjallaire/deep-learning-with-r-notebooks) are at GitHub.
+  
+- [RStudio's Keras page](https://keras.rstudio.com)
+  
+  - [another one](https://tensorflow.rstudio.com/keras/)
+
+
+How Keras addresses Deep Learning's most important feature?
+========================================================
+
+- The principle: "Trying to see without looking."
+
+- No special feature engineering required. 
+
+- The development speed-up of using Keras, in general and in R.
+
+- The Paris Gun pattern.
+
+
+The code runs
+========================================================
+
+TBD...
+
+Some questions to consider in more detail
+========================================================
+
+TBD...
+
+
+Some rules of thumb
+========================================================
+
+- Most likely we will not be making neural network from scratch.
+
+- Two important skills to acquire first:
+
+   - Knowing well how to utilize different encoders (over different data.)
+  
+   - Knowing basic neural networks and how to obtain them.
+   
+      - Copy & paste or from dedicated repositories.
+
+- "Next wave" skills
+
+   - Knowing how to do batch training and out-of-core training.
+   
+   - Knowing how to deal with over-fitting.
+   
+   - Knowing how how to do network surgery.
+   
+Some rules of thumb 2
+========================================================
+
+- Given a problem:
+
+   - Is it simple to apply neural networks to it?
+   
+   - Do we have enough data with enough quality in order to apply neural networks?
+   
+   - What result we get with alternative methods, like random forest, nearest neighbors, etc.?
+   
+   
+   
