@@ -29,7 +29,7 @@ summary(model)
 ```
 
 
-Detailed introduction
+Detailed introduction 1
 ========================================================
 
 ## Goals (messages to convey)
@@ -47,6 +47,9 @@ Detailed introduction
   - With making neural networks is not so much of [Goldberg machines](https://en.wikipedia.org/wiki/Rube_Goldberg_machine) (anymore); 
     
     -  more of a building with a Lego set or Soma cube.
+
+Detailed introduction 2
+========================================================
 
 ## Keras in R
 
@@ -103,7 +106,7 @@ Some questions to consider in more detail
 TBD...
 
 
-Some rules of thumb
+Some rules of thumb 1
 ========================================================
 
 - Most likely we will not be making neural network from scratch.
