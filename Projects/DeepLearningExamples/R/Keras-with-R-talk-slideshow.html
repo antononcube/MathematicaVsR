@@ -890,6 +890,40 @@ summary(model)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
+<h3>Who am I?</h3>
+<div class="slideContent" >
+<ul>
+<li><p>MSc in Mathematics (Abstract Algebra).</p></li>
+<li><p>MSc in Computer Science (Databases).</p></li>
+<li><p>PhD in Applied Mathematics (Large Scale Air Pollution Simulations).</p></li>
+<li><p>Former Kernel Developer of Mathematica (7 years).</p></li>
+<li><p>Currently branding as a &ldquo;Senior Data Scientist.&rdquo; </p>
+
+<ul>
+<li>10+ years experience in applying machine learning algorithms in commercial setting.</li>
+<li>Large part in recommendations systems building and related data analysis. </li>
+<li>Currently working in healthcare.</li>
+</ul></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Audience questions</h3>
+<div class="slideContent" >
+<ul>
+<li><p>How many use R?</p></li>
+<li><p>How many use Python?</p></li>
+<li><p>How many are data scientists?</p></li>
+<li><p>How many are engineers?</p></li>
+<li><p>How many are students?</p></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
 <h3>How Keras addresses Deep Learning&#x27;s most important feature?</h3>
 <div class="slideContent" >
 <ul>
@@ -903,23 +937,115 @@ summary(model)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>The code runs</h3>
+<h3>Neural network construction in general</h3>
 <div class="slideContent" >
-<p>TBD&hellip;</p>
+<ul>
+<li><p>See this diagram.</p></li>
+<li><p>Steps:</p>
+
+<ul>
+<li>Prepare the data.</li>
+<li>Chain layers.</li>
+<li>Pick an optimizer.</li>
+<li>Train and evaluate.</li>
+</ul></li>
+</ul>
 
 </div>
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Some questions to consider in more detail</h3>
+<h3>Neural network layers primer</h3>
 <div class="slideContent" >
-<p>TBD&hellip;</p>
+<ul>
+<li><p>Is this something the audience want to see/hear?</p></li>
+<li><p>Separate presentation or referenced along in the code runs?</p>
+
+<ul>
+<li>Sub-presentation done in Mathematica (~15 min.)</li>
+</ul></li>
+<li><p>See the functionality breakdowns:</p>
+
+<ul>
+<li>RStudio: <a href="https://keras.rstudio.com/reference/index.html">Keras reference</a>;</li>
+<li>Mathematica: <a href="http://reference.wolfram.com/language/guide/NeuralNetworks.html">&ldquo;Neural Networks guide&rdquo;</a>.<br/></li>
+</ul></li>
+</ul>
 
 </div>
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Some rules of thumb 1</h3>
+<h3>The code runs 1</h3>
+<div class="slideContent" >
+<ul>
+<li><p>First run with a basic, non-trivial example (over MNIST.)</p></li>
+<li><p>The breakdown:</p>
+
+<ul>
+<li>binary classification;</li>
+<li>multi-label classification;</li>
+<li>regression.</li>
+</ul></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>The code runs 2</h3>
+<div class="slideContent" >
+<ul>
+<li><p>The specific topics:</p>
+
+<ul>
+<li>encoders and decoders;</li>
+<li>dealing with over-fitting;</li>
+<li>categorical classification;</li>
+<li>vector classification.</li>
+</ul></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Some questions to consider in more detail 1</h3>
+<div class="slideContent" >
+<ul>
+<li><p>Can we change the metrics function?</p></li>
+<li><p>Can we do out-of-core training?</p>
+
+<ul>
+<li><a href="https://mathematica.stackexchange.com/a/174150/34008">Or, how we do batch training?</a></li>
+</ul></li>
+<li><p>How do we deal with over-fitting?</p></li>
+<li><p>Can we visualize the layers?</p></li>
+<li><p>Are there repositories we can use to download already made nets?</p></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Some questions to consider in more detail 2</h3>
+<div class="slideContent" >
+<ul>
+<li><p>How easy to add a custom classifier to an already made and pre-trained net?</p></li>
+<li><p>Where we can find explanations and/or directions for which type layer to use under what conditions?</p></li>
+<li><p>How the data is “uplifted” into the space of a net?</p>
+
+<ul>
+<li>Encoders</li>
+<li>And of course what are the decoders?</li>
+</ul></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Some guidelines 1</h3>
 <div class="slideContent" >
 <ul>
 <li><p>Most likely we will not be making neural network from scratch.</p></li>
@@ -946,7 +1072,7 @@ summary(model)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Some rules of thumb 2</h3>
+<h3>Some guidelines 2</h3>
 <div class="slideContent" >
 <ul>
 <li><p>Given a problem:</p>
@@ -956,6 +1082,16 @@ summary(model)
 <li>Do we have enough data with enough quality in order to apply neural networks?</li>
 <li>What result we get with alternative methods, like random forest, nearest neighbors, etc.?</li>
 </ul></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Future plans   </h3>
+<div class="slideContent" >
+<ul>
+<li>Conversational agent for building neural networks.</li>
 </ul>
 
 </div>

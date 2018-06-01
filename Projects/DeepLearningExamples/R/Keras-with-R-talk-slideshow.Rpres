@@ -83,6 +83,39 @@ Links
   - [another one](https://tensorflow.rstudio.com/keras/)
 
 
+Who am I?
+========================================================
+
+- MSc in Mathematics (Abstract Algebra).
+
+- MSc in Computer Science (Databases).
+
+- PhD in Applied Mathematics (Large Scale Air Pollution Simulations).
+
+- Former Kernel Developer of Mathematica (7 years).
+
+- Currently branding as a "Senior Data Scientist." 
+
+   - 10+ years experience in applying machine learning algorithms in commercial setting.
+   
+   - Large part in recommendations systems building and related data analysis. 
+   
+   - Currently working in healthcare.
+
+Audience questions
+========================================================
+
+- How many use R?
+
+- How many use Python?
+
+- How many are data scientists?
+
+- How many are engineers?
+
+- How many are students?
+
+
 How Keras addresses Deep Learning's most important feature?
 ========================================================
 
@@ -95,18 +128,97 @@ How Keras addresses Deep Learning's most important feature?
 - The Paris Gun pattern.
 
 
-The code runs
+Neural network construction in general
 ========================================================
 
-TBD...
+- See this diagram.
 
-Some questions to consider in more detail
+- Steps:
+
+  - Prepare the data.
+
+  - Chain layers.
+
+  - Pick an optimizer.
+
+  - Train and evaluate.
+
+
+Neural network layers primer
 ========================================================
 
-TBD...
+- Is this something the audience want to see/hear?
+
+- Separate presentation or referenced along in the code runs?
+  
+  - Sub-presentation done in Mathematica (~15 min.)
+
+- See the functionality breakdowns:
+
+  - RStudio: [Keras reference](https://keras.rstudio.com/reference/index.html);
+  
+  - Mathematica: ["Neural Networks guide"](http://reference.wolfram.com/language/guide/NeuralNetworks.html).   
 
 
-Some rules of thumb 1
+The code runs 1
+========================================================
+
+- First run with a basic, non-trivial example (over MNIST.)
+
+- The breakdown:
+
+  - binary classification;
+  
+  - multi-label classification;
+  
+  - regression.
+
+
+The code runs 2
+========================================================
+
+- The specific topics:
+  
+  - encoders and decoders;
+  
+  - dealing with over-fitting;
+  
+  - categorical classification;
+  
+  - vector classification.
+
+
+Some questions to consider in more detail 1
+========================================================
+
+- Can we change the metrics function?
+
+- Can we do out-of-core training?
+
+   - [Or, how we do batch training?](https://mathematica.stackexchange.com/a/174150/34008)
+
+- How do we deal with over-fitting?
+
+- Can we visualize the layers?
+
+- Are there repositories we can use to download already made nets?
+
+
+Some questions to consider in more detail 2
+========================================================
+
+- How easy to add a custom classifier to an already made and pre-trained net?
+
+- Where we can find explanations and/or directions for which type layer to use under what conditions?
+
+- How the data is “uplifted” into the space of a net?
+
+  - Encoders
+
+  - And of course what are the decoders?
+
+
+Some guidelines 1
 ========================================================
 
 - Most likely we will not be making neural network from scratch.
@@ -127,7 +239,8 @@ Some rules of thumb 1
    
    - Knowing how how to do network surgery.
    
-Some rules of thumb 2
+   
+Some guidelines 2
 ========================================================
 
 - Given a problem:
@@ -137,6 +250,10 @@ Some rules of thumb 2
    - Do we have enough data with enough quality in order to apply neural networks?
    
    - What result we get with alternative methods, like random forest, nearest neighbors, etc.?
+ 
    
-   
-   
+Future plans   
+========================================================   
+
+- Conversational agent for building neural networks.
+

@@ -10,9 +10,12 @@ of the meetup
 [Orlando Machine Learning and Data Science](https://www.meetup.com/Orlando-MLDS).
 
 The focus of the talk is R and Keras, so the project structure is strongly influenced by the content 
-of the book [Deep learning with R](https://www.manning.com/books/deep-learning-with-r), \[1\]. 
+of the book [Deep learning with R](https://www.manning.com/books/deep-learning-with-r), 
+\[[1](https://www.manning.com/books/deep-learning-with-r)\] and 
+the corresponding Rmd notebooks, \[[2](https://github.com/jjallaire/deep-learning-with-r-notebooks)\].
 
-Some of the WL's notebooks repeat the material in \[2\]. Some are original versions.
+Some of the WL's notebooks repeat the material in \[[2](https://github.com/jjallaire/deep-learning-with-r-notebooks)\]. 
+Some are original versions.
 
 WL's Neural Nets framework and abilities are fairly well described in the 
 reference page 
@@ -37,6 +40,24 @@ can be used for a very fruitful comparison of features and abilities.
 
 ## Comparison 
 
+### Installation
+
+#### Mathematica
+
+The neural networks framework comes with Mathematica. (No additional installation required.)
+
+#### R
+
+Pretty straightforward using the directions \[3\]. (A short list.)
+
+Some additional Python installation is required. 
+
+### Functionality
+
+TBD...
+
+### Documentation
+ 
 TBD...
 
 ## References
