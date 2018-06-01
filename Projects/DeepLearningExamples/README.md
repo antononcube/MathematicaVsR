@@ -14,7 +14,7 @@ of the book [Deep learning with R](https://www.manning.com/books/deep-learning-w
 \[[1](https://www.manning.com/books/deep-learning-with-r)\], and 
 the corresponding Rmd notebooks, \[[2](https://github.com/jjallaire/deep-learning-with-r-notebooks)\].
 
-Some of the WL's notebooks repeat the material in \[[2](https://github.com/jjallaire/deep-learning-with-r-notebooks)\]. 
+Some of Mathematica's notebooks repeat the material in \[[2](https://github.com/jjallaire/deep-learning-with-r-notebooks)\]. 
 Some are original versions.
 
 WL's Neural Nets framework and abilities are fairly well described in the 
@@ -43,14 +43,14 @@ An alternative is the deep learning functionality of the library
 
 ## The big picture
 
-Deep learning can be used both supervised and supervised learning. 
+Deep learning can be used for both supervised and unsupervised learning. 
 ***In this project we concentrate on supervised learning.*** 
 
 The following diagram outlines the general, simple classification workflow we have in mind.
 
 [![simple_classification_workflow](https://imgur.com/OT5Qkqil.png)]()
 
-Here is a monadic pipeline in WL of a classification workflow:
+Here is a corresponding monadic pipeline in Mathematica of a classification workflow:
 
 ![monadic_pipeline](https://imgur.com/zwjBynL.png)
 
@@ -88,7 +88,7 @@ Keras uses monadic pipelines through the library `magrittr`. For example:
 
 ### Regression
 
-- WL: 
+- Mathematica: 
 [Predicting-house-prices-a-regression-example.pdf](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Predicting-house-prices-a-regression-example.pdf).
 
 - R:
@@ -99,7 +99,7 @@ Keras uses monadic pipelines through the library `magrittr`. For example:
   
 ### Encoders and decoders
 
-The WL encoders (for neural networks and generally for machine learning tasks) are very well designed 
+The Mathematica encoders (for neural networks and generally for machine learning tasks) are very well designed 
 and with a very advanced development.
 
 The encoders in R-Keras are fairly useful but not was advanced as those in WL.
@@ -108,7 +108,7 @@ The encoders in R-Keras are fairly useful but not was advanced as those in WL.
 
 ### Dealing with over-fitting
 
-- WL: 
+- Mathematica: 
 [Training-Neural-Networks-with-Regularization.pdf](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Training-Neural-Networks-with-Regularization.pdf).
 
 - R:
