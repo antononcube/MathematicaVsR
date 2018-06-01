@@ -937,6 +937,42 @@ summary(model)
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
+<h3>Analogy: a classifier based on matrix factorization 1</h3>
+<div class="slideContent" >
+<p><strong>1.</strong> <a href="https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/">Training phase</a></p>
+
+<p>1.1. Rasterize each training image into an array of 16 x 16 pixels.</p>
+
+<p>1.2. Each raster image is linearized — the rows are aligned into a one dimensional array.<br/>
+In other words, each raster image is mapped into a R<sup>256</sup> vector space.<br/>
+We will call these one dimensional arrays raster vectors.</p>
+
+<p>1.3. From each set of images corresponding to a digit make a matrix with 256 columns of the corresponding raster vectors.</p>
+
+<p>1.4. Using the matrices in step 1.3 use thin SVD to derive orthogonal bases that describe the image data for each digit.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Analogy: a classifier based on matrix factorization 2</h3>
+<div class="slideContent" >
+<p><strong>2.</strong> <a href="https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/">Recognition phase</a></p>
+
+<p>2.1. Given an image of an unknown digit derive its raster vector, R.</p>
+
+<p>2.2. Find the residuals of the approximations of R with each of the bases found in 1.4.</p>
+
+<p>2.3. The digit with the minimal residual is the recognition result.</p>
+
+<ul>
+<li>See <a href="https://mathematicaforprediction.wordpress.com/?s=NNMF">more</a>.</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
 <h3>Neural network construction in general</h3>
 <div class="slideContent" >
 <ul>

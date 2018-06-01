@@ -128,6 +128,36 @@ How Keras addresses Deep Learning's most important feature?
 - The Paris Gun pattern.
 
 
+Analogy: a classifier based on matrix factorization 1
+========================================================
+
+**1.** [Training phase](https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/)
+
+1.1. Rasterize each training image into an array of 16 x 16 pixels.
+
+1.2. Each raster image is linearized — the rows are aligned into a one dimensional array.   
+In other words, each raster image is mapped into a R^256 vector space.   
+We will call these one dimensional arrays raster vectors.
+
+1.3. From each set of images corresponding to a digit make a matrix with 256 columns of the corresponding raster vectors.
+
+1.4. Using the matrices in step 1.3 use thin SVD to derive orthogonal bases that describe the image data for each digit.
+  
+
+Analogy: a classifier based on matrix factorization 2
+========================================================
+
+**2.** [Recognition phase](https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/)
+
+2.1. Given an image of an unknown digit derive its raster vector, R.
+
+2.2. Find the residuals of the approximations of R with each of the bases found in 1.4.
+
+2.3. The digit with the minimal residual is the recognition result.
+
+- See [more](https://mathematicaforprediction.wordpress.com/?s=NNMF).
+
+
 Neural network construction in general
 ========================================================
 
