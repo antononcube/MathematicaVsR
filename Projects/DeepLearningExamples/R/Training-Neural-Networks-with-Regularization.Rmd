@@ -1,0 +1,217 @@
+---
+title: "Training Neural Networks with Regularization"
+author: Anton Antonov
+date: 2018-05-31
+output: html_notebook
+---
+
+# Introduction
+
+This notebook is part of the MathematicaVsR at GitHub project ["DeepLearningExamples"](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DeepLearningExamples).
+
+This notebook has code that corresponds to code in the book 
+["Deep learning with R" by F. Chollet and J. J. Allaire](https://www.manning.com/books/deep-learning-with-r). 
+See the  GitHub repository: https://github.com/jjallaire/deep-learning-with-r-notebooks ; specifically the notebook 
+["Overfitting and underfitting"](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/4.4-overfitting-and-underfitting.nb.html).
+
+In many ways that R notebook has content similar to WL's 
+["Training Neural Networks with Regularization"](https://reference.wolfram.com/language/tutorial/NeuralNetworksRegularization.html).
+
+The R notebook
+["Overfitting and underfitting"](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/4.4-overfitting-and-underfitting.nb.html)
+discusses the following possible remedies of overfitting: smaller network, weight regularization, and adding of a dropout layer. 
+
+The WL notebook
+["Training Neural Networks with Regularization"](https://reference.wolfram.com/language/tutorial/NeuralNetworksRegularization.html)
+discusses: early stopping of network training, weight decay, and adding of a dropout layer. 
+
+The goal of this notebook is to compare the R-Keras and WL-MXNet neural network frameworks in a more obvious way with simple data and networks.
+
+# Get data
+
+Here we generate data in the same way as in
+["Training Neural Networks with Regularization"](https://reference.wolfram.com/language/tutorial/NeuralNetworksRegularization.html).
+
+```{r}
+xs <- seq(-3, 3, 0.2)
+ys <- exp(-xs^2) + rnorm(length(xs), 0, 0.15)
+data <- data.frame( x = xs, y = ys )
+dim(data)
+```
+
+```{r}
+ggplot(data) + geom_point(aes(x = x, y = y ))
+```
+
+# Train a neural network
+
+```{r}
+net <- 
+  keras_model_sequential() %>% 
+  layer_dense( units = 150, activation = "tanh", input_shape = c(1)  ) %>% 
+  layer_dense( units = 150, activation = "tanh" ) %>% 
+  layer_dense(1)
+```
+
+```{r}
+net %>% 
+  compile(
+    optimizer = "adam",
+    loss = "mse",
+    metrics = c("accuracy")
+  )
+```
+
+(It is instructive to see the results with `epochs=10`.)
+
+```{r, echo=FALSE, message=FALSE}
+system.time(
+  net_hist <- net %>% fit(
+    data$x, data$y,
+    epochs = 2000,
+    view_metrics = FALSE
+  )
+)
+```
+
+```{r}
+plot(net_hist)
+```
+
+```{r}
+qDF <- data.frame( Type = "predicted", x = data$x, y = net %>% predict(data$x) )
+#qDF <- rbind( qDF, cbind( Type = "actual", data ) )
+ggplot() + 
+  geom_point(aes( x = data$x, y = data$y, color = "red") ) +
+  geom_line(aes( x = qDF$x, y = qDF$y, color = "blue") ) 
+```
+
+# Using smaller network
+
+```{r}
+net2 <- 
+  keras_model_sequential() %>% 
+  layer_dense( units = 3, activation = "tanh", input_shape = c(1)  ) %>% 
+  layer_dense( units = 3, activation = "tanh" ) %>% 
+  layer_dense(1)
+```
+
+```{r}
+net2 %>% 
+  compile(
+    optimizer = "adam",
+    loss = "mse",
+    metrics = c("accuracy")
+  )
+```
+
+```{r, echo=FALSE, results='hide'}
+system.time(
+  net2_hist <- net2 %>% fit(
+    data$x, data$y,
+    epochs = 2000,
+    view_metrics = FALSE
+  )
+)
+```
+
+```{r}
+plot(net2_hist)
+```
+
+
+```{r}
+qDF <- data.frame( Type = "predicted", x = data$x, y = net2 %>% predict(data$x) )
+#qDF <- rbind( qDF, cbind( Type = "actual", data ) )
+ggplot() + 
+  geom_point(aes( x = data$x, y = data$y, color = "red") ) +
+  geom_line(aes( x = qDF$x, y = qDF$y, color = "blue") ) 
+```
+
+
+# Weight decay
+
+```{r}
+net3 <- 
+  keras_model_sequential() %>% 
+  layer_dense( units = 150, activation = "tanh", input_shape = c(1)  ) %>% 
+  layer_dense( units = 250, activation = "tanh", kernel_regularizer = regularizer_l2(0.001) ) %>% 
+  layer_dense(1)
+```
+
+```{r}
+net3 %>% 
+  compile(
+    optimizer = "adam",
+    loss = "mse",
+    metrics = c("accuracy")
+  )
+```
+
+```{r, echo=FALSE, results='hide'}
+system.time(
+  net3_hist <- net3 %>% fit(
+    data$x, data$y,
+    epochs = 2000,
+    view_metrics = FALSE
+  )
+)
+```
+
+```{r}
+plot(net3_hist)
+```
+
+
+```{r}
+qDF <- data.frame( Type = "predicted", x = data$x, y = net3 %>% predict(data$x) )
+#qDF <- rbind( qDF, cbind( Type = "actual", data ) )
+ggplot() + 
+  geom_point(aes( x = data$x, y = data$y, color = "red") ) +
+  geom_line(aes( x = qDF$x, y = qDF$y, color = "blue") ) 
+```
+
+
+# Adding a dropout layer
+
+```{r}
+net4 <- 
+  keras_model_sequential() %>% 
+  layer_dense( units = 150, activation = "tanh", input_shape = c(1)  ) %>% 
+  layer_dropout( 0.3 ) %>% 
+  layer_dense( units = 250, activation = "tanh" ) %>% 
+  layer_dense(1)
+```
+
+```{r}
+net4 %>% 
+  compile(
+    optimizer = "adam",
+    loss = "mse",
+    metrics = c("accuracy")
+  )
+```
+
+```{r, echo=FALSE, results='hide'}
+system.time(
+  net4_hist <- net4 %>% fit(
+    data$x, data$y,
+    epochs = 2000,
+    view_metrics = FALSE
+  )
+)
+```
+
+```{r}
+plot(net4_hist)
+```
+
+
+```{r}
+qDF <- data.frame( Type = "predicted", x = data$x, y = net4 %>% predict(data$x) )
+#qDF <- rbind( qDF, cbind( Type = "actual", data ) )
+ggplot() + 
+  geom_point(aes( x = data$x, y = data$y, color = "red") ) +
+  geom_line(aes( x = qDF$x, y = qDF$y, color = "blue") ) 
+```
+
