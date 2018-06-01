@@ -50,11 +50,13 @@ The following diagram outlines the general, simple classification workflow we ha
 
 [![simple_classification_workflow](https://imgur.com/OT5Qkqil.png)]()
 
-Here is a corresponding monadic pipeline in Mathematica of a classification workflow:
+Here is a corresponding classification [monadic pipeline](https://en.wikipedia.org/wiki/Monad_(functional_programming)) 
+in Mathematica:
 
 ![monadic_pipeline](https://imgur.com/zwjBynL.png)
 
-Keras uses monadic pipelines through the library `magrittr`. For example:
+R-Keras uses monadic pipelines through the library [`magrittr`](https://github.com/tidyverse/magrittr). 
+For example:
 
     model <- keras_model_sequential() 
     model %>% 
