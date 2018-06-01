@@ -11,7 +11,7 @@ of the meetup
 
 The focus of the talk is R and Keras, so the project structure is strongly influenced by the content 
 of the book [Deep learning with R](https://www.manning.com/books/deep-learning-with-r), 
-\[[1](https://www.manning.com/books/deep-learning-with-r)\] and 
+\[[1](https://www.manning.com/books/deep-learning-with-r)\], and 
 the corresponding Rmd notebooks, \[[2](https://github.com/jjallaire/deep-learning-with-r-notebooks)\].
 
 Some of the WL's notebooks repeat the material in \[[2](https://github.com/jjallaire/deep-learning-with-r-notebooks)\]. 
@@ -42,23 +42,57 @@ can be used for a very fruitful comparison of features and abilities.
 
 ### Installation
 
-#### Mathematica
+- Mathematica
 
-The neural networks framework comes with Mathematica. (No additional installation required.)
+  - The neural networks framework comes with Mathematica. (No additional installation required.)
 
-#### R
+- R
 
-Pretty straightforward using the directions \[3\]. (A short list.)
+  - Pretty straightforward using the directions in \[3\]. (A short list.)
 
-Some additional Python installation is required. 
+  - Some additional Python installation is required. 
 
-### Functionality
+### Vector classification
 
-TBD...
+*TBD...*
+
+### Categorical classification
+
+*TBD...*
+
+### Regression
+
+- WL: 
+[Predicting-house-prices-a-regression-example.pdf](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Predicting-house-prices-a-regression-example.pdf).
+
+- R:
+[3.6-predicting-house-prices.nb.html](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.6-predicting-house-prices.nb.html),
+[3.6-predicting-house-prices.Rmd](https://github.com/jjallaire/deep-learning-with-r-notebooks/blob/master/notebooks/3.6-predicting-house-prices.Rmd).
+ 
+  - *(Those are links to notebooks in \[2\].)*
+  
+### Encoders and decoders
+
+The WL encoders (for neural networks and generally for machine learning tasks) are very well designed 
+and with a very advanced development.
+
+The encoders in R-Keras are fairly useful but not was advanced as those in WL.
+
+*[TBD: Encoder correspondence...]* 
+
+### Dealing with over-fitting
+
+- WL: 
+["Training-Neural-Networks-with-Regularization.pdf"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Training-Neural-Networks-with-Regularization.pdf).
+
+- R:
+[Training-Neural-Networks-with-Regularization.nb.html](http://htmlpreview.github.io/?https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Training-Neural-Networks-with-Regularization.nb.html),
+[Training-Neural-Networks-with-Regularization.Rmd](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Training-Neural-Networks-with-Regularization.Rmd).
+
 
 ### Documentation
  
-TBD...
+*TBD...*
 
 ## References
 
