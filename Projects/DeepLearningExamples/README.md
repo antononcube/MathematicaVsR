@@ -28,8 +28,11 @@ The corresponding documentation pages
 can be used for a very fruitful comparison of features and abilities.
 
 **Remark:** With "deep learning with R" here we mean "Keras with R". 
-An alternative is the deep learning functionality of the library 
-[H2O](https://www.h2o.ai). See project's directory [R.H2O]() for examples.
+
+**Remark:** An alternative to R/Keras and Mathematica/MXNet is the library 
+[H2O](https://www.h2o.ai) (that has interfaces to Java, Python, R, Scala.) See project's directory 
+[R.H2O](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DeepLearningExamples/R.H2O) 
+for examples.
 
 
 ## The presentation
@@ -40,6 +43,11 @@ An alternative is the deep learning functionality of the library
 - The presentation slideshow: 
   [html](http://htmlpreview.github.io/?https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Keras-with-R-talk-slideshow.html#/),
   [Rpres](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Keras-with-R-talk-slideshow.Rpres).
+
+- ["Neural network layers primer" slideshow](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Neural-network-layers-primer.pdf).
+
+  - The slideshow is part of [Sebastian Bodenstein's presentation at Wolfram U](http://www.wolfram.com/broadcast/video.php?c=442&v=2173).     
+  *(It was separated/extracted for clarity and convenience during the meetup presentation.)*
 
 ## The big picture
 
@@ -80,6 +88,16 @@ For example:
 
   - Some additional Python installation is required. 
 
+### Simple neural network classifier over [MNIST data](http://yann.lecun.com/exdb/mnist/)
+
+- Mathematica: 
+[Simple-neural-network-classifier-over-MNIST-data.pdf](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Simple-neural-network-classifier-over-MNIST-data.pdf)
+
+- R: 
+[Keras-with-R-talk-introduction.nb.html](http://htmlpreview.github.io/?https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Keras-with-R-talk-introduction.nb.html),
+[Keras-with-R-talk-introduction.Rmd](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Keras-with-R-talk-introduction.Rmd).
+
+
 ### Vector classification
 
 *TBD...*
@@ -104,7 +122,7 @@ For example:
 The Mathematica encoders (for neural networks and generally for machine learning tasks) are very well designed 
 and with a very advanced development.
 
-The encoders in R-Keras are fairly useful but not was advanced as those in WL.
+The encoders in R-Keras are fairly useful but not was advanced as those in Mathematica.
 
 *[TBD: Encoder correspondence...]* 
 
