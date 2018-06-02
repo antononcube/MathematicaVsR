@@ -1,0 +1,77 @@
+---
+title: "Simple H2O neural network classifier over MNIST"
+author: Anton Antonov
+date: 2018-06-02
+output: html_notebook
+---
+
+# Introduction
+
+This notebook is part of the MathematicaVsR at GitHub project ["DeepLearningExamples"](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/DeepLearningExamples).
+The intent of this notebook is to be compared with the similar project notebooks using 
+[R/Keras](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Keras-with-R-talk-introduction.Rmd)
+and
+[Mathematica/MXNet](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Simple-neural-network-classifier-over-MNIST-data.pdf).
+
+The code below is taken from the booklet ["Deep Learning with H2O", 6th edition](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/booklets/DeepLearningBooklet.pdf).
+
+# Code
+
+```{r}
+library(h2o)
+# Sets number of threads to number of available cores
+h2o.init(nthreads = -1)
+
+train_file <- "https://h2o-public-test-data.s3.amazonaws.com/bigdata/laptop/mnist/train.csv.gz"
+test_file <- "https://h2o-public-test-data.s3.amazonaws.com/bigdata/laptop/mnist/test.csv.gz"
+
+train <- h2o.importFile(train_file)
+test <- h2o.importFile(test_file)
+# Get a brief summary of the data
+summary(train)
+summary(test)
+```
+
+```{r}
+# Specify the response and predictor columns
+y <- "C785"
+x <- setdiff(names(train), y)
+
+# Encode the response column as categorical for multinomial classification
+train[,y] <- as.factor(train[,y])
+test[,y] <- as.factor(test[,y])
+
+# Train Deep Learning model and validate on test set
+model <- h2o.deeplearning(
+x = x,
+y = y,
+training_frame = train,
+validation_frame = test,
+distribution = "multinomial",
+activation = "RectifierWithDropout",
+hidden = c(32,32,32),
+input_dropout_ratio = 0.2,
+sparse = TRUE,
+l1 = 1e-5,
+epochs = 10)
+```
+
+```{r}
+# View specified parameters of the deep learning model
+model@parameters
+```
+
+```{r}
+# Examine the performance of the trained model model # display all performance metrics
+h2o.performance(model) # training metrics 
+```
+
+```{r}
+h2o.performance(model, valid = TRUE) # validation metrics
+```
+
+```{r}
+# Get MSE only
+h2o.mse(model, valid = TRUE)
+```
+
