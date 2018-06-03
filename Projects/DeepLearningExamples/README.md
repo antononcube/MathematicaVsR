@@ -150,14 +150,6 @@ The encoders in R-Keras are fairly useful but not was advanced as those in Mathe
 [Training-Neural-Networks-with-Regularization.nb.html](http://htmlpreview.github.io/?https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Training-Neural-Networks-with-Regularization.nb.html),
 [Training-Neural-Networks-with-Regularization.Rmd](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Training-Neural-Networks-with-Regularization.Rmd).
 
-
-### Documentation
- 
-- Mathematica: ["Neural Networks guide"](http://reference.wolfram.com/language/guide/NeuralNetworks.html).   
-
-- R-Keras: ["Keras reference"](https://keras.rstudio.com/reference/index.html).
-
-
 ### Repositories of pre-trained models
 
 - Mathematica: 
@@ -167,6 +159,13 @@ can import externally trained networks in
 format.
 
 - R-Keras: has commands loading for pre-trained models.   
+
+### Documentation
+ 
+- Mathematica: ["Neural Networks guide"](http://reference.wolfram.com/language/guide/NeuralNetworks.html).   
+
+- R-Keras: ["Keras reference"](https://keras.rstudio.com/reference/index.html), 
+  [cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/keras.pdf).
 
 ## References
 
