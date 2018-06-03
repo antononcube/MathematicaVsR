@@ -63,6 +63,8 @@ in Mathematica:
 
 ![monadic_pipeline](https://imgur.com/zwjBynL.png)
 
+## Code samples
+
 R-Keras uses monadic pipelines through the library [`magrittr`](https://github.com/tidyverse/magrittr). 
 For example:
 
@@ -73,6 +75,19 @@ For example:
       layer_dense(units = 128, activation = 'relu') %>%
       layer_dropout(rate = 0.3) %>%
       layer_dense(units = 10, activation = 'softmax')
+
+The corresponding Mathematica command is:
+
+    model =
+     NetChain[{
+       LinearLayer[256, "Input" -> 784],
+       ElementwiseLayer[Ramp],            
+       DropoutLayer[0.4],
+       LinearLayer[128],
+       ElementwiseLayer[Ramp],            
+       DropoutLayer[0.3],
+       LinearLayer[10]
+     }]
 
 ## Comparison 
 
@@ -93,7 +108,7 @@ For example:
 - Mathematica: 
 [Simple-neural-network-classifier-over-MNIST-data.pdf](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Simple-neural-network-classifier-over-MNIST-data.pdf)
 
-- R: 
+- R-Keras: 
 [Keras-with-R-talk-introduction.nb.html](http://htmlpreview.github.io/?https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Keras-with-R-talk-introduction.nb.html),
 [Keras-with-R-talk-introduction.Rmd](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Keras-with-R-talk-introduction.Rmd).
 
@@ -111,7 +126,7 @@ For example:
 - Mathematica: 
 [Predicting-house-prices-a-regression-example.pdf](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Predicting-house-prices-a-regression-example.pdf).
 
-- R:
+- R-Keras:
 [3.6-predicting-house-prices.nb.html](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.6-predicting-house-prices.nb.html),
 [3.6-predicting-house-prices.Rmd](https://github.com/jjallaire/deep-learning-with-r-notebooks/blob/master/notebooks/3.6-predicting-house-prices.Rmd).
  
@@ -131,14 +146,27 @@ The encoders in R-Keras are fairly useful but not was advanced as those in Mathe
 - Mathematica: 
 [Training-Neural-Networks-with-Regularization.pdf](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Training-Neural-Networks-with-Regularization.pdf).
 
-- R:
+- R-Keras:
 [Training-Neural-Networks-with-Regularization.nb.html](http://htmlpreview.github.io/?https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Training-Neural-Networks-with-Regularization.nb.html),
 [Training-Neural-Networks-with-Regularization.Rmd](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Training-Neural-Networks-with-Regularization.Rmd).
 
 
 ### Documentation
  
-*TBD...*
+- Mathematica: ["Neural Networks guide"](http://reference.wolfram.com/language/guide/NeuralNetworks.html).   
+
+- R-Keras: ["Keras reference"](https://keras.rstudio.com/reference/index.html).
+
+
+### Repositories of pre-trained models
+
+- Mathematica: 
+[Wolfram Research repository of neural networks](http://resources.wolframcloud.com/NeuralNetRepository);
+can import externally trained networks in 
+[MXNet](http://reference.wolfram.com/language/ref/format/MXNet.html) 
+format.
+
+- R-Keras: has commands loading for pre-trained models.   
 
 ## References
 
