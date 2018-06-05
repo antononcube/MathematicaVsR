@@ -112,7 +112,7 @@ Using the CDF function obtained with CDFEstimate we can find the PDF function by
        Plot[{qCDFInt[x], qCDFInt'[x]}, {x, qCDFInt["Domain"][[1, 1]], qCDFInt["Domain"][[1, 2]]}, PlotRange -> {0, 1}, Axes -> False, Frame -> True, PlotLabel -> "Estimated CDF and PDF for " <> DateString[t0, {"Year", ".", "Month", ".", "Day"}], opts]
       ];
 
-### QR with for lots of quantiles
+### QR with a lot of quantiles
 
 Consider the quantiles:
 
