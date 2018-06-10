@@ -40,7 +40,7 @@ for examples.
 - [Mind map for the presentation](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Diagrams/Deep-learning-with-Keras-in-R-mind-map.pdf).
 *(Has life hyperlinks.)*
 
-- The presentation slideshow: 
+- Presentation slideshow: 
   [html](http://htmlpreview.github.io/?https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Keras-with-R-talk-slideshow.html#/),
   [Rpres](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/R/Keras-with-R-talk-slideshow.Rpres).
 
@@ -49,8 +49,12 @@ for examples.
   - The slideshow is part of [Sebastian Bodenstein's presentation at Wolfram U](http://www.wolfram.com/broadcast/video.php?c=442&v=2173).     
   *(It was separated/extracted for clarity and convenience during the meetup presentation.)*
 
-- Recording of the presentation at YouTube: [ORLMLDS Deep learning series (2): "Using Keras with R (... and MXNet with WL)"](https://youtu.be/AidENXetn3o).
+- Recording of the presentation at YouTube:   
+  [ORLMLDS Deep learning series (2): "Using Keras with R (... and MXNet with WL)"](https://youtu.be/AidENXetn3o).
     
+- The info-chart 
+["Classification of handwritten digits by matrix factorization"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Diagrams/Classification-of-handwritten-digits-by-MF.pdf) 
+(used in the presentation.)
 
 ## The big picture
 
@@ -59,7 +63,7 @@ Deep learning can be used for both supervised and unsupervised learning.
 
 The following diagram outlines the general, simple classification workflow we have in mind.
 
-[![simple_classification_workflow](https://imgur.com/OT5Qkqil.png)]()
+[![simple_classification_workflow](https://imgur.com/OT5Qkqil.png)](https://imgur.com/OT5Qkqi.png)
 
 Here is a corresponding classification [monadic pipeline](https://en.wikipedia.org/wiki/Monad_(functional_programming)) 
 in Mathematica:
@@ -161,7 +165,7 @@ can import externally trained networks in
 [MXNet](http://reference.wolfram.com/language/ref/format/MXNet.html) 
 format.
 
-- R-Keras: has commands loading for pre-trained models.   
+- R-Keras: has commands loading for pre-trained models, \[[3](https://keras.rstudio.com/reference/index.html)\].   
 
 ### Documentation
  
