@@ -49,6 +49,9 @@ for examples.
   - The slideshow is part of [Sebastian Bodenstein's presentation at Wolfram U](http://www.wolfram.com/broadcast/video.php?c=442&v=2173).     
   *(It was separated/extracted for clarity and convenience during the meetup presentation.)*
 
+- Recording of the presentation at YouTube: [ORLMLDS Deep learning series (2): "Using Keras with R (... and MXNet with WL)"](https://youtu.be/AidENXetn3o).
+    
+
 ## The big picture
 
 Deep learning can be used for both supervised and unsupervised learning. 

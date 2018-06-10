@@ -38,7 +38,7 @@ Detailed introduction 1
 
   - Taking a system analysis approach
 
-  - Analogy with [a man made Machine Learning algorithm]()
+  - Analogy with [a man made Machine Learning algorithm](https://mathematicaforprediction.wordpress.com/2013/08/26/classification-of-handwritten-digits/)
   
 - Deep learning libraries
  
@@ -267,7 +267,7 @@ Some guidelines 1
    
    - Knowing how to deal with over-fitting.
    
-   - Knowing how how to do network surgery.
+   - Knowing how to do network surgery.
    
    
 Some guidelines 2
