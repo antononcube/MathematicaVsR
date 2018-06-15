@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project for the comparison of the Deep Learning functionalities in R/RStudio and Mathematica/Wolfram Language (WL).
+This project is for the comparison of the Deep Learning functionalities in R/RStudio and Mathematica/Wolfram Language (WL).
 
 The project is aimed to mirror and aid the talk 
 ["Deep Learning series (session 2)"](https://www.meetup.com/Orlando-MLDS/events/250086544/)
