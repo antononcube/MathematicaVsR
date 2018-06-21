@@ -52,6 +52,16 @@ for examples.
 - Recording of the presentation at YouTube:   
   [ORLMLDS Deep learning series (2): "Using Keras with R (... and MXNet with WL)"](https://youtu.be/AidENXetn3o).
     
+  - Corrections to some of the bloopers.
+   
+    1. At 7:01 the correct statement is "5000 for training and 1000 for testing (handwritten images)". 
+    
+    2. The Mathematica neural network at 20:10 has some transpositions, 
+    the correct Mathematica netwoirk corresponding to the R-Keras one is given in 
+    [this notebook](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Mathematica/Simple-neural-network-classifier-over-MNIST-data.pdf).
+    
+    3. At 20:22 the correct statement is "Mathematica provides very nice visualization..."; (not R). 
+
 - The info-chart 
 ["Classification of handwritten digits by matrix factorization"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/DeepLearningExamples/Diagrams/Classification-of-handwritten-digits-by-MF.pdf) 
 (used in the presentation.)
