@@ -1,5 +1,5 @@
 ---
-title: "Time series analysis with Quantile regression"
+title: "Time series analysis with Quantile Regression"
 author: "Anton Antonov"
 date: "10/1/2016"
 output: pdf_document
@@ -101,11 +101,13 @@ ggplot(tempDF) +
 ```
 (The color name was selected from the web page ["ggplot2 Quick Reference: colour (and fill)"](http://sape.inf.usi.ch/quick-reference/ggplot2/colour).)
 
-## Fitting Quantile regression curves and finding outliers
+## Fitting Quantile Regression curves and finding outliers
 
 ### QR fitting of B-splines
 
-The package [`quantreg`](https://cran.r-project.org/web/packages/quantreg/index.html) provides several ways (functions and work flow) to apply QR to time series data. In this document we interested in applying QR using B-spline basis functions. Following the vignette [1] this can be done in the following way.
+The package [`quantreg`](https://cran.r-project.org/web/packages/quantreg/index.html) provides several ways (functions and work flow)
+to apply QR to time series data. In this document we are interested in applying QR using B-spline basis functions.
+Following the vignette [1] this can be done in the following way.
 
 First we are going to add to the time series data frame an index column and an absolute time column.
 
@@ -187,7 +189,7 @@ PDFEstimateFunction <- function( qs, qvals ) {
 
 Note, that if we used [`splinefun`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/splinefun.html) for the calculation of the CDF function `cdfFunc` we could implement the PDF function simply as `pdfFunc <- function(x) cdfFunc( x, 1 )`.
 
-### QR with for lots of quantiles
+### QR with lots of quantiles
 
 Consider the quantiles:
 ```{r}
