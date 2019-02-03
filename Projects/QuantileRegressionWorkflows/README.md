@@ -14,14 +14,26 @@ of the meetup
 
 The Mathematica monad `QRMon` is implemented with the package 
 ["MonadicQuantileRegression.m"](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicQuantileRegression.m), 
-[[AAp2](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicQuantileRegression.m)].
+[[AAp1](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicQuantileRegression.m)],
+and it is based on the package 
+["QuantileRegression.m"](https://github.com/antononcube/MathematicaForPrediction/blob/master/QuantileRegression.m),
+\[[AAp2](https://github.com/antononcube/MathematicaForPrediction/blob/master/QuantileRegression.m)\].
 
-The R monad is also named `QRMon` and it is based on Quantile Regression package 
+The R monad is also named `QRMon`, it is implemented with the package 
+["QRMon-R"](https://github.com/antononcube/QRMon-R),
+\[[AAp3](https://github.com/antononcube/QRMon-R)\],
+and it is based on Quantile Regression package 
 [`quantreg`](https://cran.r-project.org/web/packages/quantreg/index.html),
 [[RKp1](https://cran.r-project.org/web/packages/quantreg/index.html), 
 [RK1](https://cran.r-project.org/web/packages/quantreg/vignettes/rq.pdf)].
 the utilizes the "pipeline" package 
 [`magrittr`](https://magrittr.tidyverse.org).
+
+## Workshop mission statement
+
+The goals of this workshop are to introduce the theoretical background of Quantile Regression (QR),
+to demonstrate QR's practical (and superior) abilities to deal with "real life" time series data,
+and to teach how to rapidly create QR workflows using Mathematica or R.
 
 ## Workshop plan
 
@@ -124,11 +136,11 @@ produces Quantile Regression fits much faster than the package \[AAp3\].
 [AAp1] Anton Antonov, [Monadic Quantile Regression Mathematica package](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicQuantileRegression.m), (2018), 
 [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
-[AAp2] Anton Antonov, [Quantile Regression workflows monad in R](https://github.com/antononcube/QRMon-R), (2018), 
-[QRMon-R at GitHub](https://github.com/antononcube/QRMon-R).
-
-[AAp3] Anton Antonov, [Quantile Regression Mathematica package](https://github.com/antononcube/MathematicaForPrediction/blob/master/QuantileRegression.m), (2014), 
+[AAp2] Anton Antonov, [Quantile Regression Mathematica package](https://github.com/antononcube/MathematicaForPrediction/blob/master/QuantileRegression.m), (2014), 
 [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+
+[AAp3] Anton Antonov, [Quantile Regression workflows monad in R](https://github.com/antononcube/QRMon-R), (2018), 
+[QRMon-R at GitHub](https://github.com/antononcube/QRMon-R).
 
 [RKp1] Roger Koenker et al., ["quantreg: Quantile Regression"](https://cran.r-project.org/web/packages/quantreg/index.html), (2018).
 
