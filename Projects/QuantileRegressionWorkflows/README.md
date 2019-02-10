@@ -22,11 +22,11 @@ and it is based on the package
 The R monad is also named `QRMon`, it is implemented with the package 
 ["QRMon-R"](https://github.com/antononcube/QRMon-R),
 \[[AAp3](https://github.com/antononcube/QRMon-R)\],
-and it is based on Quantile Regression package 
+and it is based on the Quantile Regression package 
 [`quantreg`](https://cran.r-project.org/web/packages/quantreg/index.html),
 [[RKp1](https://cran.r-project.org/web/packages/quantreg/index.html), 
-[RK1](https://cran.r-project.org/web/packages/quantreg/vignettes/rq.pdf)].
-the utilizes the "pipeline" package 
+[RK1](https://cran.r-project.org/web/packages/quantreg/vignettes/rq.pdf)]
+it also utilizes the "pipeline" package 
 [`magrittr`](https://magrittr.tidyverse.org).
 
 ## Workshop mission statement
@@ -39,7 +39,7 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
 - Quantile Regression (QR) theory
 
-  - Brief
+  - Brief outline
 
   - Warm-up examples
 
@@ -47,7 +47,7 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
     - Just a sketch
 
-  - Analogy between Quantile Regression and Neural Networks
+  - Analogies between Quantile Regression and Neural Networks
 
 - Monadic programming
 
@@ -63,9 +63,9 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
   - Installing the packages
 
-  - Review of look-and-feel
+  - Review of the look-and-feel
 
-- Main benefits of QR
+- Main benefits of QR (first wave examples)
 
   - All done through monadic pipelines (workflows)
 
@@ -77,7 +77,7 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
   - Simulation of time series
   
-- QR workflows (second wave)
+- QR workflows (second wave examples)
 
   - Using StackExchange questions (and data)
 
@@ -103,7 +103,7 @@ Here is a monadic pipeline in Mathematica:
        QRMonQuantileRegression[12]⟹
        QRMonPlot;
       
-Here is a monadic pipeline with R:
+Here is a monadic pipeline in R:
 
      qrmon <-
        QRMonUnit( dfTemperatureData ) %>%
@@ -113,7 +113,7 @@ Here is a monadic pipeline with R:
        
 ### Performance
 
-Because of specialized algorithms developed by Roger Koenker et al. the package `quantreg`, \[RKp1\]
+Because of the specialized algorithms developed by Roger Koenker et al. the package `quantreg`, \[RKp1\],
 produces Quantile Regression fits much faster than the package \[AAp3\]. 
 (The latter uses the built-in Mathematica functions `LinearProgramming`, `Minimize`, and `NMinimize`.
 `LinearProgramming` is the fastest.)
