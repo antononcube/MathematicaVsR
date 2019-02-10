@@ -8,7 +8,7 @@ software monads for the specification and execution of
 workflows.
 
 The project is aimed to mirror and aid the workshop 
-["Quantile Regression Workshop"]()
+["Quantile Regression Workshop"](https://www.meetup.com/Orlando-MLDS/events/258855219/?rv=ea1_v2&_xtd=gatlbWFpbF9jbGlja9oAJDM3Nzc3MWUyLTJlNmItNDg2NS1iNGEzLWZkYWZmMzc1ZTIxZA)
 of the meetup
 [Orlando Machine Learning and Data Science](https://www.meetup.com/Orlando-MLDS).
 
@@ -25,7 +25,7 @@ The R monad is also named `QRMon`, it is implemented with the package
 and it is based on the Quantile Regression package 
 [`quantreg`](https://cran.r-project.org/web/packages/quantreg/index.html),
 [[RKp1](https://cran.r-project.org/web/packages/quantreg/index.html), 
-[RK1](https://cran.r-project.org/web/packages/quantreg/vignettes/rq.pdf)]
+[RK1](https://cran.r-project.org/web/packages/quantreg/vignettes/rq.pdf)];
 it also utilizes the "pipeline" package 
 [`magrittr`](https://magrittr.tidyverse.org).
 
