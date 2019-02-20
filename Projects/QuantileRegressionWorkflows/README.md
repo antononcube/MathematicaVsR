@@ -91,6 +91,33 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
   - [Data generation](https://mathematica.stackexchange.com/q/188958)
 
+
+## Quantile regression videos
+
+For introduction to Quantile Regression see the YouTube video 
+["Quantile Regression—Theory, Implementations, and Applications"](https://www.youtube.com/watch?v=GddvdXMJV9Y).
+
+Here is a video for using the `QRMon-WL` monad.
+ 
+Here is a video for using the `QRMon-R` monad.
+
+
+## Data
+
+- If using Mathematica (and having an internet connection) the financial and weather data 
+can obtained with the functions 
+[`FinancialData`](https://reference.wolfram.com/language/ref/FinancialData.html)
+and 
+[`WeatherData`](https://reference.wolfram.com/language/ref/WeatherData.html).
+
+- I using R: the [`QRMon-R`](https://github.com/antononcube/QRMon-R) 
+package comes with three sample datasets (distribution, financial, and weather data.)
+    
+- The data used in the workshop examples can be obtained from this repository.
+
+   - See the sub-directory ["Data"](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/QuantileRegressionWorkflows/Data). 
+
+
 ## Comparisons
 
 ### Monadic pipelines
