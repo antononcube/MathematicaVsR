@@ -12,12 +12,13 @@ The project is aimed to mirror and aid the workshop
 of the meetup
 [Orlando Machine Learning and Data Science](https://www.meetup.com/Orlando-MLDS).
 
-The Mathematica monad `QRMon` is implemented with the package 
+The Mathematica / Wolfram Language monad `QRMon` is implemented with the package 
 ["MonadicQuantileRegression.m"](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicQuantileRegression.m), 
 [[AAp1](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicQuantileRegression.m)],
 and it is based on the package 
 ["QuantileRegression.m"](https://github.com/antononcube/MathematicaForPrediction/blob/master/QuantileRegression.m),
 \[[AAp2](https://github.com/antononcube/MathematicaForPrediction/blob/master/QuantileRegression.m)\].
+(Below this software monad is referenced as `QRMon-WL`.)
 
 The R monad is also named `QRMon`, it is implemented with the package 
 ["QRMon-R"](https://github.com/antononcube/QRMon-R),
@@ -28,6 +29,8 @@ and it is based on the Quantile Regression package
 [RK1](https://cran.r-project.org/web/packages/quantreg/vignettes/rq.pdf)];
 it also utilizes the "pipeline" package 
 [`magrittr`](https://magrittr.tidyverse.org).
+(Below this software monad is referenced as `QRMon-R`.)
+
 
 ## Workshop mission statement
 
@@ -59,7 +62,7 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
   - Why apply it to QR?
 
-- Introduction to QRMon
+- Introduction to `QRMon`
 
   - Installing the packages
 
@@ -85,14 +88,16 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
   - [Envelopes](https://mathematica.stackexchange.com/a/106173/34008)
 
-  - Picking points of interest
+  - [Picking points of interest](https://mathematica.stackexchange.com/a/189471/34008)
+  
+  - [Brute force identification of expansion terms](https://mathematica.stackexchange.com/a/191792/34008)
   
   - [Finding peaks](https://mathematica.stackexchange.com/a/189710/34008) 
 
   - [Data generation](https://mathematica.stackexchange.com/q/188958)
 
 
-## Quantile regression videos
+## Quantile Regression videos
 
 For introduction to Quantile Regression see the YouTube video 
 ["Quantile Regression—Theory, Implementations, and Applications"](https://www.youtube.com/watch?v=GddvdXMJV9Y).
