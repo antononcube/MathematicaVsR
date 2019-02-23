@@ -21,9 +21,9 @@ showing the concepts in a QRMon pipeline (in Mathematica notation.)
 
 # Installation and libraries load
 
-The package/librart QRMon can be installed with the command:
+The package/library QRMon can be installed with the command:
 
-```{r}
+```{r, eval=F}
 devtools::install_github("antononcube/QRMon-R")
 ```
 Then we load that package with:
@@ -119,26 +119,55 @@ qFracPoints <-
   QRMonTakeValue()
 ```
 
-This shows that found point sets have roughly the same number of elements that adger
+This shows that found point sets have roughly the same number of elements that adhere 
+to the selected quantiles:
 
 ```{r}
-purrr::map(qFracPoints, nrow)
+rbind(
+  purrr::map_df(qFracPoints, nrow),
+  purrr::map_df(qFracPoints, nrow) / nrow(dfTemperatureData)
+)
 ```
 
 ### Plot
 
-Here we plot the seprated points with different colors:
+Here we plot the separated points with different colors:
 
 ```{r}
-qDF <- 
-  purrr::map_df( 
-    names(qFracPoints), 
-    function(x) cbind( Quantile = x, qFracPoints[[x]], stringsAsFactors = FALSE )
-  )
+qDF <- dplyr::bind_rows( qFracPoints , .id = "Quantile")
 
 qDF$Time <- as.POSIXct( qDF$Time, origin = "1900-01-01" )
 
 ggplot(qDF) + 
   geom_point(aes(x = Time, y = Value, color = Quantile) )
 ```
+
+# Further application of the separation
+
+One of the unique applications of Quantile Regression is to do "realistic" time series simulations. 
+
+Let us first do Quantile Regression fit of the time series data:
+
+```{r}
+qrmon <-
+  QRMonUnit( setNames(dfTemperatureData, c("Time", "Value") )) %>% 
+  QRMonQuantileRegression( df = 16, quantiles = c( 0.01, seq(0.1,0.9,0.1), 0.99) ) %>% 
+  QRMonPlot(datePlotQ = TRUE, dateOrigin = "1900-01-01" )
+```
+
+Here with the obtained monad object we do several time series simulations over 1000 regular grid points:
+
+```{r, fig.width=10}
+set.seed(2223)
+qDF <- rbind( cbind( Type = "Original", qrmon %>% QRMonTakeData() ),
+              cbind( Type = "Simulated.1", as.data.frame( qrmon %>% QRMonSimulate(1000) %>% QRMonTakeValue() )),
+              cbind( Type = "Simulated.2", as.data.frame( qrmon %>% QRMonSimulate(1000) %>% QRMonTakeValue() )),
+              cbind( Type = "Simulated.3", as.data.frame( qrmon %>% QRMonSimulate(1000) %>% QRMonTakeValue() ))
+              )
+qDF$Time <- as.POSIXct( qDF$Time, origin = "1900-01-01" )
+ggplot( qDF ) +
+  geom_line( aes( x = Time, y = Value ), color = "lightblue" ) +
+  facet_wrap( ~Type, ncol=1)
+```
+
 
