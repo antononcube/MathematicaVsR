@@ -40,7 +40,7 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
 ## Workshop plan
 
-- Quantile Regression (QR) theory
+- Quantile Regression (QR) theory *(7-10 min)*
 
   - Brief outline
 
@@ -52,7 +52,7 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
   - Analogies between Quantile Regression and Neural Networks
 
-- Monadic programming
+- Monadic programming *(5 min)*
 
   - Why use it?
 
@@ -62,13 +62,13 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
   - Why apply it to QR?
 
-- Introduction to `QRMon`
+- Introduction to `QRMon` *(15 min)*
 
   - Installing the packages
 
   - Review of the look-and-feel
 
-- Main benefits of QR (first wave examples)
+- Main benefits of QR (first wave examples) *(30-40 min)*
 
   - All done through monadic pipelines (workflows)
 
@@ -80,7 +80,7 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 
   - Simulation of time series
   
-- QR workflows (second wave examples)
+- QR workflows (second wave examples) *(30 min)*
 
   - Using StackExchange questions (and data)
 
@@ -106,6 +106,25 @@ Here is a video for using the `QRMon-WL` monad.
  
 Here is a video for using the `QRMon-R` monad.
 
+## Package installations and usage guides
+
+- Mathematica
+
+  - Follow the GitHub Markdown article 
+["A monad for Quantile Regression workflows"](https://github.com/antononcube/MathematicaForPrediction/blob/master/MarkdownDocuments/A-monad-for-Quantile-Regression-workflows.md).
+
+
+- R 
+
+  - Download/follow the introductory notebook 
+["Separation by regression quantiles"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/QuantileRegressionWorkflows/R/Separation-by-regression-quantiles.Rmd)
+([html version](https://htmlpreview.github.io/?https://github.com/antononcube/MathematicaVsR/blob/master/Projects/QuantileRegressionWorkflows/R/Separation-by-regression-quantiles.nb.html)).
+
+
+  - Read/follow the vignette 
+["Rapid making of Quantile Regression workflows"](https://htmlpreview.github.io/?https://github.com/antononcube/QRMon-R/blob/master/notebooks/rapid-making-of-qr-workflows.html) 
+  
+  - Examine [QRMon-R's unit test files](https://github.com/antononcube/QRMon-R/tree/master/tests/testthat).
 
 ## Data
 
