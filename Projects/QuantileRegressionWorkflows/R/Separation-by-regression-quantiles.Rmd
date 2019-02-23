@@ -1,0 +1,144 @@
+---
+title: "Separation by regression quantiles"
+author: Anton Antonov
+date: "```r Sys.Date()```"
+output: html_notebook
+---
+
+# Introduction
+
+Basic, introductory example to illustrate how Quantile Regression works using the package 
+[QRMon](https://github.com/antononcube/QRMon-R).
+
+For detailed explanations see the vignette 
+["Rapid making of Quantile Regression workflows"](https://htmlpreview.github.io/?https://github.com/antononcube/QRMon-R/blob/master/notebooks/rapid-making-of-qr-workflows.html).
+
+Here is a 
+[diagram](https://github.com/antononcube/MathematicaForPrediction/raw/master/MarkdownDocuments/Diagrams/A-monad-for-Quantile-Regression-workflows/QRMon-pipeline.jpg)
+showing the concepts in a QRMon pipeline (in Mathematica notation.)
+
+![QRMon pipeline in Mathematica](https://github.com/antononcube/MathematicaForPrediction/raw/master/MarkdownDocuments/Diagrams/A-monad-for-Quantile-Regression-workflows/QRMon-pipeline.jpg)
+
+# Installation and libraries load
+
+The package/librart QRMon can be installed with the command:
+
+```{r}
+devtools::install_github("antononcube/QRMon-R")
+```
+Then we load that package with:
+
+```{r}
+library(QRMon)
+```
+
+Sometimes I have to explicitly load the dependency libraries:
+
+```{r}
+library(splines)
+library(quantreg)
+library(purrr)
+library(magrittr)
+library(ggplot2)
+```
+
+Those libraries can be installed with the command:
+
+```{r, eval=FALSE}
+install.packages( "quantreg", "purrr", "magrittr", "ggplot2")
+```
+
+
+# Computation pipelines
+
+Below the curves produced by Quantile Regression are called "regression quantiles".
+
+## The monad object
+
+A QRMon monad object is a S3 object and it is constructed with`QRMonUnit`.
+
+Here are the S3 object element names: 
+
+```{r}
+names(QRMonUnit())
+```
+
+Here is the class attribute:
+
+```{r}
+class(QRMonUnit())
+```
+
+**Remarks:**
+
+- The class attribute is not used/respected in QRMon's functions because they use the prefix "QRMon".
+
+- Some of QRMon's functions can put additional elements into the monad object.
+
+## Fractions of points 
+
+Here we compute the fractions of the points separated by the regression quantiles with 
+the following pipeline:
+
+```{r}
+qFracs <-
+  QRMonUnit( setNames(dfTemperatureData, c("Time", "Value")) ) %>%       # Get data
+  QRMonQuantileRegression( df = 12, quantiles = seq(0.2,0.8,0.2) ) %>%   # Quantile Regression with B-splines
+  QRMonPlot %>%                                                          # Plot data and regression quantiles
+  QRMonSeparateToFractions %>%                                           # Separate the points and find fractions
+  QRMonTakeValue                                                         # Take the value of the monad object
+```
+
+
+```{r}
+qFracs
+```
+
+The above result should :
+
+- illustrate what Quantile Regression does, and
+
+- convince us that the concrete QRMon implementation works.
+
+
+## Separated points with different colors 
+
+Let use make a more interesting example by plotting the points separated by the regression quantiles
+with different colors.
+
+### Separation
+
+First we compute a non-cumulative point separation:
+
+```{r}
+qFracPoints <-
+  QRMonUnit( setNames(dfTemperatureData, c("Time", "Value")) ) %>%
+  QRMonQuantileRegression( df = 12, quantiles = seq(0.2,0.8,0.2) ) %>%
+  QRMonPlot(datePlotQ = T, dateOrigin = "1900-01-01") %>%               # Make a date-axis plot
+  QRMonSeparate( cumulativeQ = FALSE ) %>%                              # Non-cumulative point sets
+  QRMonTakeValue()
+```
+
+This shows that found point sets have roughly the same number of elements that adger
+
+```{r}
+purrr::map(qFracPoints, nrow)
+```
+
+### Plot
+
+Here we plot the seprated points with different colors:
+
+```{r}
+qDF <- 
+  purrr::map_df( 
+    names(qFracPoints), 
+    function(x) cbind( Quantile = x, qFracPoints[[x]], stringsAsFactors = FALSE )
+  )
+
+qDF$Time <- as.POSIXct( qDF$Time, origin = "1900-01-01" )
+
+ggplot(qDF) + 
+  geom_point(aes(x = Time, y = Value, color = Quantile) )
+```
+
