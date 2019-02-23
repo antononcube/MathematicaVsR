@@ -108,23 +108,29 @@ Here is a video for using the `QRMon-R` monad.
 
 ## Package installations and usage guides
 
-- Mathematica
+### Mathematica
 
   - Follow the GitHub Markdown article 
 ["A monad for Quantile Regression workflows"](https://github.com/antononcube/MathematicaForPrediction/blob/master/MarkdownDocuments/A-monad-for-Quantile-Regression-workflows.md).
 
 
-- R 
+  - Examine QRMon-WL's unit test files:
+   
+    - [MonadicQuantileRegression-Unit-Tests.wlt](https://github.com/antononcube/MathematicaForPrediction/blob/master/UnitTests/MonadicQuantileRegression-Unit-Tests.wlt) and
+ 
+    - [MonadicQuantileRegressionRandomPipelinesUnitTests.m](https://github.com/antononcube/MathematicaForPrediction/blob/master/UnitTests/MonadicQuantileRegressionRandomPipelinesUnitTests.m).
+    
+### R 
 
-  - Download/follow the introductory notebook 
+   - Download/follow the introductory notebook 
 ["Separation by regression quantiles"](https://github.com/antononcube/MathematicaVsR/blob/master/Projects/QuantileRegressionWorkflows/R/Separation-by-regression-quantiles.Rmd)
 ([html version](https://htmlpreview.github.io/?https://github.com/antononcube/MathematicaVsR/blob/master/Projects/QuantileRegressionWorkflows/R/Separation-by-regression-quantiles.nb.html)).
 
 
-  - Read/follow the vignette 
-["Rapid making of Quantile Regression workflows"](https://htmlpreview.github.io/?https://github.com/antononcube/QRMon-R/blob/master/notebooks/rapid-making-of-qr-workflows.html) 
+   - Read/follow the vignette 
+["Rapid making of Quantile Regression workflows"](https://htmlpreview.github.io/?https://github.com/antononcube/QRMon-R/blob/master/notebooks/rapid-making-of-qr-workflows.html). 
   
-  - Examine [QRMon-R's unit test files](https://github.com/antononcube/QRMon-R/tree/master/tests/testthat).
+   - Examine [QRMon-R's unit test files](https://github.com/antononcube/QRMon-R/tree/master/tests/testthat).
 
 ## Data
 
