@@ -82,8 +82,8 @@ the following pipeline:
 
 ```{r}
 qFracs <-
-  QRMonUnit( setNames(dfTemperatureData, c("Time", "Value")) ) %>%       # Get data
-  QRMonQuantileRegression( df = 12, quantiles = seq(0.2,0.8,0.2) ) %>%   # Quantile Regression with B-splines
+  QRMonUnit( setNames(dfTemperatureData, c("Regressor", "Value")) ) %>%  # Get data
+  QRMonQuantileRegression( df = 12, probabilities = seq(0.2,0.8,0.2) ) %>%   # Quantile Regression with B-splines
   QRMonPlot %>%                                                          # Plot data and regression quantiles
   QRMonSeparateToFractions %>%                                           # Separate the points and find fractions
   QRMonTakeValue                                                         # Take the value of the monad object
@@ -100,6 +100,15 @@ The above result should :
 
 - convince us that the concrete QRMon implementation works.
 
+Consider the application of the points separation process for finding (and defining) outliers.
+
+```{r}
+qrObj<-
+ QRMonUnit( setNames(dfTemperatureData, c("Regressor", "Value")) ) %>%
+  QRMonQuantileRegression( df = 16, probabilities = c(0.01,0.98) ) %>% 
+  QRMonOutliers %>% 
+  QRMonOutliersPlot
+```
 
 ## Separated points with different colors 
 
@@ -110,17 +119,17 @@ with different colors.
 
 First we compute a non-cumulative point separation:
 
-```{r}
+```{r, collapse=T}
 qFracPoints <-
-  QRMonUnit( setNames(dfTemperatureData, c("Time", "Value")) ) %>%
-  QRMonQuantileRegression( df = 12, quantiles = seq(0.2,0.8,0.2) ) %>%
+  QRMonUnit( setNames( dfTemperatureData, c("Time", "Value") ) ) %>%
+  QRMonQuantileRegression( df = 16, probabilities = seq(0.2,0.8,0.2) ) %>%
   QRMonPlot(datePlotQ = T, dateOrigin = "1900-01-01") %>%               # Make a date-axis plot
   QRMonSeparate( cumulativeQ = FALSE ) %>%                              # Non-cumulative point sets
   QRMonTakeValue()
 ```
 
-This shows that found point sets have roughly the same number of elements that adhere 
-to the selected quantiles:
+The following result shows that the found point sets have roughly the same number of elements that adhere 
+to the selected quantile proabilities.
 
 ```{r}
 rbind(
@@ -136,7 +145,7 @@ Here we plot the separated points with different colors:
 ```{r}
 qDF <- dplyr::bind_rows( qFracPoints , .id = "Quantile")
 
-qDF$Time <- as.POSIXct( qDF$Time, origin = "1900-01-01" )
+qDF$Time <- as.POSIXct( qDF$Regressor, origin = "1900-01-01" )
 
 ggplot(qDF) + 
   geom_point(aes(x = Time, y = Value, color = Quantile) )
@@ -151,23 +160,24 @@ Let us first do Quantile Regression fit of the time series data:
 ```{r}
 qrmon <-
   QRMonUnit( setNames(dfTemperatureData, c("Time", "Value") )) %>% 
-  QRMonQuantileRegression( df = 16, quantiles = c( 0.01, seq(0.1,0.9,0.1), 0.99) ) %>% 
+  QRMonQuantileRegression( df = 16, probabilities = c( 0.01, seq(0.1,0.9,0.1), 0.99) ) %>% 
   QRMonPlot(datePlotQ = TRUE, dateOrigin = "1900-01-01" )
 ```
 
 Here with the obtained monad object we do several time series simulations over 1000 regular grid points:
 
-```{r, fig.width=10}
+```{r}
 set.seed(2223)
 qDF <- rbind( cbind( Type = "Original", qrmon %>% QRMonTakeData() ),
               cbind( Type = "Simulated.1", as.data.frame( qrmon %>% QRMonSimulate(1000) %>% QRMonTakeValue() )),
               cbind( Type = "Simulated.2", as.data.frame( qrmon %>% QRMonSimulate(1000) %>% QRMonTakeValue() )),
               cbind( Type = "Simulated.3", as.data.frame( qrmon %>% QRMonSimulate(1000) %>% QRMonTakeValue() ))
               )
-qDF$Time <- as.POSIXct( qDF$Time, origin = "1900-01-01" )
+qDF$Regressor <- as.POSIXct( qDF$Regressor, origin = "1900-01-01" )
 ggplot( qDF ) +
-  geom_line( aes( x = Time, y = Value ), color = "lightblue" ) +
+  geom_line( aes( x = Regressor, y = Value ), color = "lightblue" ) +
   facet_wrap( ~Type, ncol=1)
 ```
 
+Simulations like these can be used in some Operations Research applications.
 
