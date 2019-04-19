@@ -7,10 +7,17 @@ software monads for the specification and execution of
 [Quantile Regression](https://en.wikipedia.org/wiki/Quantile_regression) 
 workflows.
 
-The project is aimed to mirror and aid the workshop 
+The project was aimed to mirror and aid the workshop 
 ["Quantile Regression Workshop"](https://www.meetup.com/Orlando-MLDS/events/258855219/?rv=ea1_v2&_xtd=gatlbWFpbF9jbGlja9oAJDM3Nzc3MWUyLTJlNmItNDg2NS1iNGEzLWZkYWZmMzc1ZTIxZA)
 of the meetup
 [Orlando Machine Learning and Data Science](https://www.meetup.com/Orlando-MLDS).
+
+This project was also used for the presentation:
+["Intro to Quantile Regression Workflows (Boston useR Group)"](https://www.meetup.com/Boston-useR/events/260162178)
+of the meetup 
+[Greater Boston useR Group (R Programming Language)](https://www.meetup.com/Boston-useR).
+(That particular event was co-hosted by [ODSC](https://odsc.com/).)
+
 
 The Mathematica / Wolfram Language monad `QRMon` is implemented with the package 
 ["MonadicQuantileRegression.m"](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicQuantileRegression.m), 
