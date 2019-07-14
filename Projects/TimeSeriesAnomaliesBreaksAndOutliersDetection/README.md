@@ -1,4 +1,4 @@
-# Time series nomalies, breaks, and outliers detection
+# Time series anomalies, breaks, and outliers detection
 
 ## In brief
 
@@ -28,6 +28,15 @@ Here we are going to list the ones we focus on in this project.
 **Structural break:** Unexpected changes of the parameters of regression models.
 
 **Outlier:** *Left as an exercise...*
+
+## Methods chosen
+
+"Non-parametric methods" means more data-driven and ad hoc methods.
+For example, K-Nearest Neighbors (KNN) and Quantile Regression (QR).
+
+**Remark:** I like/prefer to use QR in many situations. 
+Outlier detection with QR is something I have discussed elsewhere, but here I am also
+show typical examples in which I think it is hard to get good results without using QR.
 
 
 ## References
