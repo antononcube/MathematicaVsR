@@ -2,8 +2,8 @@
 
 ## In brief
 
-In this project we compare several non-parametric methods for finding anomalies, breaks,
-and outliers in time series.
+In this project we show, explain, and compare several non-parametric methods for finding 
+anomalies, breaks, and outliers in time series.
 
 We are interested in finding anomalies in both single time series and collections of time series.
 
@@ -22,8 +22,8 @@ Here we are going to list the ones we focus on in this project.
 
 **Contextual Anomaly:** An anomaly that is local to some sub-sequence of the time series.
  
-**Breakpoint:** A regressor value (time) of a time series where the mean of the values change. 
-(Also, consider (i) shifts in trend, (ii) other changes in trend and/or, (iii) changes in variance.)
+**Breakpoint:** A time of a time series where the mean of the values change. 
+Also, consider: (i) shifts in trend, (ii) other changes in trend and/or, (iii) changes in variance.
 
 **Structural break:** Unexpected changes of the parameters of regression models.
 
@@ -33,6 +33,9 @@ Here we are going to list the ones we focus on in this project.
 
 "Non-parametric methods" means more data-driven and ad hoc methods.
 For example, K-Nearest Neighbors (KNN) and Quantile Regression (QR).
+
+Because structural breaks are defined through regression, we use Statistical tests 
+(like [Chow Test](https://en.wikipedia.org/wiki/Chow_test).)
 
 **Remark:** I like/prefer to use QR in many situations. 
 Outlier detection with QR is something I have discussed elsewhere, but here I am also
