@@ -109,6 +109,8 @@ and to teach how to rapidly create QR workflows using Mathematica or R.
 For introduction to Quantile Regression see the YouTube video 
 ["Quantile Regression—Theory, Implementations, and Applications"](https://www.youtube.com/watch?v=GddvdXMJV9Y).
 
+[Video of the "Quantile Regression Workflows" presentation at Boston useR! Meetup 2019.04.18](https://www.youtube.com/watch?v=FBhmtIF1bJY).
+
 Here is a video for using the `QRMon-WL` monad.
  
 Here is a video for using the `QRMon-R` monad.
