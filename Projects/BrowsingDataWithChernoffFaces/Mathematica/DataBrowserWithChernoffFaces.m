@@ -37,10 +37,10 @@
 (* :Author: Anton Antonov *)
 (* :Date: 2016-11-05 *)
 
-(* :Package Version: 1 *)
-(* :Mathematica Version: *)
+(* :Package Version: 1.0 *)
+(* :Mathematica Version: 10.0 *)
 (* :Copyright: (c) 2016 Anton Antonov *)
-(* :Keywords: Chernoff faces, Multidimentional data visualization, Interactive interface *)
+(* :Keywords: Chernoff faces, Multidimensional data visualization, Interactive interface *)
 (* :Discussion:
 
     The code of this file is for the Mathematica part of the project:
@@ -59,7 +59,7 @@
     not that easy to read for beginners in Mathematica. (The code for a simple data browser is also part of this
     project.)
 
-    A version of the function ChernoffFaceAutoColored should be probably included in the ChernoffFaces.m package.
+    A version of the function ChernoffFaceAutoColored was included in the ChernoffFaces.m package.
 
     That function had also an implementation with Association data argument. I removed it because I consider
     the Association argument implementation redundant for the purposes of this source code/file.
@@ -89,7 +89,7 @@ If[Length[DownValues[ChernoffFace`ChernoffFace]] == 0,
 ];
 
 
-Clear[ChernoffFaceAutoColored]
+Clear[ChernoffFaceAutoColored];
 
 ChernoffFaceAutoColored[vec_?VectorQ, cdf_ColorDataFunction, opts : OptionsPattern[]] :=
     Block[{asc},
