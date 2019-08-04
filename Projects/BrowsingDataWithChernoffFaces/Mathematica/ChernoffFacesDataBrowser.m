@@ -90,7 +90,7 @@ ChernoffFacesDataBrowser[ aDatasets : Association[ (_String -> _Dataset) .. ], o
     (*    Block[{imageSize, numberOfColumns, faceImageSize,*)
     (*      data, rdata, numCols, recordNames, recordNamesInds, qvals, cfFunc},*)
     DynamicModule[{ imageSize, ncols, faceImageSize,
-      columnNames, numCols, data, rdata, recordNames, recordNamesInds, qvals,
+      columnNames, numCols, data, data2, rdata, recordNames, recordNamesInds, qvals,
       medianFace, neutralFace, lowFace, highFace, firstQuFace, thirdQuFace,
       offset, pageSpan, cfFunc},
 
@@ -150,10 +150,13 @@ ChernoffFacesDataBrowser[ aDatasets : Association[ (_String -> _Dataset) .. ], o
         If[(page - 1) * itemsPerPage + 1 > Length[data], page = 1];
         pageSpan = (page - 1) * itemsPerPage + 1 ;; Min[page * itemsPerPage, Length[data]];
 
+        data2 = data[[All, numCols]][[ pageSpan ]];
+
         (* Restrict the numerical data to the page to be shown. *)
         rdata = rdata[[pageSpan]];
         recordNames = recordNames[[pageSpan]];
         recordNamesInds = recordNamesInds[[pageSpan]];
+
 
         (* Tabular presentations of data views. *)
         TabView[
@@ -171,8 +174,11 @@ ChernoffFacesDataBrowser[ aDatasets : Association[ (_String -> _Dataset) .. ], o
                 (* No face coloring *)
                 Grid[ArrayReshape[
                   MapThread[
-                    ChernoffFace[#1, PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize] &,
-                    {rdata, recordNames}],
+                    Tooltip[
+                      ChernoffFace[#1, PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize],
+                      GridTableForm[Transpose[{Take[Keys[ChernoffFacePartsParameters[]], UpTo[Length[#3]]], columnNames[[numCols]], #3}]]
+                    ]&,
+                    {rdata, recordNames, data2}],
                   {Ceiling[Length[rdata] / ncols], ncols}, ""],
                   Alignment -> Center, Dividers -> All, FrameStyle -> GrayLevel[0.8]],
                 colorMethod == "Label",
@@ -182,17 +188,22 @@ ChernoffFacesDataBrowser[ aDatasets : Association[ (_String -> _Dataset) .. ], o
                     asc = AssociationThread[Take[Keys[ChernoffFace["FacePartsProperties"]], UpTo[Length[#1]]] -> #1];
                     asc = Join[asc, <|"FaceColor" -> ColorData[colorDataScheme][#3]|>];
 
-                    ChernoffFace[asc, PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize]
-                  ) &, {rdata, recordNames, recordNamesInds}],
+                    Tooltip[
+                      ChernoffFace[asc, PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize],
+                      GridTableForm[Transpose[{Take[Keys[ChernoffFacePartsParameters[]], UpTo[Length[#4]]], columnNames[[numCols]], #4}]]
+                    ]
+                  ) &, {rdata, recordNames, recordNamesInds, data2}],
                   {Ceiling[Length[rdata] / ncols], ncols}, ""],
                   Alignment -> Center, Dividers -> All, FrameStyle -> GrayLevel[0.8]],
                 True,
                 (* ELSE -- do face coloring by values*)
                 Grid[ArrayReshape[
-                  MapThread[(
-                    ChernoffFaceAutoColored[#1, ColorData[colorDataScheme],
-                      PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize]
-                  ) &, {rdata, recordNames}],
+                  MapThread[
+                    Tooltip[
+                      ChernoffFaceAutoColored[#1, ColorData[colorDataScheme],
+                        PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize],
+                      GridTableForm[Transpose[{Take[Keys[ChernoffFacePartsParameters[]], UpTo[Length[#3]]], columnNames[[numCols]], #3}]]
+                    ]&, {rdata, recordNames, data2}],
                   {Ceiling[Length[rdata] / ncols], ncols}, ""], Alignment -> Center,
                   Dividers -> All, FrameStyle -> GrayLevel[0.8]]
               ], SpanFromAbove, SpanFromAbove}}, Alignment -> Top],
