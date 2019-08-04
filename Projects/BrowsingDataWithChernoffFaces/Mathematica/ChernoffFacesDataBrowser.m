@@ -170,13 +170,15 @@ ChernoffFacesDataBrowser[ aDatasets : Association[ (_String -> _Dataset) .. ], o
                 Row[{lowFace, neutralFace, highFace}],
                 Row[{firstQuFace, medianFace, thirdQuFace}]},
               {Which[
-                TrueQ[colorDataScheme == "None"],
+                TrueQ[colorDataScheme == "None"] || TrueQ[ vizFunc =!= ChernoffFace ],
                 (* No face coloring *)
                 Grid[ArrayReshape[
                   MapThread[
                     Tooltip[
-                      ChernoffFace[#1, PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize],
-                      GridTableForm[Transpose[{Take[Keys[ChernoffFacePartsParameters[]], UpTo[Length[#3]]], columnNames[[numCols]], #3}]]
+                      vizFunc[#1, PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize],
+                      GridTableForm[
+                        Transpose[{Take[Keys[ChernoffFacePartsParameters[]], UpTo[Length[#3]]], columnNames[[numCols]], #3}],
+                        TableHeadings->{"Face feature", "Data column name", "Value"}]
                     ]&,
                     {rdata, recordNames, data2}],
                   {Ceiling[Length[rdata] / ncols], ncols}, ""],
@@ -190,7 +192,9 @@ ChernoffFacesDataBrowser[ aDatasets : Association[ (_String -> _Dataset) .. ], o
 
                     Tooltip[
                       ChernoffFace[asc, PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize],
-                      GridTableForm[Transpose[{Take[Keys[ChernoffFacePartsParameters[]], UpTo[Length[#4]]], columnNames[[numCols]], #4}]]
+                      GridTableForm[
+                        Transpose[{Take[Keys[ChernoffFacePartsParameters[]], UpTo[Length[#4]]], columnNames[[numCols]], #4}],
+                        TableHeadings->{"Face feature", "Data column name", "Value"}]
                     ]
                   ) &, {rdata, recordNames, recordNamesInds, data2}],
                   {Ceiling[Length[rdata] / ncols], ncols}, ""],
@@ -202,7 +206,9 @@ ChernoffFacesDataBrowser[ aDatasets : Association[ (_String -> _Dataset) .. ], o
                     Tooltip[
                       ChernoffFaceAutoColored[#1, ColorData[colorDataScheme],
                         PlotLabel -> Style[#2, Small], ImageSize -> faceImageSize],
-                      GridTableForm[Transpose[{Take[Keys[ChernoffFacePartsParameters[]], UpTo[Length[#3]]], columnNames[[numCols]], #3}]]
+                      GridTableForm[
+                        Transpose[{Take[Keys[ChernoffFacePartsParameters[]], UpTo[Length[#3]]], columnNames[[numCols]], #3}],
+                        TableHeadings->{"Face feature", "Data column name", "Value"}]
                     ]&, {rdata, recordNames, data2}],
                   {Ceiling[Length[rdata] / ncols], ncols}, ""], Alignment -> Center,
                   Dividers -> All, FrameStyle -> GrayLevel[0.8]]
@@ -237,6 +243,7 @@ ChernoffFacesDataBrowser[ aDatasets : Association[ (_String -> _Dataset) .. ], o
               ], ImageSize -> imageSize, Scrollbars -> True]
           }],
         {{dname, Keys[aDatasets][[1]], "Dataset name:"}, Keys[aDatasets], ControlType -> PopupMenu},
+        {{vizFunc, ChernoffFace, "Visualization function:"}, { ChernoffFace -> "ChernoffFace", SectorChartAdapter -> "SectorChart" }},
         {{normalizationType, "MeanVar", "Data normalization type:"},
           {"MeanVar" -> "by mean & standard deivation", "MedianQuartile" -> "by median & quartile deviation"}},
         {{clipOutliers, False, "Clip outliers:"}, {False, True}},
@@ -251,6 +258,8 @@ ChernoffFacesDataBrowser[ aDatasets : Association[ (_String -> _Dataset) .. ], o
             TrackedSymbols :> {dname, itemsPerPage}], ControlType -> PopupMenu}]
     ];
 
+Clear[SectorChartAdapter];
+SectorChartAdapter[x_, args___] := SectorChart[ Transpose[{ConstantArray[1,Length[x]], x}], args ];
 
 End[]; (*`Private`*)
 
