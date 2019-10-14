@@ -90,13 +90,13 @@
 
 *)
 
-BeginPackage["GetMachineLearningDataset`"]
+BeginPackage["GetMachineLearningDataset`"];
 
 GetMachineLearningDataset::usage = "GetMachineLearningDataset[dataName_String] gets data with \
 ExampleData[{\"MachineLearning\", dataName}, \"Data\"] and transforms it into a Dataset object with named rows and columns. \
-Some additional transformations are done do some variables for some data-sets."
+Some additional transformations are done do some variables for some data-sets.";
 
-Begin["`Private`"]
+Begin["`Private`"];
 
 Clear[GetMachineLearningDataset]
 
@@ -162,8 +162,8 @@ GetMachineLearningDataset[dataName_String, opts:OptionsPattern[]] :=
       ];
 
       ds
-    ]
+    ];
 
-End[] (* `Private` *)
+End[];(* `Private` *)
 
 EndPackage[]
