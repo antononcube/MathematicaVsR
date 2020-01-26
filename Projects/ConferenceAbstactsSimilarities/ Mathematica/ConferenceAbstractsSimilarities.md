@@ -1,20 +1,31 @@
 # Conference abstracts similarities
 
-Anton Antonov
-[MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR)
-[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction)
-[SimplifiedMachineLearningWorkflow-book at GitHub](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book)
+Anton Antonov   
+[MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR)   
+[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction)   
+[SimplifiedMachineLearningWorkflow-book at GitHub](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book)   
 January 2020
 
 ## Introduction
 
 In this notebook we discuss and exemplify finding and analyzing similarities between texts using Latent Semantic Analysis (LSA).
 
-The LSA workflows are constructed and executed with the software monad LSAMon, [AA1, AAp1]. A related notebook that uses the same data is [AA2].
+The LSA workflows are constructed and executed with the software monad LSAMon, \[AA1, AAp1\]. 
+A related notebook that uses the same data is [AA2].
 
-The illustrating examples are based on conference abstracts from [rstudio::conf](https://rstudio.com/conference/) and [Wolfram Technology Conference (WTC)](https://www.wolfram.com/events/technology-conference/2019/), [AAd1, AAd2]. Since the number of rstudio::conf abstracts is small and since rstudio::conf 2020 start soon we focus on words and texts from R / RStudio ecosystem of packages and presentations.
+The illustrating examples are based on conference abstracts from 
+[rstudio::conf](https://rstudio.com/conference/) 
+and 
+[Wolfram Technology Conference (WTC)](https://www.wolfram.com/events/technology-conference/2019/), 
+\[AAd1, AAd2\]. 
+Since the number of rstudio::conf abstracts is small and since rstudio::conf 2020 is about to start 
+at the time of preparing this notebook we focus on words and texts from R / RStudio ecosystem of packages and presentations.
 
-This notebook is part of the [MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR) project “Conference abstracts similarities”, [[AAr1](https://github.com/antononcube/MathematicaVsR)].
+This notebook is part of the 
+[MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR) 
+project 
+[“Conference abstracts similarities”](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ConferenceAbstactsSimilarities), 
+\[[AAr1](https://github.com/antononcube/MathematicaVsR)\].
 
 ### Summary of the computations
 
