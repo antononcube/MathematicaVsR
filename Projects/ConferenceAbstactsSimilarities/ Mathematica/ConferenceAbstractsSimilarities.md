@@ -406,19 +406,32 @@ ResourceFunction["GridTableForm"][Take[KeyTake[aWTCAbstracts,nns],UpTo[3]]]
 
 ### Articles
 
-[AA1] Anton Antonov, [A monad for Latent Semantic Analysis workflows](https://github.com/antononcube/MathematicaForPrediction/blob/master/MarkdownDocuments/A-monad-for-Latent-Semantic-Analysis-workflows.md), (2019), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+[AA1] Anton Antonov, 
+[A monad for Latent Semantic Analysis workflows](https://github.com/antononcube/MathematicaForPrediction/blob/master/MarkdownDocuments/A-monad-for-Latent-Semantic-Analysis-workflows.md), 
+(2019), 
+[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
-[AA2] Anton Antonov, Text similarities through bags of words, (2020), [SimplifiedMachineLearningWorfklows-book at GitHub]({Simplified Machine Learning Workflows, None}).
+[AA2] Anton Antonov, Text similarities through bags of words, (2020), 
+[SimplifiedMachineLearningWorkflows-book at GitHub](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book).
 
 ### Data
 
-[AAd1] Anton Antonov, [RStudio::conf-2019-abstracts.csv](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book/blob/master/Data/RStudio-conf-2019-abstracts.csv), (2020), [SimplifiedMachineLearningWorfklows-book at GitHub]({Simplified Machine Learning Workflows, None}).
+[AAd1] Anton Antonov, 
+[RStudio::conf-2019-abstracts.csv](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book/blob/master/Data/RStudio-conf-2019-abstracts.csv), 
+(2020), 
+[SimplifiedMachineLearningWorkflows-book at GitHub](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book).
 
-[AAd2] Anton Antonov, [Wolfram-Technology-Conference-2016-to-2019-abstracts.csv](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book/blob/master/Data/Wolfram-Technology-Conference-2016-to-2019-abstracts.csv), (2020), [SimplifiedMachineLearningWorfklows-book at GitHub]({Simplified Machine Learning Workflows, None}).
+[AAd2] Anton Antonov, 
+[Wolfram-Technology-Conference-2016-to-2019-abstracts.csv](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book/blob/master/Data/Wolfram-Technology-Conference-2016-to-2019-abstracts.csv), 
+(2020), 
+[SimplifiedMachineLearningWorkflows-book at GitHub](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book).
 
 ### Packages & repositories
 
-[AAp1] Anton Antonov, [Monadic Latent Semantic Analysis Mathematica packag](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m)e, (2017), [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+[AAp1] Anton Antonov, 
+[Monadic Latent Semantic Analysis Mathematica packag](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m),
+(2017), 
+[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
 [AAr1] Anton Antonov,  [MathematicaVsR](https://github.com/antononcube/MathematicaVsR), 2016, GitHub.
 
