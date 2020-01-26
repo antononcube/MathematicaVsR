@@ -68,7 +68,7 @@ SeedRandom[23];
     RandomSample[dsRSCAbstracts,3]
 ```
 
-![0nrzvkagcj70a](img/0nrzvkagcj70a.png)
+![0nrzvkagcj70a](Diagrams/0nrzvkagcj70a.png)
 
 ### Read WTC-2019 abstracts
 
@@ -95,7 +95,7 @@ SeedRandom[23];
     RandomSample[dsWTCAbstracts,3]
 ```
 
-![1f4x7b0669083](img/1f4x7b0669083.png)
+![1f4x7b0669083](Diagrams/1f4x7b0669083.png)
 
 ## LSA monad application
 
@@ -123,7 +123,7 @@ lsaObj=
     LSAMonApplyTermWeightFunctions["IDF","TermFrequency","Cosine"];
 ```
 
-![0ranivqeawya6](img/0ranivqeawya6.png)
+![0ranivqeawya6](Diagrams/0ranivqeawya6.png)
 
 ### Topics extraction
 
@@ -137,7 +137,7 @@ SeedRandom[668];
     LSAMonEchoTopicsTable["NumberOfTableColumns"->6];
 ```
 
-![0ptn5rk5ud23d](img/0ptn5rk5ud23d.png)
+![0ptn5rk5ud23d](Diagrams/0ptn5rk5ud23d.png)
 
 ### Statistical thesauri
 
@@ -148,7 +148,7 @@ lsaObj⟹
     LSAMonEchoStatisticalThesaurus["Words"->focusWords];
 ```
 
-![0az70qt8noeqf](img/0az70qt8noeqf.png)
+![0az70qt8noeqf](Diagrams/0az70qt8noeqf.png)
 
 Here we see another statistical entries computed with Non-Negative Matrix Factorization (NNMF): 
 
@@ -159,7 +159,7 @@ SeedRandom[132];
     LSAMonEchoStatisticalThesaurus["Words"->focusWords];
 ```
 
-![1x0utp76xr9z4](img/1x0utp76xr9z4.png)
+![1x0utp76xr9z4](Diagrams/1x0utp76xr9z4.png)
 
 Remark: By examining the statistical thesauri we prefer to ICA over NNMF below. The ICA results seem more “R-flavored.”
 
@@ -173,7 +173,7 @@ In this section we compute and plot the similarity matrices based on (i) linear 
 smat=lsaObj⟹LSAMonTakeWeightedDocumentTermMatrix
 ```
 
-![1x79nq09xkydz](img/1x79nq09xkydz.png)
+![1x79nq09xkydz](Diagrams/1x79nq09xkydz.png)
 
 ```mathematica
 RowNames[smat]\[LeftDoubleBracket]1;;65\[RightDoubleBracket]
@@ -189,13 +189,13 @@ matTermSim=smat.Transpose[smat];
     MatrixPlot[matTermSim]
 ```
 
-![0ilp4e4vif2ja](img/0ilp4e4vif2ja.png)
+![0ilp4e4vif2ja](Diagrams/0ilp4e4vif2ja.png)
 
 ```mathematica
 ResourceFunction["RecordsSummary"][Flatten[SparseArray[matTermSim]]]
 ```
 
-![1b1ef13fb5t4m](img/1b1ef13fb5t4m.png)
+![1b1ef13fb5t4m](Diagrams/1b1ef13fb5t4m.png)
 
 ### By topics
 
@@ -212,7 +212,7 @@ Here normalize each row of the matrix using Euclidean norm:
 smat=WeightTermsOfSSparseMatrix[smat,"None","None","Cosine"]
 ```
 
-![0lcwfg74mkgdl](img/0lcwfg74mkgdl.png)
+![0lcwfg74mkgdl](Diagrams/0lcwfg74mkgdl.png)
 
 We can see that the first 61 rows of that matrix correspond to rstudio::conf abstract ID’s:
 
@@ -235,7 +235,7 @@ Here is the summary of the non-zero values of the similarity matrix:
 ResourceFunction["RecordsSummary"][Flatten[SparseArray[matTopicsSim]]]
 ```
 
-![1xdv0wjz9bh8j](img/1xdv0wjz9bh8j.png)
+![1xdv0wjz9bh8j](Diagrams/1xdv0wjz9bh8j.png)
 
 #### Visualization
 
@@ -245,7 +245,7 @@ Here we visualize the similarity matrix:
 MatrixPlot[matTopicsSim]
 ```
 
-![1d5a83m8cghew](img/1d5a83m8cghew.png)
+![1d5a83m8cghew](Diagrams/1d5a83m8cghew.png)
 
 Remark: Note the top left rectangle that indicates high similarity -- the rows and columns of that rectangle correspond to the rstudio::conf abstracts. 
 
@@ -255,7 +255,7 @@ Here we sort the matrix rows and columns first and then plot:
 matTopicsSim2=matTopicsSim\[LeftDoubleBracket]Reverse@Ordering[Normal@SparseArray[matTopicsSim]],Reverse@Ordering[Normal@Transpose@SparseArray[matTopicsSim]]\[RightDoubleBracket];MatrixPlot[matTopicsSim2]
 ```
 
-![0srrzzrnpv5dk](img/0srrzzrnpv5dk.png)
+![0srrzzrnpv5dk](Diagrams/0srrzzrnpv5dk.png)
 
 ## Abstracts clustering by topics
 
@@ -273,7 +273,7 @@ Here we summarize the non-zero values of the topics similarity matrix:
 ResourceFunction["RecordsSummary"][SparseArray[matTopicsSim]["NonzeroValues"]]
 ```
 
-![1cekidd1po1l5](img/1cekidd1po1l5.png)
+![1cekidd1po1l5](Diagrams/1cekidd1po1l5.png)
 
 Here we put to zero similarity values under a certain threshold:
 
@@ -287,7 +287,7 @@ Here we use an LSAMon workflow to compute an NN’s graph between the abstracts:
 gr=LSAMonUnit[]⟹LSAMonSetValue[matTopicsSim2]⟹LSAMonMakeGraph["Type"->"DocumentDocument","Weighted"->False]⟹LSAMonTakeValue
 ```
 
-![12c3zb80rausu](img/12c3zb80rausu.png)
+![12c3zb80rausu](Diagrams/12c3zb80rausu.png)
 
 Here we find graph communities -- i.e. clusters of abstracts:
 
@@ -310,7 +310,7 @@ Highlight the chosen cluster in the NN’s graph:
 HighlightGraph[gr,Subgraph[gr,focusCom]]
 ```
 
-![09y26s6kr3bv9](img/09y26s6kr3bv9.png)
+![09y26s6kr3bv9](Diagrams/09y26s6kr3bv9.png)
 
 Show the rstudio::conf abstracts in the cluster:
 
@@ -318,7 +318,7 @@ Show the rstudio::conf abstracts in the cluster:
 Take[dsRSCAbstracts[Select[MemberQ[focusCom,#ID]&]],UpTo[6]]
 ```
 
-![14ca7wtnzxrla](img/14ca7wtnzxrla.png)
+![14ca7wtnzxrla](Diagrams/14ca7wtnzxrla.png)
 
 Show the WTC abstracts in the cluster:
 
@@ -326,7 +326,7 @@ Show the WTC abstracts in the cluster:
 Take[dsWTCAbstracts[Select[MemberQ[focusCom,#ID]&]],UpTo[6]]
 ```
 
-![1vfib3tdsre81](img/1vfib3tdsre81.png)
+![1vfib3tdsre81](Diagrams/1vfib3tdsre81.png)
 
 Remark: Note the semantic similarity between the rstudio::conf and WTC abstracts!
 
@@ -336,7 +336,7 @@ Using graph communities further cluster the abstracts in the cluster:
 CommunityGraphPlot[Subgraph[gr,focusCom],Method->"Spectral",VertexLabels->Placed["Name",Above,Tooltip],AspectRatio->1,ImageSize->Large]
 ```
 
-![0rba3xgoknkwi](img/0rba3xgoknkwi.png)
+![0rba3xgoknkwi](Diagrams/0rba3xgoknkwi.png)
 
 Remark: Note the rstudio::conf abstracts form separate communities. This fits the observations over the topics-derived similarity matrix.
 
@@ -373,7 +373,7 @@ nns=Keys@TakeLargest[ColumnSumsAssociation[matTopicsSim\[LeftDoubleBracket]{focu
 MatrixPlot[matTopicsSim\[LeftDoubleBracket]nns,nns\[RightDoubleBracket]]
 ```
 
-![1dlut9is1ei31](img/1dlut9is1ei31.png)
+![1dlut9is1ei31](Diagrams/1dlut9is1ei31.png)
 
 Here are the found top four rstudio::conf abstracts NN’s:
 
@@ -381,7 +381,7 @@ Here are the found top four rstudio::conf abstracts NN’s:
 ResourceFunction["GridTableForm"][Take[KeyTake[aRSCAbstracts,nns],UpTo[3]]]
 ```
 
-![1x5a4a6lgkvay](img/1x5a4a6lgkvay.png)
+![1x5a4a6lgkvay](Diagrams/1x5a4a6lgkvay.png)
 
 Here are the found WTC abstracts NN’s: 
 
@@ -389,7 +389,7 @@ Here are the found WTC abstracts NN’s:
 ResourceFunction["GridTableForm"][Take[KeyTake[aWTCAbstracts,nns],UpTo[3]]]
 ```
 
-![17dokvap8j4xn](img/17dokvap8j4xn.png)
+![17dokvap8j4xn](Diagrams/17dokvap8j4xn.png)
 
 ## References
 
