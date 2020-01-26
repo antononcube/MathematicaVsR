@@ -176,7 +176,7 @@ smat=lsaObj⟹LSAMonTakeWeightedDocumentTermMatrix
 ![1x79nq09xkydz](Diagrams/1x79nq09xkydz.png)
 
 ```mathematica
-RowNames[smat]\[LeftDoubleBracket]1;;65\[RightDoubleBracket]
+RowNames[smat][[1;;65]]
 
 (*{"id.001","id.002","id.003","id.004","id.005","id.006","id.007","id.008","id.009","id.010","id.011","id.012","id.013","id.014","id.015","id.016","id.017","id.018","id.019","id.020","id.021","id.022","id.023","id.024","id.025","id.026","id.027","id.028","id.029","id.030","id.031","id.032","id.033","id.034","id.035","id.036","id.037","id.038","id.040","id.041","id.042","id.043","id.044","id.045","id.046","id.047","id.048","id.049","id.050","id.051","id.053","id.055","id.056","id.057","id.060","id.061","id.052","id.054","id.059","id.062","id.063","2016.Abraham.Gadalla.Save.your.time.and.your","2016.George.Danner.Talking.to.Models","2016.Faisal.Whelpley.Automated.Test.Generator","2016.Enrique.Vílchez.Quesada.Vil.Cretas..package.educational"}*)
 ```
@@ -217,7 +217,7 @@ smat=WeightTermsOfSSparseMatrix[smat,"None","None","Cosine"]
 We can see that the first 61 rows of that matrix correspond to rstudio::conf abstract ID’s:
 
 ```mathematica
-RowNames[smat]\[LeftDoubleBracket]1;;61\[RightDoubleBracket]
+RowNames[smat][[1;;61]]
 
 (*{"id.001","id.002","id.003","id.004","id.005","id.006","id.007","id.008","id.009","id.010","id.011","id.012","id.013","id.014","id.015","id.016","id.017","id.018","id.019","id.020","id.021","id.022","id.023","id.024","id.025","id.026","id.027","id.028","id.029","id.030","id.031","id.032","id.033","id.034","id.035","id.036","id.037","id.038","id.040","id.041","id.042","id.043","id.044","id.045","id.046","id.047","id.048","id.049","id.050","id.051","id.053","id.055","id.056","id.057","id.060","id.061","id.052","id.054","id.059","id.062","id.063"}*)
 ```
@@ -252,7 +252,7 @@ Remark: Note the top left rectangle that indicates high similarity -- the rows a
 Here we sort the matrix rows and columns first and then plot:
 
 ```mathematica
-matTopicsSim2=matTopicsSim\[LeftDoubleBracket]Reverse@Ordering[Normal@SparseArray[matTopicsSim]],Reverse@Ordering[Normal@Transpose@SparseArray[matTopicsSim]]\[RightDoubleBracket];MatrixPlot[matTopicsSim2]
+matTopicsSim2=matTopicsSim[[Reverse@Ordering[Normal@SparseArray[matTopicsSim]],Reverse@Ordering[Normal@Transpose@SparseArray[matTopicsSim]]]];MatrixPlot[matTopicsSim2]
 ```
 
 ![0srrzzrnpv5dk](Diagrams/0srrzzrnpv5dk.png)
@@ -298,7 +298,7 @@ coms=FindGraphCommunities[gr,Method->"Spectral"];
 Choose the cluster with the most rstudio::conf abstracts:
 
 ```mathematica
-focusCom=TakeLargestBy[coms,Length[Intersection[#,focusIDs]]&,2]\[LeftDoubleBracket]1\[RightDoubleBracket];
+focusCom=TakeLargestBy[coms,Length[Intersection[#,focusIDs]]&,2][[1]];
     Shallow[focusCom]
 
 (*{"id.011","id.014","id.016","id.025","id.040","id.049","2018.John.Odden.GIST..Health.Care.Guidelines.Simplicity.CDF","2018.Maureen.Baehr.Ben.Kickert.Analyzing.Public.Data.with.Wolfram.","id.043","id.054",\[LeftSkeleton]15\[RightSkeleton]}*)
@@ -348,7 +348,7 @@ Consider the following abstract from rstudio::conf 2019:
 
 ```mathematica
 focusID="id.019";
-    focusAbstract=Normal[dsRSCAbstracts[Select[#ID==focusID&],"Abstract"]]\[LeftDoubleBracket]1\[RightDoubleBracket]
+    focusAbstract=Normal[dsRSCAbstracts[Select[#ID==focusID&],"Abstract"]][[1]]
 
 (*"Of the many coding puzzles on the web, few focus on the programming skills needed for handling untidy data. During my summer internship at RStudio, I worked with Jenny Bryan to develop a series of data science puzzles known as the \[OpenCurlyDoubleQuote]Tidies of March.\[CloseCurlyDoubleQuote] These puzzles isolate data wrangling tasks into bite-sized pieces to nurture core data science skills such as importing, reshaping, and summarizing data. We also provide access to puzzles and puzzle data directly in R through an accompanying Tidies of March package. I will show how this package models best practices for both data wrangling and project management."*)
 ```
@@ -364,13 +364,13 @@ StringCases[focusAbstract,"workflow",IgnoreCase->True]
 Nevertheless, NN’s of the focus rstudio::conf abstract contain WTC abstracts about data science workflows:
 
 ```mathematica
-nns=Keys@TakeLargest[ColumnSumsAssociation[matTopicsSim\[LeftDoubleBracket]{focusID},All\[RightDoubleBracket]],12]
+nns=Keys@TakeLargest[ColumnSumsAssociation[matTopicsSim[[{focusID},All]]],12]
 
 (*{"id.008","id.031","id.014","id.048","id.004","id.061","id.005","id.017","id.012","2019.Matt.Klimuszka.Gosia.Konwerska.PhD.and.Etienne.Bernard.Meet.Up.Data.Science.Workflows.Wolfram","id.040","2018.Maureen.Baehr.Ben.Kickert.Analyzing.Public.Data.with.Wolfram."}*)
 ```
 
 ```mathematica
-MatrixPlot[matTopicsSim\[LeftDoubleBracket]nns,nns\[RightDoubleBracket]]
+MatrixPlot[matTopicsSim[[nns,nns]]]
 ```
 
 ![1dlut9is1ei31](Diagrams/1dlut9is1ei31.png)
