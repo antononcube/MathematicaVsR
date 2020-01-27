@@ -359,7 +359,7 @@ Consider the following abstract from rstudio::conf 2019:
 
 ```mathematica
 focusID="id.019";
-    focusAbstract=Normal[dsRSCAbstracts[Select[#ID==focusID&],"Abstract"]][[1]]
+focusAbstract=Normal[dsRSCAbstracts[Select[#ID==focusID&],"Abstract"]][[1]]
 
 (*"Of the many coding puzzles on the web, few focus on the programming skills needed for handling untidy data. During my summer internship at RStudio, I worked with Jenny Bryan to develop a series of data science puzzles known as the \[OpenCurlyDoubleQuote]Tidies of March.\[CloseCurlyDoubleQuote] These puzzles isolate data wrangling tasks into bite-sized pieces to nurture core data science skills such as importing, reshaping, and summarizing data. We also provide access to puzzles and puzzle data directly in R through an accompanying Tidies of March package. I will show how this package models best practices for both data wrangling and project management."*)
 ```
