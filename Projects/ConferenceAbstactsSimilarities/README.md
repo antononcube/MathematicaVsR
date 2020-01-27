@@ -1,5 +1,5 @@
-# 
-
+# Conference abstracts similarities
+ 
 Anton Antonov  
 [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction)  
 [MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR)  
@@ -40,7 +40,7 @@ note the square formed top-left in the plot of a similarity matrix based on extr
 
 ![1d5a83m8cghew](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ConferenceAbstactsSimilarities/Mathematica/Diagrams/1d5a83m8cghew.png) 
 
-Here is clustering of a cluster found over the corresponding similarity graph:
+Here is clustering of a cluster found over the similarity graph corresponding to the matrix above:
 
 ![0rba3xgoknkwi](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ConferenceAbstactsSimilarities/Mathematica/Diagrams/0rba3xgoknkwi.png) 
 
