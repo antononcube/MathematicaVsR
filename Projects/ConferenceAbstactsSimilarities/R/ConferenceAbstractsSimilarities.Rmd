@@ -247,9 +247,9 @@ lsDescriptions[ grep("^id.", nns, invert = T, value = T) ]
 ### Packages & repositories
 
 [AAp1] Anton Antonov, 
-[Monadic Latent Semantic Analysis Mathematica packag](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m),
-(2017), 
-[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+[Monadic Latent Semantic Analysis Mathematica packag](https://github.com/antononcube/R-packages/tree/master/LSAMon-R),
+(2019),
+[R-packages at GitHub](https://github.com/antononcube/R-packages).
 
 [AAr1] Anton Antonov,  [MathematicaVsR](https://github.com/antononcube/MathematicaVsR), 2016, GitHub.
 

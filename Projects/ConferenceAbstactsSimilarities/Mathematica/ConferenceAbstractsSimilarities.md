@@ -411,7 +411,9 @@ ResourceFunction["GridTableForm"][Take[KeyTake[aWTCAbstracts,nns],UpTo[3]]]
 (2019), 
 [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
-[AA2] Anton Antonov, Text similarities through bags of words, (2020), 
+[AA2] Anton Antonov, 
+[Text similarities through bags of words](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book/blob/master/Part-3-Example-Applications/Text-similarities-through-bags-of-words.md), 
+(2020), 
 [SimplifiedMachineLearningWorkflows-book at GitHub](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book).
 
 ### Data
