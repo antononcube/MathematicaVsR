@@ -10,7 +10,7 @@ November, 2020
 In this project we discuss and exemplify finding and analyzing similarities between texts using 
 Latent Semantic Analysis (LSA). Both Mathematica and R code is provided.
 
-The LSA workflows are constructed and executed with the software monad LSAMon, \[AA1, AAp1, AAp2\]. 
+The LSA workflows are constructed and executed with the software monads `LSAMon-WL`, \[AA1, AAp1\], and `LSAMon-R`, \[AAp2\].  
 
 The illustrating examples are based on conference abstracts from 
 [rstudio::conf](https://rstudio.com/conference/) 
@@ -33,6 +33,8 @@ Here is a statistical thesaurus for those words:
 ![0az70qt8noeqf](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ConferenceAbstactsSimilarities/Mathematica/Diagrams/0az70qt8noeqf-better.png) 
 
 
+**Remark:** Note that the computed thesaurus entries seem fairly “R-flavored.”
+
 ## Similarity analysis diagrams
 
 As expected the abstracts from rstudio::conf tend to cluster closely -- 
@@ -40,11 +42,11 @@ note the square formed top-left in the plot of a similarity matrix based on extr
 
 ![1d5a83m8cghew](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ConferenceAbstactsSimilarities/Mathematica/Diagrams/1d5a83m8cghew.png) 
 
-Here is similarity graph based on the matrix above:
+Here is a similarity graph based on the matrix above:
 
 ![09y26s6kr3bv9](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ConferenceAbstactsSimilarities/Mathematica/Diagrams/09y26s6kr3bv9.png)  
 
-Here is a "graph communities" clustering of the sub-graph highlighted in the plot above:
+Here is a clustering (by "graph communities") of the sub-graph highlighted in the plot above:
 
 ![0rba3xgoknkwi](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ConferenceAbstactsSimilarities/Mathematica/Diagrams/0rba3xgoknkwi.png) 
 
@@ -100,7 +102,7 @@ Mathematica's matrix plots provide more control and are more readily informative
 ### Sparse matrix objects with named rows and columns 
 
 R's built-in sparse matrices with named rows and columns are great. 
-`LSAMon-WL` utilizes similar, specially implemented sparse matrix object, see \[AA1\]. 
+`LSAMon-WL` utilizes a similar, specially implemented sparse matrix object, see \[AA1, AAp3\]. 
   
   
 ## References
@@ -132,11 +134,16 @@ R's built-in sparse matrices with named rows and columns are great.
 ### Packages
 
 [AAp1] Anton Antonov, 
-[Monadic Latent Semantic Analysis Mathematica packag](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m),
+[Monadic Latent Semantic Analysis Mathematica package](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m),
 (2017), 
 [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
 [AAp2] Anton Antonov, 
-[Monadic Latent Semantic Analysis Mathematica packag](https://github.com/antononcube/R-packages/tree/master/LSAMon-R),
+[Latent Semantic Analysis Monad R package](https://github.com/antononcube/R-packages/tree/master/LSAMon-R),
 (2019), 
 [R-packages at GitHub](https://github.com/antononcube/R-packages).
+
+[AAp3] Anton Antonov,
+[SSparseMatrix Mathematica package](https://github.com/antononcube/MathematicaForPrediction/blob/master/SSparseMatrix.m),
+(2018),
+[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
