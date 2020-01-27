@@ -18,7 +18,7 @@ and
 [Wolfram Technology Conference (WTC)](https://www.wolfram.com/events/technology-conference/2019/), 
 \[AAd1, AAd2\]. 
 Since the number of rstudio::conf abstracts is small and since rstudio::conf 2020 is about to start 
-at the time of preparing this notebook we focus on words and texts from R / RStudio ecosystem of packages and presentations.
+at the time of preparing this project we focus on words and texts from RStudio's ecosystem of packages and presentations.
 
 ## Statistical thesaurus for words from RStudio's ecosystem
 
