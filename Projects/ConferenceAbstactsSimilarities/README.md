@@ -8,7 +8,7 @@ November, 2020
 ## Introduction
 
 In this project we discuss and exemplify finding and analyzing similarities between texts using 
-Latent Semantic Analysis (LSA). Both Mathematica and R code is provided.
+Latent Semantic Analysis (LSA). Both Mathematica and R codes are provided.
 
 The LSA workflows are constructed and executed with the software monads `LSAMon-WL`, \[AA1, AAp1\], and `LSAMon-R`, \[AAp2\].  
 
