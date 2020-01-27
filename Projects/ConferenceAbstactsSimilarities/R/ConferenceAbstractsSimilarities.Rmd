@@ -1,0 +1,257 @@
+---
+title: "Conference Abstracts Similarities"
+author: Anton Antonov
+date: 2020-01-27
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(Matrix)
+library(SparseMatrixRecommender)
+library(LSAMon)
+```
+
+
+# Introduction
+
+In this notebook we discuss and exemplify finding and analyzing similarities between texts using Latent Semantic Analysis (LSA).
+
+The LSA workflows are constructed and executed with the software monad LSAMon, [AA1, AAp1]. 
+A related notebook that uses the same data is [AA2].
+
+The illustrating examples are based on conference abstracts from 
+[rstudio::conf](https://rstudio.com/conference/) 
+and 
+[Wolfram Technology Conference (WTC)](https://www.wolfram.com/events/technology-conference/2019/), 
+[AAd1, AAd2]. 
+Since the number of rstudio::conf abstracts is small and since rstudio::conf 2020 is about to start 
+at the time of preparing this notebook we focus on words and texts from R / RStudio ecosystem of packages and presentations.
+
+This notebook is part of the 
+[MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR) 
+project 
+[“Conference abstracts similarities”](https://github.com/antononcube/MathematicaVsR/tree/master/Projects/ConferenceAbstactsSimilarities), 
+[[AAr1](https://github.com/antononcube/MathematicaVsR)].
+
+## Summary of the computations
+
+   1. Ingest the abstracts data from both conferences.
+
+      1. rstudio::conf 2019.
+
+      0. WTC 2016÷2019.
+
+   0. Apply the standard LSA workflow using LSAMon.
+
+      1. Pick a suitable dimension reduction algorithm by evaluating extracted topics and statistical thesauri.
+
+      0. The statistical thesauri are based on typical R-ecosystem words.
+
+   0. Compute, summarize, and visualize abstract-abstract similarity matrices.
+
+      1. Terms-derived.
+
+      0. Topics-derived.
+
+   0. Find clusters of abstracts using a relational graph made with the topics similarity matrix. ***(TBD..)***
+
+      1. Look closer into a cluster with a fair amount of rstudio::conf abstracts.
+
+   0. Find the Nearest Neighbors (NN's) of a selected rstudio::conf abstract using the topics similarity matrix.
+
+      1. Demonstrate the similarity from LSA’s point of view.
+
+# Data
+
+We have a “large” dataset of $584$ WTC abstracts, and a “small” dataset of $61$ rstudio::conf abstracts.
+
+The abstracts datasets [AAd1] and [AAd2] are provided in [the data folder](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book/tree/master/Data) of the (book) repository, [[AAr2](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book/)].
+
+
+## Read rstudio-conf-2019 abstracts
+
+```{r}
+dfRSCAbstracts <- read.csv( "https://raw.githubusercontent.com/antononcube/SimplifiedMachineLearningWorkflows-book/master/Data/RStudio-conf-2019-abstracts.csv", stringsAsFactors = FALSE )
+dim(dfRSCAbstracts)
+```
+
+```{r}
+dfRSCAbstracts
+```
+
+```{r}
+lsRSCAbstacts <- setNames( dfRSCAbstracts$Abstract, dfRSCAbstracts$ID )
+```
+
+## Read WTC-2019 abstracts
+
+```{r}
+dfWTCAbstracts <- read.csv( "https://raw.githubusercontent.com/antononcube/SimplifiedMachineLearningWorkflows-book/master/Data/Wolfram-Technology-Conference-2016-to-2019-abstracts.csv", stringsAsFactors = FALSE )
+dim(dfWTCAbstracts)
+```
+
+```{r}
+dfWTCAbstracts <- 
+  dfWTCAbstracts %>% 
+  dplyr::filter( nchar(Abstract) > 100 )
+```
+
+```{r}
+dfWTCAbstracts
+```
+
+```{r}
+lsWTCAbstacts <- setNames( dfWTCAbstracts$Abstract, dfWTCAbstracts$ID )
+```
+
+# LSA monad application
+
+## Focus words
+
+For the evaluation of the dimension reduction methods applicability we are going to use the following focus words:
+
+```{r}
+focusWords <- c("cloud", "rstudio", "package", "tidyverse", "dplyr", "analyze", "python", "ggplot2", "markdown", "sql")
+```
+
+## LSA monad object
+
+Join the abstracts from the two conferences:
+
+```{r}
+lsDescriptions <- c( lsRSCAbstacts, lsWTCAbstacts )
+```
+
+```{r}
+lsaObj <- 
+  LSAMonUnit(lsDescriptions) %>% 
+  LSAMonMakeDocumentTermMatrix( stemWordsQ = FALSE, stopWords = stopwords::stopwords() ) %>% 
+  LSAMonApplyTermWeightFunctions( "IDF", "TermFrequency", "Cosine" )
+```
+
+## Topics extraction
+
+After some experimentation we chose to use Non-Negative Matrix Factorization (NNMF) as a dimension reduction method because produces the most sensible entries for the focus words. 
+
+```{r}
+set.seed(12)
+lsaObj <- 
+  lsaObj %>% 
+  LSAMonExtractTopics( numberOfTopics = 36, minNumberOfDocumentsPerTerm = 5, method = "NNMF", maxSteps = 20, profilingQ = FALSE ) %>% 
+  LSAMonEchoTopicsTable( numberOfTableColumns = 6, wideFormQ = TRUE ) 
+```
+
+## Statistical thesauri
+
+With the selected NNMF method we get the following statistical thesauri entries:
+
+```{r}
+lsaObj <- 
+  lsaObj %>% 
+  LSAMonEchoStatisticalThesaurus( words = focusWords, wideFormQ = TRUE )
+```
+
+# Similarity matrices
+
+In this section we compute and plot the similarity matrices based on (i) linear vector space representation, and (ii) LSA topics representation.
+
+## By terms
+
+```{r}
+smat <- lsaObj %>% LSAMonTakeWeightedDocumentTermMatrix 
+dim(smat)
+```
+
+```{r}
+matTermsSim <- smat %*% t(smat)
+Matrix::image(matTermsSim)
+```
+
+
+## By topics
+
+```{r}
+smat <- lsaObj %>% LSAMonTakeW
+smat <- SparseMatrixRecommender::SMRApplyTermWeightFunctions( smat, "None", "None", "Cosine" )
+dim(smat)
+```
+
+```{r}
+matTopicsSim <- smat %*% t(smat)
+Matrix::image(matTopicsSim)
+```
+
+**Remark:** Note the top left rectangle that indicates high similarity -- the rows and columns of that rectangle correspond to the rstudio::conf abstracts. 
+
+We can see that the last 61 rows of that matrix correspond to rstudio::conf abstract ID's:
+
+```{r}
+rownames(matTopicsSim)[(nrow(matTopicsSim)-60):nrow(matTopicsSim)]
+```
+
+
+# Nearest neighbors for a focus abstract
+
+In this section we look closer into the Nearest Neighbors (NN’s) of an arbitrarily picked rstudio::conf abstract. We want to demonstrate the semantic similarity of the found NN’s -- both from rstudio::conf and WTC.
+
+Consider the following abstract from rstudio::conf 2019:
+
+```{r}
+focusID <- "id.019"
+focusAbstract <- lsDescriptions[[focusID]]
+focusAbstract
+```
+
+Abstract’s talk is clearly about data science workflows. The word “workflow” does not appear in the abstract:
+
+```{r}
+grep( "workflow", focusAbstract, ignore.case = TRUE )
+```
+
+Nevertheless, NN’s of the focus rstudio::conf abstract contain WTC abstracts about data science workflows:
+
+```{r}
+nns <- colnames(matTopicsSim)[ order( -colSums(matTopicsSim[focusID,,drop=F]))[1:9] ]
+nns
+```
+
+```{r}
+lsDescriptions[ grep("^id.", nns, invert = T, value = T) ]
+```
+
+# References
+
+### Articles
+
+[AA1] Anton Antonov, 
+[A monad for Latent Semantic Analysis workflows](https://github.com/antononcube/MathematicaForPrediction/blob/master/MarkdownDocuments/A-monad-for-Latent-Semantic-Analysis-workflows.md), 
+(2019), 
+[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+
+[AA2] Anton Antonov, Text similarities through bags of words, (2020), 
+[SimplifiedMachineLearningWorkflows-book at GitHub](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book).
+
+### Data
+
+[AAd1] Anton Antonov, 
+[RStudio::conf-2019-abstracts.csv](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book/blob/master/Data/RStudio-conf-2019-abstracts.csv), 
+(2020), 
+[SimplifiedMachineLearningWorkflows-book at GitHub](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book).
+
+[AAd2] Anton Antonov, 
+[Wolfram-Technology-Conference-2016-to-2019-abstracts.csv](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book/blob/master/Data/Wolfram-Technology-Conference-2016-to-2019-abstracts.csv), 
+(2020), 
+[SimplifiedMachineLearningWorkflows-book at GitHub](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book).
+
+### Packages & repositories
+
+[AAp1] Anton Antonov, 
+[Monadic Latent Semantic Analysis Mathematica packag](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m),
+(2017), 
+[MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
+
+[AAr1] Anton Antonov,  [MathematicaVsR](https://github.com/antononcube/MathematicaVsR), 2016, GitHub.
+
+[AAr2] Anton Antonov, [Simplified Machine Learning Workflows](https://github.com/antononcube/SimplifiedMachineLearningWorkflows-book), 2019, GitHub.
+
