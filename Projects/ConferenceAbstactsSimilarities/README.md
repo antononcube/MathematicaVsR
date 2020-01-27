@@ -40,7 +40,11 @@ note the square formed top-left in the plot of a similarity matrix based on extr
 
 ![1d5a83m8cghew](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ConferenceAbstactsSimilarities/Mathematica/Diagrams/1d5a83m8cghew.png) 
 
-Here is clustering of a cluster found over the similarity graph corresponding to the matrix above:
+Here is similarity graph based on the matrix above:
+
+![09y26s6kr3bv9](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ConferenceAbstactsSimilarities/Mathematica/Diagrams/09y26s6kr3bv9.png)  
+
+Here is a "graph communities" clustering of the sub-graph highlighted in the plot above:
 
 ![0rba3xgoknkwi](https://github.com/antononcube/MathematicaVsR/raw/master/Projects/ConferenceAbstactsSimilarities/Mathematica/Diagrams/0rba3xgoknkwi.png) 
 
