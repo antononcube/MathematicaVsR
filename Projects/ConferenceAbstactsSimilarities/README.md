@@ -59,8 +59,46 @@ Here is clustering of a cluster found over the similarity graph corresponding to
 
 ## Comparison observations
 
-***TBD...***
+### LSA pipelines specifications
 
+The packages `LSAMon-WL`, \[AAp1\], and `LSAMon-R`, \[AAp2\], make the comparison easy -- 
+the codes of the specified workflows are nearly identical.
+
+Here is the Mathematica code:
+
+```mathematica
+lsaObj =
+  LSAMonUnit[aDesriptions]⟹
+   LSAMonMakeDocumentTermMatrix[{}, Automatic]⟹
+   LSAMonEchoDocumentTermMatrixStatistics⟹
+   LSAMonApplyTermWeightFunctions["IDF", "TermFrequency", "Cosine"]⟹
+   LSAMonExtractTopics["NumberOfTopics" -> 36, "MinNumberOfDocumentsPerTerm" -> 2, Method -> "ICA", MaxSteps -> 200]⟹
+   LSAMonEchoTopicsTable["NumberOfTableColumns" -> 6];
+```
+    
+Here is the R code:
+
+```r
+lsaObj <- 
+  LSAMonUnit(lsDescriptions) %>% 
+  LSAMonMakeDocumentTermMatrix( stemWordsQ = FALSE, stopWords = stopwords::stopwords() ) %>% 
+  LSAMonApplyTermWeightFunctions( "IDF", "TermFrequency", "Cosine" ) 
+  LSAMonExtractTopics( numberOfTopics = 36, minNumberOfDocumentsPerTerm = 5, method = "NNMF", maxSteps = 20, profilingQ = FALSE ) %>% 
+  LSAMonEchoTopicsTable( numberOfTableColumns = 6, wideFormQ = TRUE ) 
+```
+
+### Graphs and graphics
+
+Mathematica's built-in graph functions make the exploration of the similarities much easier. (Than using R.)
+
+Mathematica's matrix plots provide more control and are more readily informative.
+
+### Sparse matrix objects with named rows and columns 
+
+R's built-in sparse matrices with named rows and columns are great. 
+`LSAMon-WL` utilizes similar, specially implemented sparse matrix object, see \[AA1\]. 
+  
+  
 ## References
 
 ### Articles
