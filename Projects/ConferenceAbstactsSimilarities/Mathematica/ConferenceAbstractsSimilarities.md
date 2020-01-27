@@ -431,7 +431,7 @@ ResourceFunction["GridTableForm"][Take[KeyTake[aWTCAbstracts,nns],UpTo[3]]]
 ### Packages & repositories
 
 [AAp1] Anton Antonov, 
-[Monadic Latent Semantic Analysis Mathematica packag](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m),
+[Monadic Latent Semantic Analysis Mathematica package](https://github.com/antononcube/MathematicaForPrediction/blob/master/MonadicProgramming/MonadicLatentSemanticAnalysis.m),
 (2017), 
 [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction).
 
