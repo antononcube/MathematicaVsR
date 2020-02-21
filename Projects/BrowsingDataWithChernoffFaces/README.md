@@ -2,7 +2,7 @@
 # Browsing data with Chernoff faces
 Anton Antonov  
 [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction)  
-[MathematicaVsR project at GitHub](https://github.com/antononcube/MathematicaVsR/tree/master/Projects)  
+[MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR)  
 November, 2016
 
 ## Introduction
