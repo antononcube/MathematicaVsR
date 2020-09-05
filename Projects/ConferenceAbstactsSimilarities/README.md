@@ -3,7 +3,7 @@
 Anton Antonov  
 [MathematicaForPrediction at GitHub](https://github.com/antononcube/MathematicaForPrediction)  
 [MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR)  
-November, 2020
+January 2020
 
 ## Introduction
 
