@@ -1,7 +1,7 @@
 # Crypto-currencies data acquisition with visualization
 
 Anton Antonov   
-https://github.com/antononcube/MathematicaVsR/   
+[MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR/)   
 [MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com)   
 June 2021
 
