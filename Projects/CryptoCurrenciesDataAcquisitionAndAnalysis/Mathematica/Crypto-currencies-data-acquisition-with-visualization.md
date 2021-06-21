@@ -58,7 +58,7 @@ Make a dataset:
 dsCryptoCurrencies = Dataset[dsCryptoCurrencies][All, AssociationThread[dsCryptoCurrenciesColumnNames[[1 ;; -3]], #] &]
 ```
 
-![027jtuv769fln](Diagrams/027jtuv769fln.png)
+![027jtuv769fln](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/027jtuv769fln.png)
 
 ### Get all time series
 
@@ -93,7 +93,7 @@ Check we good the data with random sample:
 RandomSample[#, 6] & /@ KeyTake[aCryptoCurrenciesDataRaw, RandomChoice[Keys@aCryptoCurrenciesDataRaw]]
 ```
 
-![12a3tm9n7hwhw](Diagrams/12a3tm9n7hwhw.png)
+![12a3tm9n7hwhw](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/12a3tm9n7hwhw.png)
 
 Here we add the crypto-currencies symbols and convert date strings into date objects.
 
@@ -113,7 +113,7 @@ In this section we compute the summary over **all** datasets:
 ResourceFunction["RecordsSummary"][Join @@ Values[aCryptoCurrenciesData], "MaxTallies" -> 30]
 ```
 
-![05np9dmf305fp](Diagrams/05np9dmf305fp.png)
+![05np9dmf305fp](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/05np9dmf305fp.png)
 
 ### Plots
 
@@ -134,7 +134,7 @@ Map[
  ]
 ```
 
-![0xx3qb97hg2w1](Diagrams/0xx3qb97hg2w1.png)
+![0xx3qb97hg2w1](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/0xx3qb97hg2w1.png)
 
 Here we plot the volume time series for each crypto-currency for the last 120 days:
 
@@ -152,7 +152,7 @@ Map[
  ]
 ```
 
-![0djptbh8lhz4e](Diagrams/0djptbh8lhz4e.png)
+![0djptbh8lhz4e](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/0djptbh8lhz4e.png)
 
 ## data.bitcoinity.org
 
@@ -220,7 +220,7 @@ dsBTCPriceData =
   ResourceFunction["ImportCSVToDataset"][stDBOURL[Join[aDBODefaultParameters, <|"currency" -> "EUR", "timeUnit" -> "hour", "timeSpan" -> "7d", "exchange" -> "coinbase"|>]]]
 ```
 
-![0xcsh7gmkf1q5](Diagrams/0xcsh7gmkf1q5.png)
+![0xcsh7gmkf1q5](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/0xcsh7gmkf1q5.png)
 
 Here is a summary:
 
@@ -228,7 +228,7 @@ Here is a summary:
 ResourceFunction["RecordsSummary"][dsBTCPriceData]
 ```
 
-![0rzy81vbf5o23](Diagrams/0rzy81vbf5o23.png)
+![0rzy81vbf5o23](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/0rzy81vbf5o23.png)
 
 #### Volume data
 
@@ -239,7 +239,7 @@ dsBTCVolumeData =
   ResourceFunction["ImportCSVToDataset"][stDBOURL[Join[aDBODefaultParameters, <|"dataType" -> Volume, "timeUnit" -> "day", "timeSpan" -> "30d", "exchange" -> "all"|>]]]
 ```
 
-![1scvwhiftq8m2](Diagrams/1scvwhiftq8m2.png)
+![1scvwhiftq8m2](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/1scvwhiftq8m2.png)
 
 Here is a summary:
 
@@ -247,7 +247,7 @@ Here is a summary:
 ResourceFunction["RecordsSummary"][dsBTCVolumeData]
 ```
 
-![1bmbadd8up36a](Diagrams/1bmbadd8up36a.png)
+![1bmbadd8up36a](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/1bmbadd8up36a.png)
 
 ### Plots
 
@@ -259,7 +259,7 @@ Here we extract the non-time columns in the tabular price data obtained above an
 DateListPlot[Association[# -> Normal[dsBTCPriceData[All, {"Time", #}][Values]] & /@Rest[Normal[Keys[dsBTCPriceData[[1]]]]]], AspectRatio -> 1/4, ImageSize -> Large]
 ```
 
-![136hrgyroy246](Diagrams/136hrgyroy246.png)
+![136hrgyroy246](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/136hrgyroy246.png)
 
 #### Volume data
 
@@ -269,7 +269,7 @@ Here we extract the non-time columns (corresponding to exchanges) in the tabular
 DateListPlot[Association[# -> Normal[dsBTCVolumeData[All, {"Time", #}][Values]] & /@ Rest[Normal[Keys[dsBTCVolumeData[[1]]]]]], PlotRange -> All, AspectRatio -> 1/4, ImageSize -> Large]
 ```
 
-![1tz1hw81b2930](Diagrams/1tz1hw81b2930.png)
+![1tz1hw81b2930](./Diagrams/Crypto-currencies-data-acquisition-with-visualization/1tz1hw81b2930.png)
 
 ## References
 
