@@ -59,7 +59,7 @@ ResourceFunction["CryptocurrencyData"]["CryptocurrencyNames"]
 Row[DateListPlot[FinancialData[#, "Jan 1 2021"], ImageSize -> Medium, AspectRatio -> 1/4, PlotLabel -> #] & /@ {"BTC", "ETH"}]
 ```
 
-![02bue86eonuo0](./Diagrams/Cryptocurrencies-data-explorations/02bue86eonuo0.png)
+![02bue86eonuo0](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/02bue86eonuo0.png)
 
 ## Significant cryptocurrencies
 
@@ -79,7 +79,7 @@ Here is a summary of the cryptocurrencies we consider (from [Yahoo Finance](http
 dsCCSummary = ResourceFunction["CryptocurrencyData"][All, "Summary"]
 ```
 
-![0u3re74xw7086](./Diagrams/Cryptocurrencies-data-explorations/0u3re74xw7086.png)
+![0u3re74xw7086](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0u3re74xw7086.png)
 
 Here is the summary of summary dataset above:
 
@@ -87,7 +87,7 @@ Here is the summary of summary dataset above:
 ResourceFunction["RecordsSummary"][dsCCSummary]
 ```
 
-![14gue3qibxrf7](./Diagrams/Cryptocurrencies-data-explorations/14gue3qibxrf7.png)
+![14gue3qibxrf7](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/14gue3qibxrf7.png)
 
 Here is a Pareto principle adherence plot for the cryptocurrency market caps:
 
@@ -95,7 +95,7 @@ Here is a Pareto principle adherence plot for the cryptocurrency market caps:
 aMCaps = Normal[dsCCSummary[Association, StringSplit[#Symbol, "-"][[1]] -> #["Market Cap"] &]]; ResourceFunction["ParetoPrinciplePlot"][aMCaps, PlotRange -> All, PlotLabel -> "Pareto principle for cryptocurrency market caps"]
 ```
 
-![0xgj73uot9hb1](./Diagrams/Cryptocurrencies-data-explorations/0xgj73uot9hb1.png)
+![0xgj73uot9hb1](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0xgj73uot9hb1.png)
 
 Here is the Pareto statistic for the top 12 cryptocurrencies:
 
@@ -114,7 +114,7 @@ startDate = DatePlus[Now, -Quantity[2, "Weeks"]]; aMeans = ReverseSort[Associati
 ResourceFunction["RecordsSummary"][aMeans, Thread -> True]
 ```
 
-![1rpeb683tls42](./Diagrams/Cryptocurrencies-data-explorations/1rpeb683tls42.png)
+![1rpeb683tls42](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1rpeb683tls42.png)
 
 Pareto principle adherence plot:
 
@@ -122,7 +122,7 @@ Pareto principle adherence plot:
 ResourceFunction["ParetoPrinciplePlot"][aMeans, PlotRange -> All, PlotLabel -> "Pareto principle for cryptocurrency closing prices"]
 ```
 
-![1a9fsea677xld](./Diagrams/Cryptocurrencies-data-explorations/1a9fsea677xld.png)
+![1a9fsea677xld](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1a9fsea677xld.png)
 
 Here are the Pareto statistic values for the top 12 cryptocurrencies:
 
@@ -138,7 +138,7 @@ Plot the daily closing prices of top cryptocurrencies since January 2018:
 DateListPlot[Log10 /@ Association[# -> ResourceFunction["CryptocurrencyData"][#, "Close", "Jan 1, 2018"] & /@ Keys[aCCTop]], PlotLabel -> "lg of crytocurrencies daily closing prices, USD", PlotTheme -> "Detailed", PlotRange -> All]
 ```
 
-![19tfy1oj2yrs7](./Diagrams/Cryptocurrencies-data-explorations/19tfy1oj2yrs7.png)
+![19tfy1oj2yrs7](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/19tfy1oj2yrs7.png)
 
 ### By trading volume
 
@@ -149,7 +149,7 @@ startDate = DatePlus[Now, -Quantity[2, "Weeks"]]; aMeans = ReverseSort[Associati
 ResourceFunction["RecordsSummary"][aMeans, Thread -> True]
 ```
 
-![1lnrdt94mofry](./Diagrams/Cryptocurrencies-data-explorations/1lnrdt94mofry.png)
+![1lnrdt94mofry](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1lnrdt94mofry.png)
 
 Pareto principle adherence plot:
 
@@ -157,7 +157,7 @@ Pareto principle adherence plot:
 ResourceFunction["ParetoPrinciplePlot"][aMeans, PlotRange -> {0, 1.1},PlotRange -> All, PlotLabel -> "Pareto principle for cryptocurrency trading volumes"]
 ```
 
-![0nvcws0qh5hum](./Diagrams/Cryptocurrencies-data-explorations/0nvcws0qh5hum.png)
+![0nvcws0qh5hum](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0nvcws0qh5hum.png)
 
 Here are the Pareto statistic values for the top 12 cryptocurrencies:
 
@@ -173,7 +173,7 @@ Plot the daily closing prices of top cryptocurrencies since January 2018:
 DateListPlot[Log10 /@ Association[# -> ResourceFunction["CryptocurrencyData"][#, "Volume", "Jan 1, 2018"] & /@ Keys[aCCTop]], PlotLabel -> "lg of cryptocurrencies trading volumes", PlotTheme -> "Detailed", PlotRange -> {5, Automatic}]
 ```
 
-![1tns5zrq560q7](./Diagrams/Cryptocurrencies-data-explorations/1tns5zrq560q7.png)
+![1tns5zrq560q7](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1tns5zrq560q7.png)
 
 ## Related events
 
@@ -198,7 +198,7 @@ dsEventData = dsEventData[All, Join[Prepend[#, "DateObject" -> DateObject[#Date]
 dsEventData = dsEventData[SortBy[#DateObject &]]
 ```
 
-![1qjdxqriy9jbj](./Diagrams/Cryptocurrencies-data-explorations/1qjdxqriy9jbj.png)
+![1qjdxqriy9jbj](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1qjdxqriy9jbj.png)
 
 ## Cryptocurrency time series with events
 
@@ -226,7 +226,7 @@ Here are the summaries for prices:
 ResourceFunction["GridTableForm"][Map[ResourceFunction["RecordsSummary"][#["Values"], "USD"] &, #] & /@ <|"BTC" -> aBTCPrices, "ETH" -> aETHPrices|>]
 ```
 
-![0klkuvia1jexo](./Diagrams/Cryptocurrencies-data-explorations/0klkuvia1jexo.png)
+![0klkuvia1jexo](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0klkuvia1jexo.png)
 
 Here are the summaries for trading volumes:
 
@@ -234,7 +234,7 @@ Here are the summaries for trading volumes:
 ResourceFunction["RecordsSummary"][#["Values"], "USD"] & /@ aCCVolume
 ```
 
-![10xmepjcwrxdn](./Diagrams/Cryptocurrencies-data-explorations/10xmepjcwrxdn.png)
+![10xmepjcwrxdn](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/10xmepjcwrxdn.png)
 
 Here we plot the cryptocurrency events with together with the Bitcoin (BTC) price time series:
 
@@ -242,7 +242,7 @@ Here we plot the cryptocurrency events with together with the Bitcoin (BTC) pric
 CryptocurrencyPlot[{aBTCPrices, dsEventData}, PlotLabel -> "BTC daily prices", ImageSize -> 1200]
 ```
 
-![0gnba7mxklpo0](./Diagrams/Cryptocurrencies-data-explorations/0gnba7mxklpo0.png)
+![0gnba7mxklpo0](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0gnba7mxklpo0.png)
 
 Here we plot the cryptocurrency events with together with the Ether (ETH) price time series:
 
@@ -250,7 +250,7 @@ Here we plot the cryptocurrency events with together with the Ether (ETH) price 
 CryptocurrencyPlot[{aETHPrices, dsEventData}, PlotRange -> {0.95, 1.05} MinMax[aETHPrices[[1]]["Values"]], PlotLabel -> "BTC daily prices", ImageSize -> 1200]
 ```
 
-![0dfaqwvvggjcf](./Diagrams/Cryptocurrencies-data-explorations/0dfaqwvvggjcf.png)
+![0dfaqwvvggjcf](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0dfaqwvvggjcf.png)
 
 Here we plot the cryptocurrency events with together with the BTC trading volume time series:
 
@@ -258,7 +258,7 @@ Here we plot the cryptocurrency events with together with the BTC trading volume
 CryptocurrencyPlot[{aCCVolume, dsEventData}, PlotLabel -> "BTC and ETH trading volumes", ImageSize -> 1200]
 ```
 
-![1ltpksb32ajim](./Diagrams/Cryptocurrencies-data-explorations/1ltpksb32ajim.png)
+![1ltpksb32ajim](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1ltpksb32ajim.png)
 
 
 
@@ -348,7 +348,7 @@ matVals = Association["SparseMatrix" -> SparseArray[Values@Map[#["Values"]/Max[#
 HeatmapPlot[Map[# /. x_Association :> Keys[x] &, matVals], Dendrogram -> {True, False}, DistanceFunction -> {CosineDistance, None}, ImageSize -> 1200]
 ```
 
-![1uktoasdy8urt](./Diagrams/Cryptocurrencies-data-explorations/1uktoasdy8urt.png)
+![1uktoasdy8urt](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1uktoasdy8urt.png)
 
 Derive correlation triplets using SpearmanRho :
 
@@ -364,7 +364,7 @@ Show summary of the correlation triplets:
 ResourceFunction["RecordsSummary"][dsCorTriplets]
 ```
 
-![0zhrnqlozgni6](./Diagrams/Cryptocurrencies-data-explorations/0zhrnqlozgni6.png)
+![0zhrnqlozgni6](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0zhrnqlozgni6.png)
 
 Show correlations that too high or too low:
 
@@ -372,7 +372,7 @@ Show correlations that too high or too low:
 Dataset[Union[Normal@dsCorTriplets[Select[Abs[#Correlation] > 0.85 &]], "SameTest" -> (Sort[Values@#1] == Sort[Values@#2] &)]][ReverseSortBy[#Correlation &]]
 ```
 
-![1g8hz1lewgpx7](./Diagrams/Cryptocurrencies-data-explorations/1g8hz1lewgpx7.png)
+![1g8hz1lewgpx7](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1g8hz1lewgpx7.png)
 
 Cross tabulate the correlation triplets and show the corresponding dataset:
 
@@ -380,7 +380,7 @@ Cross tabulate the correlation triplets and show the corresponding dataset:
 dsMatCor = ResourceFunction["CrossTabulate"][dsCorTriplets]
 ```
 
-![12idrdt53tzmc](./Diagrams/Cryptocurrencies-data-explorations/12idrdt53tzmc.png)
+![12idrdt53tzmc](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/12idrdt53tzmc.png)
 
 Cross tabulate the correlation triplets and plot the corresponding matrix with heat-map plot:
 
@@ -389,7 +389,7 @@ matCor1 = ResourceFunction["CrossTabulate"][dsCorTriplets, "Sparse" -> True];
 gr1 = HeatmapPlot[matCor1, Dendrogram -> {True, True}, DistanceFunction -> {CosineDistance, CosineDistance}, ImageSize -> Medium, PlotLabel -> "Opening price"]
 ```
 
-![0ufk6pcr1j3da](./Diagrams/Cryptocurrencies-data-explorations/0ufk6pcr1j3da.png)
+![0ufk6pcr1j3da](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0ufk6pcr1j3da.png)
 
 ### Trading volume time series
 
@@ -400,7 +400,7 @@ matVals = Association["SparseMatrix" -> SparseArray[Values@Map[#["Values"]/Max[#
 HeatmapPlot[Map[# /. x_Association :> Keys[x] &, matVals], Dendrogram -> {True, False}, DistanceFunction -> {CosineDistance, None}, ImageSize -> 1200]
 ```
 
-![1ktjec1jdlsrg](./Diagrams/Cryptocurrencies-data-explorations/1ktjec1jdlsrg.png)
+![1ktjec1jdlsrg](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1ktjec1jdlsrg.png)
 
 Derive correlation triplets using SpearmanRho :
 
@@ -416,7 +416,7 @@ Show summary of the correlation triplets:
 ResourceFunction["RecordsSummary"][dsCorTriplets]
 ```
 
-![0un433xvnvbm4](./Diagrams/Cryptocurrencies-data-explorations/0un433xvnvbm4.png)
+![0un433xvnvbm4](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0un433xvnvbm4.png)
 
 Show correlations that too high or too low:
 
@@ -424,7 +424,7 @@ Show correlations that too high or too low:
 Dataset[Union[Normal@dsCorTriplets[Select[Abs[#Correlation] > 0.85 &]], "SameTest" -> (Sort[Values@#1] == Sort[Values@#2] &)]][ReverseSortBy[#Correlation &]]
 ```
 
-![191tqczjvp1gp](./Diagrams/Cryptocurrencies-data-explorations/191tqczjvp1gp.png)
+![191tqczjvp1gp](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/191tqczjvp1gp.png)
 
 Cross tabulate the correlation triplets and show the corresponding dataset:
 
@@ -432,7 +432,7 @@ Cross tabulate the correlation triplets and show the corresponding dataset:
 dsMatCor = ResourceFunction["CrossTabulate"][dsCorTriplets]
 ```
 
-![1wmxdysnjdvj1](./Diagrams/Cryptocurrencies-data-explorations/1wmxdysnjdvj1.png)
+![1wmxdysnjdvj1](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1wmxdysnjdvj1.png)
 
 Cross tabulate the correlation triplets and plot the corresponding matrix with heat-map plot:
 
@@ -441,7 +441,7 @@ matCor2 = ResourceFunction["CrossTabulate"][dsCorTriplets, "Sparse" -> True];
 gr2 = HeatmapPlot[matCor2, Dendrogram -> {True, True}, DistanceFunction -> {CosineDistance, CosineDistance}, ImageSize -> Medium, PlotLabel -> "Trading volume"]
 ```
 
-![1nywjggle91rq](./Diagrams/Cryptocurrencies-data-explorations/1nywjggle91rq.png)
+![1nywjggle91rq](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1nywjggle91rq.png)
 
 ### Observations
 
@@ -451,7 +451,7 @@ gr2 = HeatmapPlot[matCor2, Dendrogram -> {True, True}, DistanceFunction -> {Cosi
 Row[{gr1, gr2}]
 ```
 
-![1q472yp7r4c04](./Diagrams/Cryptocurrencies-data-explorations/1q472yp7r4c04.png)
+![1q472yp7r4c04](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1q472yp7r4c04.png)
 
 Generally speaking, the two clustering patterns a different. This one of the reasons to do the nearest neighbor graph clusterings below.
 
@@ -477,7 +477,7 @@ Here we plot the graphs with clusters:
 ResourceFunction["GridTableForm"][List @@@ Normal[CommunityGraphPlot[#, ImageSize -> 800] & /@ aNNGraphs], TableHeadings -> {"Property", "Communities of nearest neighbors graph"}, Background -> White, Dividers -> All]
 ```
 
-![1fl5f7a50gkvu](./Diagrams/Cryptocurrencies-data-explorations/1fl5f7a50gkvu.png)
+![1fl5f7a50gkvu](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1fl5f7a50gkvu.png)
 
 Here are the corresponding time series plots for each cluster:
 
@@ -497,7 +497,7 @@ aClusterPlots =
 ResourceFunction["GridTableForm"][List @@@ Normal[aClusterPlots], TableHeadings -> {"Property", "Cluster plots"}, Background -> White, Dividers -> All]
 ```
 
-![0j8tmvwyygijv](./Diagrams/Cryptocurrencies-data-explorations/0j8tmvwyygijv.png)
+![0j8tmvwyygijv](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/0j8tmvwyygijv.png)
 
 ## Other types of analysis
 
