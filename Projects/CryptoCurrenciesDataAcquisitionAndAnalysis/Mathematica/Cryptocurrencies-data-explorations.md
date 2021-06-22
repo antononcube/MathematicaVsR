@@ -1,8 +1,8 @@
 # Cryptocurrencies data explorations
 
-Anton Antonov
-[MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR/)
-[MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com)
+Anton Antonov   
+[MathematicaVsR at GitHub](https://github.com/antononcube/MathematicaVsR/)   
+[MathematicaForPrediction at WordPress](https://mathematicaforprediction.wordpress.com)   
 June 2021
 
 ## Introduction
@@ -453,7 +453,8 @@ Row[{gr1, gr2}]
 
 ![1q472yp7r4c04](https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Cryptocurrencies-data-explorations/1q472yp7r4c04.png)
 
-Generally speaking, the two clustering patterns a different. This one of the reasons to do the nearest neighbor graph clusterings below.
+Generally speaking, the two clustering patterns are different. 
+This is one of the reasons to do the nearest neighbor graph clusterings below.
 
 ## Nearest neighbors graphs
 
