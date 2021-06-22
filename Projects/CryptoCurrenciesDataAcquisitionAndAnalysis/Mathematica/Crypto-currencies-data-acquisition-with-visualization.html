@@ -33,7 +33,7 @@ June 2021</p>
 <p>Make a dataset:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dsCryptoCurrencies <span class="ex">=</span> Dataset<span class="op">[</span>dsCryptoCurrencies<span class="op">][</span><span class="cn">All</span><span class="op">,</span> AssociationThread<span class="op">[</span>dsCryptoCurrenciesColumnNames<span class="op">[[</span><span class="dv">1</span> ;; <span class="sc">-</span><span class="dv">3</span><span class="op">]],</span> #<span class="op">]</span> &amp;<span class="op">]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/027jtuv769fln.png" alt="027jtuv769fln" /><figcaption aria-hidden="true">027jtuv769fln</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/027jtuv769fln.png" alt="027jtuv769fln" /><figcaption aria-hidden="true">027jtuv769fln</figcaption>
 </figure>
 <h3 id="get-all-time-series">Get all time series</h3>
 <p>In this section we get all the crypto-currencies time series from [YF1].</p>
@@ -55,7 +55,7 @@ June 2021</p>
 <p>Check we good the data with random sample:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">RandomSample</span><span class="op">[</span>#<span class="op">,</span> <span class="dv">6</span><span class="op">]</span> &amp; <span class="sc">/</span>@ KeyTake<span class="op">[</span>aCryptoCurrenciesDataRaw<span class="op">,</span> <span class="fu">RandomChoice</span><span class="op">[</span>Keys@aCryptoCurrenciesDataRaw<span class="op">]]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/12a3tm9n7hwhw.png" alt="12a3tm9n7hwhw" /><figcaption aria-hidden="true">12a3tm9n7hwhw</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/12a3tm9n7hwhw.png" alt="12a3tm9n7hwhw" /><figcaption aria-hidden="true">12a3tm9n7hwhw</figcaption>
 </figure>
 <p>Here we add the crypto-currencies symbols and convert date strings into date objects.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AbsoluteTiming</span><span class="op">[</span></span>
@@ -67,7 +67,7 @@ June 2021</p>
 <p>In this section we compute the summary over <strong>all</strong> datasets:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ResourceFunction<span class="op">[</span><span class="st">&quot;RecordsSummary&quot;</span><span class="op">][</span><span class="fu">Join</span> @@ Values<span class="op">[</span>aCryptoCurrenciesData<span class="op">],</span> <span class="st">&quot;MaxTallies&quot;</span> <span class="ot">-&gt;</span> <span class="dv">30</span><span class="op">]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/05np9dmf305fp.png" alt="05np9dmf305fp" /><figcaption aria-hidden="true">05np9dmf305fp</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/05np9dmf305fp.png" alt="05np9dmf305fp" /><figcaption aria-hidden="true">05np9dmf305fp</figcaption>
 </figure>
 <h3 id="plots">Plots</h3>
 <p>Here we plot the “Low” and “High” price time series for each crypto-currency for the last 120 days:</p>
@@ -84,7 +84,7 @@ June 2021</p>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  aCryptoCurrenciesData </span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a> <span class="op">]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/0xx3qb97hg2w1.png" alt="0xx3qb97hg2w1" /><figcaption aria-hidden="true">0xx3qb97hg2w1</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/0xx3qb97hg2w1.png" alt="0xx3qb97hg2w1" /><figcaption aria-hidden="true">0xx3qb97hg2w1</figcaption>
 </figure>
 <p>Here we plot the volume time series for each crypto-currency for the last 120 days:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nDays <span class="ex">=</span> <span class="dv">120</span>;</span>
@@ -99,7 +99,7 @@ June 2021</p>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  aCryptoCurrenciesData </span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a> <span class="op">]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/0djptbh8lhz4e.png" alt="0djptbh8lhz4e" /><figcaption aria-hidden="true">0djptbh8lhz4e</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/0djptbh8lhz4e.png" alt="0djptbh8lhz4e" /><figcaption aria-hidden="true">0djptbh8lhz4e</figcaption>
 </figure>
 <h2 id="data.bitcoinity.org">data.bitcoinity.org</h2>
 <p>In this section we ingest crypto-currency data from <a href="https://data.bitcoinity.org/">data.bitcoinity.org</a>, [DBO1].</p>
@@ -128,37 +128,37 @@ June 2021</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dsBTCPriceData <span class="ex">=</span> </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  ResourceFunction<span class="op">[</span><span class="st">&quot;ImportCSVToDataset&quot;</span><span class="op">][</span>stDBOURL<span class="op">[</span><span class="fu">Join</span><span class="op">[</span>aDBODefaultParameters<span class="op">,</span> &lt;<span class="sc">|</span><span class="st">&quot;currency&quot;</span> <span class="ot">-&gt;</span> <span class="st">&quot;EUR&quot;</span><span class="op">,</span> <span class="st">&quot;timeUnit&quot;</span> <span class="ot">-&gt;</span> <span class="st">&quot;hour&quot;</span><span class="op">,</span> <span class="st">&quot;timeSpan&quot;</span> <span class="ot">-&gt;</span> <span class="st">&quot;7d&quot;</span><span class="op">,</span> <span class="st">&quot;exchange&quot;</span> <span class="ot">-&gt;</span> <span class="st">&quot;coinbase&quot;</span><span class="sc">|</span>&gt;<span class="op">]]]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/0xcsh7gmkf1q5.png" alt="0xcsh7gmkf1q5" /><figcaption aria-hidden="true">0xcsh7gmkf1q5</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/0xcsh7gmkf1q5.png" alt="0xcsh7gmkf1q5" /><figcaption aria-hidden="true">0xcsh7gmkf1q5</figcaption>
 </figure>
 <p>Here is a summary:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ResourceFunction<span class="op">[</span><span class="st">&quot;RecordsSummary&quot;</span><span class="op">][</span>dsBTCPriceData<span class="op">]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/0rzy81vbf5o23.png" alt="0rzy81vbf5o23" /><figcaption aria-hidden="true">0rzy81vbf5o23</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/0rzy81vbf5o23.png" alt="0rzy81vbf5o23" /><figcaption aria-hidden="true">0rzy81vbf5o23</figcaption>
 </figure>
 <h4 id="volume-data">Volume data</h4>
 <p>Here we retrieve data by overwriting the parameters for data type, time unit, time span, and exchange:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dsBTCVolumeData <span class="ex">=</span> </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  ResourceFunction<span class="op">[</span><span class="st">&quot;ImportCSVToDataset&quot;</span><span class="op">][</span>stDBOURL<span class="op">[</span><span class="fu">Join</span><span class="op">[</span>aDBODefaultParameters<span class="op">,</span> &lt;<span class="sc">|</span><span class="st">&quot;dataType&quot;</span> <span class="ot">-&gt;</span> Volume<span class="op">,</span> <span class="st">&quot;timeUnit&quot;</span> <span class="ot">-&gt;</span> <span class="st">&quot;day&quot;</span><span class="op">,</span> <span class="st">&quot;timeSpan&quot;</span> <span class="ot">-&gt;</span> <span class="st">&quot;30d&quot;</span><span class="op">,</span> <span class="st">&quot;exchange&quot;</span> <span class="ot">-&gt;</span> <span class="st">&quot;all&quot;</span><span class="sc">|</span>&gt;<span class="op">]]]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/1scvwhiftq8m2.png" alt="1scvwhiftq8m2" /><figcaption aria-hidden="true">1scvwhiftq8m2</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/1scvwhiftq8m2.png" alt="1scvwhiftq8m2" /><figcaption aria-hidden="true">1scvwhiftq8m2</figcaption>
 </figure>
 <p>Here is a summary:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ResourceFunction<span class="op">[</span><span class="st">&quot;RecordsSummary&quot;</span><span class="op">][</span>dsBTCVolumeData<span class="op">]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/1bmbadd8up36a.png" alt="1bmbadd8up36a" /><figcaption aria-hidden="true">1bmbadd8up36a</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/1bmbadd8up36a.png" alt="1bmbadd8up36a" /><figcaption aria-hidden="true">1bmbadd8up36a</figcaption>
 </figure>
 <h3 id="plots-1">Plots</h3>
 <h4 id="price-data">Price data</h4>
 <p>Here we extract the non-time columns in the tabular price data obtained above and plot the corresponding time series:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DateListPlot</span><span class="op">[</span>Association<span class="op">[</span># <span class="ot">-&gt;</span> <span class="fu">Normal</span><span class="op">[</span>dsBTCPriceData<span class="op">[</span><span class="cn">All</span><span class="op">,</span> <span class="op">{</span><span class="st">&quot;Time&quot;</span><span class="op">,</span> #<span class="op">}][</span>Values<span class="op">]]</span> &amp; <span class="sc">/</span>@Rest<span class="op">[</span><span class="fu">Normal</span><span class="op">[</span>Keys<span class="op">[</span>dsBTCPriceData<span class="op">[[</span><span class="dv">1</span><span class="op">]]]]]],</span> <span class="fu">AspectRatio</span> <span class="ot">-&gt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span><span class="op">,</span> <span class="fu">ImageSize</span> <span class="ot">-&gt;</span> <span class="fu">Large</span><span class="op">]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/136hrgyroy246.png" alt="136hrgyroy246" /><figcaption aria-hidden="true">136hrgyroy246</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/136hrgyroy246.png" alt="136hrgyroy246" /><figcaption aria-hidden="true">136hrgyroy246</figcaption>
 </figure>
 <h4 id="volume-data-1">Volume data</h4>
 <p>Here we extract the non-time columns (corresponding to exchanges) in the tabular volume data obtained above and plot the corresponding time series:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode mathematica"><code class="sourceCode mathematica"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DateListPlot</span><span class="op">[</span>Association<span class="op">[</span># <span class="ot">-&gt;</span> <span class="fu">Normal</span><span class="op">[</span>dsBTCVolumeData<span class="op">[</span><span class="cn">All</span><span class="op">,</span> <span class="op">{</span><span class="st">&quot;Time&quot;</span><span class="op">,</span> #<span class="op">}][</span>Values<span class="op">]]</span> &amp; <span class="sc">/</span>@ <span class="fu">Rest</span><span class="op">[</span><span class="fu">Normal</span><span class="op">[</span>Keys<span class="op">[</span>dsBTCVolumeData<span class="op">[[</span><span class="dv">1</span><span class="op">]]]]]],</span> <span class="fu">PlotRange</span> <span class="ot">-&gt;</span> <span class="cn">All</span><span class="op">,</span> <span class="fu">AspectRatio</span> <span class="ot">-&gt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span><span class="op">,</span> <span class="fu">ImageSize</span> <span class="ot">-&gt;</span> <span class="fu">Large</span><span class="op">]</span></span></code></pre></div>
 <figure>
-<img src="https://github.com/antononcube/MathematicaVsR/raw/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/1tz1hw81b2930.png" alt="1tz1hw81b2930" /><figcaption aria-hidden="true">1tz1hw81b2930</figcaption>
+<img src="https://raw.githubusercontent.com/antononcube/MathematicaVsR/master/Projects/CryptoCurrenciesDataAcquisitionAndAnalysis/Mathematica/Diagrams/Crypto-currencies-data-acquisition-with-visualization/1tz1hw81b2930.png" alt="1tz1hw81b2930" /><figcaption aria-hidden="true">1tz1hw81b2930</figcaption>
 </figure>
 <h2 id="references">References</h2>
 <p>[DBO1] https://data.bitcoinity.org.</p>
