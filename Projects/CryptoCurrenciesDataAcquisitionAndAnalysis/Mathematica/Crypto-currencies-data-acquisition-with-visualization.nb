@@ -1,0 +1,1301 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     53656,       1293]
+NotebookOptionsPosition[     44996,       1162]
+NotebookOutlinePosition[     45544,       1181]
+CellTagsIndexPosition[     45501,       1178]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Crypto-currencies data acquisition with visualization", "Title",
+ CellChangeTimes->{{3.83284174447018*^9, 3.832841784588583*^9}, {
+   3.8328418786622553`*^9, 3.832841880191084*^9}, 3.832924418047929*^9, {
+   3.833011867686922*^9, 3.833011925085331*^9}, {3.8330119727643213`*^9, 
+   3.833011993712605*^9}, 3.8330327418041573`*^9, {3.833032854511303*^9, 
+   3.833032859527812*^9}},ExpressionUUID->"bbc61566-e827-4448-8d3d-\
+6d4bfa15da1e"],
+
+Cell[TextData[{
+ "Anton Antonov\n",
+ ButtonBox["MathematicaVsR at GitHub",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/MathematicaVsR/"], None},
+  ButtonNote->"https://github.com/antononcube/MathematicaVsR/"],
+ "\n",
+ ButtonBox["MathematicaForPrediction at WordPress",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://mathematicaforprediction.wordpress.com"], None},
+  ButtonNote->"https://mathematicaforprediction.wordpress.com"],
+ "\nJune 2021"
+}], "Text",
+ CellChangeTimes->{{3.8328417975494757`*^9, 3.8328418203188143`*^9}, {
+  3.833099264773211*^9, 3.8330992656610107`*^9}, {3.833106114697906*^9, 
+  3.8331061291841993`*^9}, {3.833107275492634*^9, 
+  3.8331072989746943`*^9}},ExpressionUUID->"ff656a53-793c-453b-a100-\
+b690eb453870"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.8328470105737658`*^9, 3.832847011373234*^9}, {
+  3.833032918524819*^9, 
+  3.8330329235646067`*^9}},ExpressionUUID->"acc0e25a-0d41-48ae-9001-\
+d5b0d4258a15"],
+
+Cell["\<\
+In this notebook we show how to obtain crypto-currencies data from several \
+data sources and make some basic time series visualizations. We assume the \
+described data acquisition workflow is useful for doing more detailed \
+(exploratory) analysis.\
+\>", "Text",
+ CellChangeTimes->{{3.8330992744361153`*^9, 3.8330993131928167`*^9}, {
+  3.83309944908355*^9, 3.8330994994840593`*^9}, {3.833099554654814*^9, 
+  3.833099594255035*^9}, {3.833104987965117*^9, 3.8331049939293003`*^9}, {
+  3.8331060367251596`*^9, 3.8331060744582148`*^9}, {3.833106143420895*^9, 
+  3.8331063229395027`*^9}},ExpressionUUID->"5e00f83a-4aaf-41e5-bc9d-\
+42c5e6387284"],
+
+Cell["\<\
+There are multiple crypto-currencies data sources, but a small proportion of \
+them give a convenient way of extracting crypto-currencies data \
+automatically. I found the easiest to work with to be \
+https://finance.yahoo.com/cryptocurrencies, [YF1]. Another easy to work with \
+Bitcoin-only data source is  https://data.bitcoinity.org , [DBO1].\
+\>", "Text",
+ CellChangeTimes->{{3.83284701643567*^9, 3.8328471694648037`*^9}, {
+   3.832847534627529*^9, 3.83284754281743*^9}, 3.833099521264471*^9, {
+   3.83310502532588*^9, 
+   3.833105081619815*^9}},ExpressionUUID->"35d5580e-0ae4-4c99-89a5-\
+9942b560b265"],
+
+Cell["\<\
+(I also looked into using https://www.coindesk.com/coindesk20. )\
+\>", "Text",
+ CellChangeTimes->{{3.83284701643567*^9, 3.8328472043619127`*^9}, {
+   3.832847245527562*^9, 3.8328472639201727`*^9}, 3.833105023933894*^9, 
+   3.833105090799806*^9},ExpressionUUID->"b8c1e00f-4860-4cb1-a5ee-\
+7b2c14851105"],
+
+Cell[TextData[{
+ StyleBox["Remark:",
+  FontWeight->"Bold"],
+ " The code below is made with certain ad-hoc inductive reasoning that \
+brought meaningful results. This means the code has to be changed if the \
+underlying data organization in [YF1, DBO1] is changed."
+}], "Text",
+ CellChangeTimes->{{3.832847859391765*^9, 3.832848053730464*^9}, {
+  3.833105102983273*^9, 
+  3.8331051057630453`*^9}},ExpressionUUID->"2a906afc-bd1d-4d84-9ad4-\
+7684dfadc6f9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Yahoo! Finance ", "Section",
+ CellChangeTimes->{{3.83284087919444*^9, 3.832840886710039*^9}, {
+  3.832848487742343*^9, 3.8328484902401533`*^9}, {3.8330338750785103`*^9, 
+  3.833033876002084*^9}, {3.8330998595345383`*^9, 
+  3.8330998938856897`*^9}},ExpressionUUID->"f9c3f3f8-5bc0-44d3-87d5-\
+b8196a8274b9"],
+
+Cell[CellGroupData[{
+
+Cell["Getting cryptocurrencies symbols and summaries", "Subsection",
+ CellChangeTimes->{{3.83284087919444*^9, 3.832840886710039*^9}, {
+  3.832848487742343*^9, 3.8328484902401533`*^9}, {3.8330338750785103`*^9, 
+  3.833033876002084*^9}, {3.8330998595345383`*^9, 
+  3.833099903803274*^9}},ExpressionUUID->"82ba4745-4ab3-4748-ae40-\
+749faf53a311"],
+
+Cell["\<\
+In this section we get all crypto-currencies symbols and related metadata.\
+\>", "Text",
+ CellChangeTimes->{{3.832847306391037*^9, 
+  3.832847336598261*^9}},ExpressionUUID->"5f58642b-610e-4f47-9a68-\
+595642def0ea"],
+
+Cell["Get the data of all crypto-currencies in [YF1]:", "Text",
+ CellChangeTimes->{{3.8328480778839617`*^9, 
+  3.832848098956263*^9}},ExpressionUUID->"5aef13d0-b896-47d1-a1a2-\
+525e1bf7a107"],
+
+Cell[BoxData[
+ RowBox[{"AbsoluteTiming", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"lsData", "=", 
+    RowBox[{"Import", "[", 
+     RowBox[{
+     "\"\<https://finance.yahoo.com/cryptocurrencies\>\"", ",", 
+      "\"\<Data\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", "]"}]], "Input",\
+
+ CellChangeTimes->{{3.8328408908319283`*^9, 3.832840935119575*^9}, {
+  3.8328469785902643`*^9, 3.832846982426807*^9}},
+ CellLabel->
+  "In[115]:=",ExpressionUUID->"b8354510-f7c4-4b35-83f0-28e7eb295eca"],
+
+Cell["Locate the data:", "Text",
+ CellChangeTimes->{{3.8328480720570097`*^9, 3.8328480730470953`*^9}, {
+  3.832848105154789*^9, 
+  3.8328481146054373`*^9}},ExpressionUUID->"f9798219-64fe-425b-95eb-\
+aaaec9a1223a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"pos", "=", 
+   RowBox[{"First", "@", 
+    RowBox[{"Position", "[", 
+     RowBox[{"lsData", ",", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<Symbol\>\"", ",", "\"\<Name\>\"", ",", "\"\<Price (Intraday)\>\"",
+         ",", "\"\<Change\>\"", ",", "\"\<% Change\>\"", ",", "___"}], 
+       "}"}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"dsCryptoCurrenciesColumnNames", "=", 
+  RowBox[{"lsData", "\[LeftDoubleBracket]", 
+   RowBox[{"Sequence", "@@", "pos"}], 
+   "\[RightDoubleBracket]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Length", "[", "dsCryptoCurrenciesColumnNames", "]"}]}], "Input",
+ CellChangeTimes->{{3.832841070978525*^9, 3.832841186917664*^9}, {
+  3.832841224054969*^9, 3.832841258711072*^9}, {3.832841289656437*^9, 
+  3.832841324507606*^9}, {3.8328413586641607`*^9, 3.83284137575235*^9}},
+ CellLabel->
+  "In[116]:=",ExpressionUUID->"61bf10f3-d10a-433f-9761-3710fb389469"],
+
+Cell["Get the data:", "Text",
+ CellChangeTimes->{{3.832848123049382*^9, 
+  3.832848126795443*^9}},ExpressionUUID->"149edbbc-c3cc-4dcf-afe0-\
+1cb0dbdfb95d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dsCryptoCurrencies", "=", 
+   RowBox[{"lsData", "\[LeftDoubleBracket]", 
+    RowBox[{"Sequence", "@@", 
+     RowBox[{"Append", "[", 
+      RowBox[{
+       RowBox[{"Most", "[", "pos", "]"}], ",", "2"}], "]"}]}], 
+    "\[RightDoubleBracket]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Dimensions", "[", "dsCryptoCurrencies", "]"}]}], "Input",
+ CellChangeTimes->{{3.832841070978525*^9, 3.832841186917664*^9}, {
+  3.832841224054969*^9, 3.832841258711072*^9}, {3.832841289656437*^9, 
+  3.832841324507606*^9}, {3.8328413586641607`*^9, 3.832841371579454*^9}},
+ CellLabel->
+  "In[119]:=",ExpressionUUID->"cb32798a-56f3-4115-aec4-76b61deeb10f"],
+
+Cell["Make a dataset:", "Text",
+ CellChangeTimes->{{3.832848062472061*^9, 
+  3.8328480663749323`*^9}},ExpressionUUID->"939e7d8e-a04b-4863-ba2c-\
+49b477c9d740"],
+
+Cell[BoxData[
+ RowBox[{"dsCryptoCurrencies", "=", 
+  RowBox[{
+   RowBox[{"Dataset", "[", "dsCryptoCurrencies", "]"}], "[", 
+   RowBox[{"All", ",", 
+    RowBox[{
+     RowBox[{"AssociationThread", "[", 
+      RowBox[{
+       RowBox[{"dsCryptoCurrenciesColumnNames", "\[LeftDoubleBracket]", 
+        RowBox[{"1", ";;", 
+         RowBox[{"-", "3"}]}], "\[RightDoubleBracket]"}], ",", "#"}], "]"}], 
+     "&"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.832841070978525*^9, 3.832841186917664*^9}, {
+  3.832841224054969*^9, 3.832841251699356*^9}, {3.832841331470697*^9, 
+  3.8328413435188723`*^9}, {3.832841388981042*^9, 3.8328413921310253`*^9}},
+ CellLabel->
+  "In[121]:=",ExpressionUUID->"20703349-ec71-44c7-9c11-ce163ff42cd1"],
+
+Cell["Here are the (generic) crypto-currency symbols:", "Text",
+ CellChangeTimes->{{3.833113495873563*^9, 
+  3.833113571587555*^9}},ExpressionUUID->"e59cebc8-a15c-486f-9029-\
+9711672e6955"],
+
+Cell[BoxData[
+ RowBox[{"lsCryptoCurrencySymbols", "=", 
+  RowBox[{
+   RowBox[{"StringSplit", "[", 
+    RowBox[{
+     RowBox[{"Normal", "@", 
+      RowBox[{"dsCryptoCurrencies", "[", 
+       RowBox[{"All", ",", "\"\<Symbol\>\""}], "]"}]}], ",", "\"\<-\>\""}], 
+    "]"}], "\[LeftDoubleBracket]", 
+   RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}]}]], "Input",
+ CellChangeTimes->{{3.8331134181800537`*^9, 3.8331134741673603`*^9}},
+ CellLabel->
+  "In[181]:=",ExpressionUUID->"58d1a85a-7d29-4e2f-9cdc-ea4d3ee5001e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Get all time series", "Subsection",
+ CellChangeTimes->{{3.832841418421777*^9, 
+  3.832841423214127*^9}},ExpressionUUID->"fc2b7862-ff86-4693-9e12-\
+bdd820fe884d"],
+
+Cell["\<\
+In this section we get all the crypto-currencies time series from [YF1].\
+\>", "Text",
+ CellChangeTimes->{{3.832847360921855*^9, 3.83284736929175*^9}, {
+  3.8328474942722807`*^9, 
+  3.8328475302059813`*^9}},ExpressionUUID->"91c87b0a-46a3-434a-b882-\
+c83a0e2dcfb4"],
+
+Cell[BoxData[
+ RowBox[{"AbsoluteTiming", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ccNow", "=", 
+    RowBox[{
+     RowBox[{"Round", "@", 
+      RowBox[{"AbsoluteTime", "[", 
+       RowBox[{"Date", "[", "]"}], "]"}]}], "-", 
+     RowBox[{"AbsoluteTime", "[", 
+      RowBox[{"{", 
+       RowBox[{"1970", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0"}], 
+       "}"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+   RowBox[{"currencySymbol", "=", "\"\<USD\>\""}], ";", "\[IndentingNewLine]", 
+   RowBox[{"stYFURL", "=", 
+    RowBox[{"StringTemplate", "[", 
+     RowBox[{
+     "\"\<https://query1.finance.yahoo.com/v7/finance/download/`\
+cryptoCurrencySymbol`-`currencySymbol`?period1=1410825600&period2=\>\"", "<>", 
+      RowBox[{"ToString", "[", "ccNow", "]"}], "<>", 
+      "\"\<&interval=1d&events=history&includeAdjustedClose=true\>\""}], 
+     "]"}]}], ";", "\[IndentingNewLine]", 
+   RowBox[{"aCryptoCurrenciesDataRaw", "=", "\[IndentingNewLine]", 
+    RowBox[{"Association", "@", "\[IndentingNewLine]", 
+     RowBox[{"Map", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"#", "<>", "\"\<-\>\"", "<>", "currencySymbol"}], ")"}], "->", 
+         RowBox[{
+          RowBox[{
+          "ResourceFunction", "[", "\"\<ImportCSVToDataset\>\"", "]"}], "[", 
+          RowBox[{"stYFURL", "[", 
+           RowBox[{"<|", 
+            RowBox[{
+             RowBox[{"\"\<cryptoCurrencySymbol\>\"", "->", "#"}], ",", 
+             RowBox[{"\"\<currencySymbol\>\"", "->", "currencySymbol"}]}], 
+            "|>"}], "]"}], "]"}]}], "&"}], ",", "lsCryptoCurrencySymbols"}], 
+      "\[IndentingNewLine]", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.832841437130556*^9, 3.832841467370812*^9}, {
+  3.832841502355351*^9, 3.8328415413518143`*^9}, {3.832841948680324*^9, 
+  3.8328419627090807`*^9}, {3.832842666070636*^9, 3.832842672447597*^9}, {
+  3.8328429359031878`*^9, 3.8328429379288473`*^9}, {3.8330323889826612`*^9, 
+  3.833032408681848*^9}, {3.83311397259382*^9, 3.833114120691905*^9}, {
+  3.8331141797711477`*^9, 3.833114192819501*^9}, {3.833119812696293*^9, 
+  3.8331198139790077`*^9}},
+ CellLabel->
+  "In[187]:=",ExpressionUUID->"87e8c2ae-65e5-4af8-ac8e-16714b8fb194"],
+
+Cell[TextData[{
+ StyleBox["Remark:",
+  FontWeight->"Bold"],
+ " Note that in the code above we specified the upper limit of the time span \
+to be the current date. (And shifted it with respect to the epoch start \
+1970-01-01 used by [YF1].)"
+}], "Text",
+ CellChangeTimes->{{3.833106349941077*^9, 
+  3.833106480263129*^9}},ExpressionUUID->"865787dd-eb1f-4d4b-b37d-\
+50b8d866327f"],
+
+Cell["Check we good the data with dimensions retrieval:", "Text",
+ CellChangeTimes->{{3.8328477219694853`*^9, 
+  3.832847796434547*^9}},ExpressionUUID->"964e5b71-41b0-4ed3-81b3-\
+f1a1951db853"],
+
+Cell[BoxData[
+ RowBox[{"Dimensions", "/@", "aCryptoCurrenciesDataRaw"}]], "Input",
+ CellChangeTimes->{{3.832841555132306*^9, 3.832841565337654*^9}, {
+  3.832841925529983*^9, 3.832841929905305*^9}, {3.832842942687043*^9, 
+  3.832842945746461*^9}, {3.8328475966402807`*^9, 3.832847714711795*^9}, {
+  3.8328477713802633`*^9, 3.832847778277573*^9}},
+ CellLabel->
+  "In[188]:=",ExpressionUUID->"1185e7b7-f030-4cc2-bf72-0f10de75d597"],
+
+Cell["Check we good the data with random sample:", "Text",
+ CellChangeTimes->{{3.8328477219694853`*^9, 
+  3.8328477527369947`*^9}},ExpressionUUID->"be484239-36fe-4e85-a863-\
+54a66dcc9b87"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"RandomSample", "[", 
+    RowBox[{"#", ",", "6"}], "]"}], "&"}], "/@", 
+  RowBox[{"KeyTake", "[", 
+   RowBox[{"aCryptoCurrenciesDataRaw", ",", 
+    RowBox[{"RandomChoice", "[", 
+     RowBox[{"Keys", "@", "aCryptoCurrenciesDataRaw"}], "]"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.832841555132306*^9, 3.832841565337654*^9}, {
+  3.832841925529983*^9, 3.832841929905305*^9}, {3.832842942687043*^9, 
+  3.832842945746461*^9}, {3.8328475966402807`*^9, 3.832847714711795*^9}},
+ CellLabel->
+  "In[189]:=",ExpressionUUID->"0292fc45-2f8d-41b9-acb5-3f8060c7b036"],
+
+Cell["\<\
+Here we add the crypto-currencies symbols and convert date strings into date \
+objects.\
+\>", "Text",
+ CellChangeTimes->{{3.8328475581294622`*^9, 
+  3.832847591351821*^9}},ExpressionUUID->"74be0c59-761a-42b7-9571-\
+398d4e66ffd0"],
+
+Cell[BoxData[
+ RowBox[{"AbsoluteTiming", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"aCryptoCurrenciesData", "=", 
+    RowBox[{"Association", "@", 
+     RowBox[{"KeyValueMap", "[", 
+      RowBox[{
+       RowBox[{"Function", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"k", ",", "v"}], "}"}], ",", 
+         RowBox[{"k", "->", 
+          RowBox[{"v", "[", 
+           RowBox[{"All", ",", 
+            RowBox[{
+             RowBox[{"Join", "[", 
+              RowBox[{
+               RowBox[{"<|", 
+                RowBox[{
+                 RowBox[{"\"\<Symbol\>\"", "->", "k"}], ",", 
+                 RowBox[{"\"\<DateObject\>\"", "->", 
+                  RowBox[{"DateObject", "[", "#Date", "]"}]}]}], "|>"}], ",", 
+               "#"}], "]"}], "&"}]}], "]"}]}]}], "]"}], ",", 
+       "aCryptoCurrenciesDataRaw"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.832842224649994*^9, 3.83284228174234*^9}, {
+  3.832842741221692*^9, 3.8328428161116037`*^9}, {3.8328429562447243`*^9, 
+  3.832842957257986*^9}, {3.832843004743512*^9, 3.832843018783093*^9}},
+ CellLabel->
+  "In[190]:=",ExpressionUUID->"94ad0370-0d04-4e35-bd68-287564cf78d4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Summary", "Subsection",
+ CellChangeTimes->{{3.83284318246175*^9, 
+  3.832843186979512*^9}},ExpressionUUID->"9cc77132-5847-45ae-9799-\
+9b5a5751461d"],
+
+Cell[TextData[{
+ "In this section we compute the summary over ",
+ StyleBox["all",
+  FontWeight->"Bold"],
+ " datasets:"
+}], "Text",
+ CellChangeTimes->{{3.832847831636127*^9, 3.832847843088766*^9}, {
+  3.832848138155221*^9, 
+  3.832848154735001*^9}},ExpressionUUID->"0305507d-22dc-425b-b505-\
+9161436b2365"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+  RowBox[{
+   RowBox[{"Join", "@@", 
+    RowBox[{"Values", "[", "aCryptoCurrenciesData", "]"}]}], ",", 
+   RowBox[{"\"\<MaxTallies\>\"", "->", "30"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8328427154839487`*^9, 3.832842723742131*^9}, {
+  3.832842856499304*^9, 3.832842890137642*^9}, {3.832843039955122*^9, 
+  3.832843067877819*^9}},
+ CellLabel->
+  "In[126]:=",ExpressionUUID->"3b1d59a2-b9fe-46dc-8b4c-1c9d70573ee7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Plots", "Subsection",
+ CellChangeTimes->{{3.832842063791706*^9, 
+  3.832842068212636*^9}},ExpressionUUID->"1a3b6177-aeaf-4863-b554-\
+5572e1af992e"],
+
+Cell["\<\
+Here we plot the \[OpenCurlyDoubleQuote]Low\[CloseCurlyDoubleQuote] and \
+\[OpenCurlyDoubleQuote]High\[CloseCurlyDoubleQuote] price time series for \
+each crypto-currency for the last 120 days:\
+\>", "Text",
+ CellChangeTimes->{{3.832848209894744*^9, 3.832848242958969*^9}, {
+  3.832848325524247*^9, 
+  3.832848336190008*^9}},ExpressionUUID->"35828237-312b-4a32-933c-\
+a0b21345178a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"nDays", "=", "120"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Map", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"dsTemp", "=", 
+        RowBox[{"#", "[", 
+         RowBox[{"Select", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"AbsoluteTime", "[", "#DateObject", "]"}], ">", 
+            RowBox[{"AbsoluteTime", "[", 
+             RowBox[{"DatePlus", "[", 
+              RowBox[{"Now", ",", 
+               RowBox[{"-", 
+                RowBox[{"Quantity", "[", 
+                 RowBox[{"nDays", ",", "\"\<Days\>\""}], "]"}]}]}], "]"}], 
+             "]"}]}], "&"}], "]"}], "]"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"DateListPlot", "[", 
+       RowBox[{
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Normal", "[", 
+           RowBox[{
+            RowBox[{"dsTemp", "[", 
+             RowBox[{"All", ",", 
+              RowBox[{"{", 
+               RowBox[{"\"\<DateObject\>\"", ",", "\"\<Low\>\""}], "}"}]}], 
+             "]"}], "[", "Values", "]"}], "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Normal", "[", 
+           RowBox[{
+            RowBox[{"dsTemp", "[", 
+             RowBox[{"All", ",", 
+              RowBox[{"{", 
+               RowBox[{"\"\<DateObject\>\"", ",", "\"\<High\>\""}], "}"}]}], 
+             "]"}], "[", "Values", "]"}], "]"}]}], "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"PlotLegends", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"\"\<Low\>\"", ",", "\"\<High\>\""}], "}"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"AspectRatio", "\[Rule]", 
+         RowBox[{"1", "/", "4"}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}]}], 
+     "\[IndentingNewLine]", "]"}], "&"}], ",", "\[IndentingNewLine]", 
+   "aCryptoCurrenciesData"}], "\[IndentingNewLine]", "]"}]}], "Input",
+ CellChangeTimes->{{3.8328420692741537`*^9, 3.8328422003551283`*^9}, {
+  3.8328422898980417`*^9, 3.832842342527631*^9}, {3.8328423953373203`*^9, 
+  3.832842428882183*^9}, {3.832843202241749*^9, 3.832843205310986*^9}, {
+  3.832846598150277*^9, 3.8328466030742702`*^9}, {3.832846635984754*^9, 
+  3.832846736099024*^9}, {3.8328467716407223`*^9, 3.832846818508429*^9}, {
+  3.8331056094563513`*^9, 3.83310561394466*^9}},
+ CellLabel->
+  "In[127]:=",ExpressionUUID->"a0e5d079-9e09-4c0f-8fce-fe343f97795c"],
+
+Cell["\<\
+Here we plot the volume time series for each crypto-currency for the last 120 \
+days:\
+\>", "Text",
+ CellChangeTimes->{{3.832848250672615*^9, 3.832848262793026*^9}, {
+  3.832848341275136*^9, 
+  3.832848342658167*^9}},ExpressionUUID->"07f83071-a37d-4835-ab5c-\
+ff69d10284fe"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"nDays", "=", "120"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Map", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"dsTemp", "=", 
+        RowBox[{"#", "[", 
+         RowBox[{"Select", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"AbsoluteTime", "[", "#DateObject", "]"}], ">", 
+            RowBox[{"AbsoluteTime", "[", 
+             RowBox[{"DatePlus", "[", 
+              RowBox[{"Now", ",", 
+               RowBox[{"-", 
+                RowBox[{"Quantity", "[", 
+                 RowBox[{"nDays", ",", "\"\<Days\>\""}], "]"}]}]}], "]"}], 
+             "]"}]}], "&"}], "]"}], "]"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"DateListPlot", "[", 
+       RowBox[{
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{"Normal", "[", 
+          RowBox[{
+           RowBox[{"dsTemp", "[", 
+            RowBox[{"All", ",", 
+             RowBox[{"{", 
+              RowBox[{"\"\<DateObject\>\"", ",", "\"\<Volume\>\""}], "}"}]}], 
+            "]"}], "[", "Values", "]"}], "]"}], "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"PlotLabel", "\[Rule]", "\"\<Volume\>\""}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"AspectRatio", "\[Rule]", 
+         RowBox[{"1", "/", "4"}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}]}], 
+     "\[IndentingNewLine]", "]"}], "&"}], ",", "\[IndentingNewLine]", 
+   "aCryptoCurrenciesData"}], "\[IndentingNewLine]", "]"}]}], "Input",
+ CellChangeTimes->{{3.8328420692741537`*^9, 3.8328422003551283`*^9}, {
+  3.8328422898980417`*^9, 3.832842342527631*^9}, {3.8328423953373203`*^9, 
+  3.832842428882183*^9}, {3.832843202241749*^9, 3.832843205310986*^9}, {
+  3.832846598150277*^9, 3.8328466030742702`*^9}, {3.832846635984754*^9, 
+  3.832846736099024*^9}, {3.8328467716407223`*^9, 3.832846818508429*^9}, {
+  3.83284685719313*^9, 3.8328468842449217`*^9}, {3.833105624553925*^9, 
+  3.83310562579109*^9}},
+ CellLabel->
+  "In[129]:=",ExpressionUUID->"ab80abde-26ac-4c16-a092-34e432e38c9b"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["data.bitcoinity.org", "Section",
+ CellChangeTimes->{{3.8328391597914963`*^9, 3.8328391635522337`*^9}, {
+  3.8328405888794737`*^9, 
+  3.832840599323996*^9}},ExpressionUUID->"8598c2cf-a240-4445-8255-\
+30dddae09eaa"],
+
+Cell[TextData[{
+ "In this section we ingest crypto-currency data from ",
+ ButtonBox["data.bitcoinity.org",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://data.bitcoinity.org/"], None},
+  ButtonNote->"https://data.bitcoinity.org/"],
+ ", [DBO1]."
+}], "Text",
+ CellChangeTimes->{{3.833101415561008*^9, 
+  3.833101477128791*^9}},ExpressionUUID->"a7be8344-aabb-443a-9502-\
+f6b9da76e828"],
+
+Cell[CellGroupData[{
+
+Cell["Metadata", "Subsection",
+ CellChangeTimes->{{3.8331013625838127`*^9, 
+  3.83310136582367*^9}},ExpressionUUID->"489e20f7-deca-409e-9c5c-\
+bc51b84fa13b"],
+
+Cell["\<\
+In this sub-section we assign different metadata elements used in \
+data.bitcoinity.org.\
+\>", "Text",
+ CellChangeTimes->{{3.833101370785183*^9, 3.833101407494431*^9}, {
+  3.833101484175753*^9, 
+  3.83310149509866*^9}},ExpressionUUID->"af81f39c-2eb6-434b-9413-\
+e5664c87eb2a"],
+
+Cell["\<\
+The currencies and exchanges we obtained by examining the output of: \
+\>", "Text",
+ CellChangeTimes->{{3.833101518218687*^9, 
+  3.833101546400053*^9}},ExpressionUUID->"ed640191-89df-4a5f-af80-\
+6d7d98244ae6"],
+
+Cell["\<\
+Import[\"https://data.bitcoinity.org/markets/price/30d/USD?t=l\", \"Plaintext\
+\"]\
+\>", "Program",
+ CellChangeTimes->{{3.833101623624166*^9, 3.833101631689682*^9}, 
+   3.8331016895405483`*^9},
+ CellLabel->"In[60]:=",ExpressionUUID->"f6bd6c3b-5e65-434c-83fe-28c99a9c34e5"],
+
+Cell[CellGroupData[{
+
+Cell["Assignments", "Subsubsection",
+ CellChangeTimes->{{3.833101672841688*^9, 
+  3.8331016747081127`*^9}},ExpressionUUID->"6671a73b-eb67-4dc6-9cbd-\
+12e375416887"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"lsCurrencies", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<all\>\"", ",", "\"\<AED\>\"", ",", "\"\<ARS\>\"", ",", "\"\<AUD\>\"",
+      ",", "\"\<BRL\>\"", ",", "\"\<CAD\>\"", ",", "\"\<CHF\>\"", ",", 
+     "\"\<CLP\>\"", ",", "\"\<CNY\>\"", ",", "\"\<COP\>\"", ",", 
+     "\"\<CZK\>\"", ",", "\"\<DKK\>\"", ",", "\"\<EUR\>\"", ",", 
+     "\"\<GBP\>\"", ",", "\"\<HKD\>\"", ",", "\"\<HRK\>\"", ",", 
+     "\"\<HUF\>\"", ",", "\"\<IDR\>\"", ",", "\"\<ILS\>\"", ",", 
+     "\"\<INR\>\"", ",", "\"\<IRR\>\"", ",", "\"\<JPY\>\"", ",", 
+     "\"\<KES\>\"", ",", "\"\<KRW\>\"", ",", "\"\<MXN\>\"", ",", 
+     "\"\<MYR\>\"", ",", "\"\<NOK\>\"", ",", "\"\<NZD\>\"", ",", 
+     "\"\<PHP\>\"", ",", "\"\<PKR\>\"", ",", "\"\<PLN\>\"", ",", 
+     "\"\<RON\>\"", ",", "\"\<RUB\>\"", ",", "\"\<RUR\>\"", ",", 
+     "\"\<SAR\>\"", ",", "\"\<SEK\>\"", ",", "\"\<SGD\>\"", ",", 
+     "\"\<THB\>\"", ",", "\"\<TRY\>\"", ",", "\"\<UAH\>\"", ",", 
+     "\"\<USD\>\"", ",", "\"\<VEF\>\"", ",", "\"\<XAU\>\"", ",", 
+     "\"\<ZAR\>\""}], "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.833100649961091*^9, 3.833100674885697*^9}, {
+  3.833101243760289*^9, 3.833101257517253*^9}, {3.83310526349262*^9, 
+  3.8331052636038923`*^9}},
+ CellLabel->
+  "In[131]:=",ExpressionUUID->"ffae8df6-8ffd-48d2-855a-95e8da4a51f6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"lsExchanges", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<all\>\"", ",", "\"\<bit-x\>\"", ",", "\"\<bit2c\>\"", ",", 
+     "\"\<bitbay\>\"", ",", "\"\<bitcoin.co.id\>\"", ",", 
+     "\"\<bitcoincentral\>\"", ",", "\"\<bitcoinde\>\"", ",", 
+     "\"\<bitcoinsnorway\>\"", ",", "\"\<bitcurex\>\"", ",", 
+     "\"\<bitfinex\>\"", ",", "\"\<bitflyer\>\"", ",", "\"\<bithumb\>\"", 
+     ",", "\"\<bitmarketpl\>\"", ",", "\"\<bitmex\>\"", ",", 
+     "\"\<bitquick\>\"", ",", "\"\<bitso\>\"", ",", "\"\<bitstamp\>\"", ",", 
+     "\"\<btcchina\>\"", ",", "\"\<btce\>\"", ",", "\"\<btcmarkets\>\"", ",", 
+     "\"\<campbx\>\"", ",", "\"\<cex.io\>\"", ",", "\"\<clevercoin\>\"", ",", 
+     "\"\<coinbase\>\"", ",", "\"\<coinfloor\>\"", ",", "\"\<exmo\>\"", ",", 
+     "\"\<gemini\>\"", ",", "\"\<hitbtc\>\"", ",", "\"\<huobi\>\"", ",", 
+     "\"\<itbit\>\"", ",", "\"\<korbit\>\"", ",", "\"\<kraken\>\"", ",", 
+     "\"\<lakebtc\>\"", ",", "\"\<localbitcoins\>\"", ",", 
+     "\"\<mercadobitcoin\>\"", ",", "\"\<okcoin\>\"", ",", "\"\<paymium\>\"", 
+     ",", "\"\<quadrigacx\>\"", ",", "\"\<therocktrading\>\"", ",", 
+     "\"\<vaultoro\>\"", ",", "\"\<wallofcoins\>\""}], "}"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.833100737280159*^9, 3.833100746088057*^9}, {
+  3.833101175832028*^9, 3.8331012291588297`*^9}, {3.833105267980448*^9, 
+  3.833105268126306*^9}},
+ CellLabel->
+  "In[132]:=",ExpressionUUID->"a1ee0d06-9078-4298-91d1-44b9712f662d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"lsTimeSpans", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<10m\>\"", ",", "\"\<1h\>\"", ",", "\"\<6h\>\"", ",", "\"\<24h\>\"", 
+     ",", "\"\<3d\>\"", ",", "\"\<30d\>\"", ",", "\"\<6m\>\"", ",", 
+     "\"\<2y\>\"", ",", "\"\<5y\>\"", ",", "\"\<all\>\""}], "}"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.833100535614048*^9, 3.83310059767607*^9}, {
+  3.833100646165091*^9, 3.833100646873336*^9}, {3.83310239968671*^9, 
+  3.833102400450988*^9}},
+ CellLabel->
+  "In[133]:=",ExpressionUUID->"39412ae6-8bdc-467e-a202-54eeeb5bbe27"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"lsTimeUnit", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<second\>\"", ",", "\"\<minute\>\"", ",", "\"\<hour\>\"", ",", 
+     "\"\<day\>\"", ",", "\"\<week\>\"", ",", "\"\<month\>\""}], "}"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.833102411759802*^9, 3.833102477907283*^9}},
+ CellLabel->
+  "In[134]:=",ExpressionUUID->"fe2aff89-5fcc-403e-82c1-9333c85f85c1"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"aDataTypeDescriptions", "=", 
+   RowBox[{"Association", "@", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<price\>\"", "\[Rule]", "\"\<Price\>\""}], ",", 
+      RowBox[{"\"\<volume\>\"", "\[Rule]", "\"\<Trading Volume\>\""}], ",", 
+      RowBox[{"\"\<rank\>\"", "\[Rule]", "\"\<Rank\>\""}], ",", 
+      RowBox[{"\"\<bidask_sum\>\"", "\[Rule]", "\"\<Bid/Ask Sum\>\""}], ",", 
+      RowBox[{"\"\<spread\>\"", "\[Rule]", "\"\<Bid/Ask Spread\>\""}], ",", 
+      RowBox[{"\"\<tradespm\>\"", "\[Rule]", "\"\<Trades Per Minute\>\""}]}], 
+     "}"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"lsDataTypes", "=", 
+   RowBox[{"Keys", "[", "aDataTypeDescriptions", "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.833100210767001*^9, 3.833100418847349*^9}, {
+   3.833100489946254*^9, 3.833100502883177*^9}, 3.833101503797707*^9, {
+   3.833102186302722*^9, 3.833102196575058*^9}, 3.8331052059691687`*^9, {
+   3.833105297669982*^9, 3.833105362195712*^9}, 
+   3.8331210758025084`*^9},ExpressionUUID->"6b337c3c-0f17-4e48-bbc6-\
+b4973013f572"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Getting BTC data", "Subsection",
+ CellChangeTimes->{{3.83283932264224*^9, 3.8328393293591957`*^9}, {
+  3.833102553453616*^9, 3.8331025543535767`*^9}, {3.833102969476746*^9, 
+  3.833102972694467*^9}},ExpressionUUID->"5b41964e-0c79-4bc2-b5b3-\
+468877cabbae"],
+
+Cell["\<\
+Here we make a template string that for CSV data retrieval from \
+data.bitcoinity.org:\
+\>", "Text",
+ CellChangeTimes->{{3.833102557233822*^9, 
+  3.8331025946487722`*^9}},ExpressionUUID->"e0729d4a-f568-4fd7-8a51-\
+9d29394d14c3"],
+
+Cell[BoxData[
+ RowBox[{"stDBOURL", "=", 
+  RowBox[{
+  "StringTemplate", "[", 
+   "\"\<https://data.bitcoinity.org/export_data.csv?currency=`currency`&data_\
+type=`dataType`&exchange=`exchange`&r=`timeUnit`&t=l&timespan=`timeSpan`\>\"",
+    "]"}]}]], "Input",
+ CellChangeTimes->{{3.833101732617642*^9, 3.8331018432131*^9}, {
+  3.833101980464767*^9, 3.833101982613488*^9}, {3.833102076105411*^9, 
+  3.833102096412363*^9}},
+ CellLabel->
+  "In[137]:=",ExpressionUUID->"e3255bc8-7e2c-4a82-94ed-45310d083491"],
+
+Cell["\<\
+Here is an association with default values for the string template above:\
+\>", "Text",
+ CellChangeTimes->{{3.8331026210113707`*^9, 
+  3.833102642229497*^9}},ExpressionUUID->"b3d7a95c-d8d9-4516-8554-\
+5dec0430d7ba"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"aDBODefaultParameters", "=", 
+   RowBox[{"<|", 
+    RowBox[{
+     RowBox[{"\"\<currency\>\"", "->", "\"\<USD\>\""}], ",", 
+     RowBox[{"\"\<dataType\>\"", "->", "\"\<price\>\""}], ",", 
+     RowBox[{"\"\<exchange\>\"", "->", "\"\<all\>\""}], ",", 
+     RowBox[{"\"\<timeUnit\>\"", "->", "\"\<day\>\""}], ",", 
+     RowBox[{"\"\<timeSpan\>\"", "->", "\"\<all\>\""}]}], "|>"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.833102644491002*^9, 3.833102668713118*^9}, 
+   3.833102771394503*^9},
+ CellLabel->
+  "In[138]:=",ExpressionUUID->"0466607f-510c-4961-95eb-40d5225a8bb4"],
+
+Cell[TextData[{
+ StyleBox["Remark:",
+  FontWeight->"Bold"],
+ " The metadata assigned above is used to form valid queries for the query \
+string template. "
+}], "Text",
+ CellChangeTimes->{{3.83310566728406*^9, 3.8331057636187572`*^9}, {
+  3.833105799369115*^9, 
+  3.833105799706723*^9}},ExpressionUUID->"30db9379-49bb-4495-9aff-\
+6897b5d4e9fd"],
+
+Cell[TextData[{
+ StyleBox["Remark:",
+  FontWeight->"Bold"],
+ " Not all combinations of parameters are \[OpenCurlyDoubleQuote]fully \
+respected\[CloseCurlyDoubleQuote] by data.bitcoinity.org. For example, if a \
+data request is with time granularity that is too fine over a large time \
+span, then the returned data is with coarser granularity."
+}], "Text",
+ CellChangeTimes->{{3.833102924734487*^9, 3.833102943432694*^9}, {
+  3.8331029929785557`*^9, 3.833103043244824*^9}, {3.8331042110120573`*^9, 
+  3.8331043731956263`*^9}},ExpressionUUID->"f038f869-db2c-4407-8d64-\
+6c3ece02f354"],
+
+Cell[CellGroupData[{
+
+Cell["Price for a particular currency and exchange pair", "Subsubsection",
+ CellChangeTimes->{{3.83310295304014*^9, 3.83310297997337*^9}, {
+  3.83310306433889*^9, 3.833103074576743*^9}, {3.833105479886671*^9, 
+  3.8331055392191143`*^9}},ExpressionUUID->"14f2e292-e781-4682-a920-\
+7c7953a4201d"],
+
+Cell["\<\
+Here we retrieve data by overwriting the parameters for currency, time unit, \
+time span, and exchange:\
+\>", "Text",
+ CellChangeTimes->{{3.833102811737059*^9, 3.833102879576097*^9}, {
+  3.833105420138344*^9, 
+  3.833105423185875*^9}},ExpressionUUID->"03242ce9-0ab1-4ef0-8f77-\
+013541ce4ffe"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dsBTCPriceData", "=", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<ImportCSVToDataset\>\"", "]"}], "[", 
+    RowBox[{"stDBOURL", "[", 
+     RowBox[{"Join", "[", 
+      RowBox[{"aDBODefaultParameters", ",", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<currency\>\"", "->", "\"\<EUR\>\""}], ",", 
+         RowBox[{"\"\<timeUnit\>\"", "->", "\"\<hour\>\""}], ",", 
+         RowBox[{"\"\<timeSpan\>\"", "->", "\"\<30d\>\""}], ",", 
+         RowBox[{"\"\<exchange\>\"", "->", "\"\<coinbase\>\""}]}], "|>"}]}], 
+      "]"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"dsBTCPriceData", "=", 
+  RowBox[{"dsBTCPriceData", "[", 
+   RowBox[{"All", ",", 
+    RowBox[{
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Symbol\>\"", "->", "\"\<BTC\>\""}], ",", 
+         RowBox[{"\"\<DateObject\>\"", "->", 
+          RowBox[{"DateObject", "[", "#Time", "]"}]}]}], "|>"}], ",", "#"}], 
+      "]"}], "&"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.833102103804606*^9, 3.8331021752086363`*^9}, {
+   3.833102209549994*^9, 3.833102227804294*^9}, {3.833102269925218*^9, 
+   3.83310228097305*^9}, {3.83310234432191*^9, 3.833102344435885*^9}, {
+   3.833102381381783*^9, 3.833102388300741*^9}, {3.833102504796914*^9, 
+   3.833102529198987*^9}, {3.833102598692897*^9, 3.833102617337723*^9}, {
+   3.833102676166635*^9, 3.833102699336241*^9}, 3.8331028047972317`*^9, {
+   3.833102898793097*^9, 3.8331029328914423`*^9}, {3.8331043810506763`*^9, 
+   3.833104384233222*^9}, {3.833104666178309*^9, 3.8331046677966213`*^9}, {
+   3.8331054258428793`*^9, 3.8331054321325417`*^9}, {3.83310824702698*^9, 
+   3.833108247577664*^9}, {3.8331206677737627`*^9, 3.833120755151285*^9}},
+ CellLabel->
+  "In[211]:=",ExpressionUUID->"4b39f92d-0314-490e-b697-52ccdb8cad22"],
+
+Cell["Here is a summary:", "Text",
+ CellChangeTimes->{{3.833105145171947*^9, 
+  3.833105149199575*^9}},ExpressionUUID->"bb5d5f00-4c93-4f71-969d-\
+b8d11e68e9e9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+  "dsBTCPriceData", "]"}]], "Input",
+ CellChangeTimes->{{3.8331051313032427`*^9, 3.833105138877666*^9}},
+ CellLabel->
+  "In[203]:=",ExpressionUUID->"5a435cf4-2607-40f5-b55b-e9aecb0bb560"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Volume data", "Subsubsection",
+ CellChangeTimes->{{3.833104397248981*^9, 
+  3.8331044007480927`*^9}},ExpressionUUID->"ac70365f-0c09-438c-aa62-\
+f066fc171ac3"],
+
+Cell["\<\
+Here we retrieve data by overwriting the parameters for data type, time unit, \
+time span, and exchange:\
+\>", "Text",
+ CellChangeTimes->{{3.833102811737059*^9, 3.833102879576097*^9}, {
+  3.833105420138344*^9, 3.833105423185875*^9}, {3.833105564589279*^9, 
+  3.8331055679528217`*^9}},ExpressionUUID->"afd5b5a5-781a-4f5b-a13a-\
+f47ce3019f9e"],
+
+Cell[BoxData[
+ RowBox[{"Print", "@", 
+  RowBox[{"stDBOURL", "[", 
+   RowBox[{"Join", "[", 
+    RowBox[{"aDBODefaultParameters", ",", 
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<dataType\>\"", "->", "Volume"}], ",", 
+       RowBox[{"\"\<timeUnit\>\"", "->", "\"\<day\>\""}], ",", 
+       RowBox[{"\"\<timeSpan\>\"", "->", "\"\<30d\>\""}], ",", 
+       RowBox[{"\"\<exchange\>\"", "->", "\"\<coinbase\>\""}]}], "|>"}]}], 
+    "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.8332087234735737`*^9, 3.833208724508144*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"d045073e-1196-402e-89c3-1ca092d5a4a4"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<ImportCSVToDataset\>\"", "]"}], "[", 
+  RowBox[{"stDBOURL", "[", 
+   RowBox[{"Join", "[", 
+    RowBox[{"aDBODefaultParameters", ",", 
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<dataType\>\"", "->", "Volume"}], ",", 
+       RowBox[{"\"\<timeUnit\>\"", "->", "\"\<day\>\""}], ",", 
+       RowBox[{"\"\<timeSpan\>\"", "->", "\"\<30d\>\""}], ",", 
+       RowBox[{"\"\<exchange\>\"", "->", "\"\<coinbase\>\""}]}], "|>"}]}], 
+    "]"}], "]"}], "]"}]], "Input",
+ CellLabel->"In[9]:=",ExpressionUUID->"639bb39d-d135-4570-8475-9d124e3ed08e"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dsBTCVolumeData", "=", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<ImportCSVToDataset\>\"", "]"}], "[", 
+    RowBox[{"stDBOURL", "[", 
+     RowBox[{"Join", "[", 
+      RowBox[{"aDBODefaultParameters", ",", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<dataType\>\"", "->", "Volume"}], ",", 
+         RowBox[{"\"\<timeUnit\>\"", "->", "\"\<day\>\""}], ",", 
+         RowBox[{"\"\<timeSpan\>\"", "->", "\"\<30d\>\""}], ",", 
+         RowBox[{"\"\<exchange\>\"", "->", "\"\<coinbase\>\""}]}], "|>"}]}], 
+      "]"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"dsBTCVolumeData", "=", 
+  RowBox[{"dsBTCVolumeData", "[", 
+   RowBox[{"All", ",", 
+    RowBox[{
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Symbol\>\"", "->", "\"\<BTC\>\""}], ",", 
+         RowBox[{"\"\<DateObject\>\"", "->", 
+          RowBox[{"DateObject", "[", "#Time", "]"}]}]}], "|>"}], ",", "#"}], 
+      "]"}], "&"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.833102103804606*^9, 3.8331021752086363`*^9}, {
+   3.833102209549994*^9, 3.833102227804294*^9}, {3.833102269925218*^9, 
+   3.83310228097305*^9}, {3.83310234432191*^9, 3.833102344435885*^9}, {
+   3.833102381381783*^9, 3.833102388300741*^9}, {3.833102504796914*^9, 
+   3.833102529198987*^9}, {3.833102598692897*^9, 3.833102617337723*^9}, {
+   3.833102676166635*^9, 3.833102699336241*^9}, 3.8331028047972317`*^9, {
+   3.833102898793097*^9, 3.8331029328914423`*^9}, {3.8331043810506763`*^9, 
+   3.833104421121648*^9}, {3.83310472823422*^9, 3.833104738302588*^9}, {
+   3.833120770868443*^9, 3.833120776859579*^9}, {3.8332086719279633`*^9, 
+   3.83320867426581*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"769ed5ce-554a-4db0-aaf9-18d825609a47"],
+
+Cell["Here is a summary:", "Text",
+ CellChangeTimes->{{3.833105145171947*^9, 3.833105149199575*^9}, {
+  3.833120779205359*^9, 
+  3.833120780159995*^9}},ExpressionUUID->"356a3711-3db6-43bf-b364-\
+abc0c91b90cc"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+  "dsBTCVolumeData", "]"}]], "Input",
+ CellChangeTimes->{{3.8331051313032427`*^9, 3.833105158100326*^9}},
+ CellLabel->
+  "In[206]:=",ExpressionUUID->"bee0379a-5477-4c9a-ae29-7f18a1667e56"],
+
+Cell[BoxData[
+ RowBox[{"RecordsSummary", "[", 
+  RowBox[{
+   RowBox[{"ResourceFunction", "[", "\"\<ImportCSVToDataset\>\"", "]"}], "[", 
+   
+   RowBox[{"stDBOURL", "[", 
+    RowBox[{"Join", "[", 
+     RowBox[{"aDBODefaultParameters", ",", 
+      RowBox[{"<|", 
+       RowBox[{
+        RowBox[{"\"\<dataType\>\"", "->", "Volume"}], ",", 
+        RowBox[{"\"\<timeUnit\>\"", "->", "\"\<day\>\""}], ",", 
+        RowBox[{"\"\<timeSpan\>\"", "->", "\"\<all\>\""}], ",", 
+        RowBox[{"\"\<exchange\>\"", "->", "\"\<all\>\""}]}], "|>"}]}], "]"}], 
+    "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.83312139438522*^9, 3.833121405304049*^9}},
+ CellLabel->
+  "In[224]:=",ExpressionUUID->"a58dea1c-0cb8-4e7e-816e-53f8904978e5"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Plots", "Subsection",
+ CellChangeTimes->{{3.833104504734462*^9, 
+  3.833104505521987*^9}},ExpressionUUID->"589c6083-883a-45b7-9915-\
+de5f56c2e203"],
+
+Cell[CellGroupData[{
+
+Cell["Price data", "Subsubsection",
+ CellChangeTimes->{{3.833104722123827*^9, 
+  3.833104723383444*^9}},ExpressionUUID->"16e7ac38-6cf6-430d-8c8f-\
+fa89466daf2c"],
+
+Cell["\<\
+Here we extract the non-time columns in the tabular price data obtained above \
+and plot the corresponding time series:\
+\>", "Text",
+ CellChangeTimes->{{3.833104759688319*^9, 3.833104810787183*^9}, {
+  3.833104920353895*^9, 
+  3.833104930546607*^9}},ExpressionUUID->"8dfb1dcc-d924-4fff-9781-\
+5e8edb69d70d"],
+
+Cell[BoxData[
+ RowBox[{"DateListPlot", "[", 
+  RowBox[{
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"#", "->", 
+       RowBox[{"Normal", "[", 
+        RowBox[{
+         RowBox[{"dsBTCPriceData", "[", 
+          RowBox[{"All", ",", 
+           RowBox[{"{", 
+            RowBox[{"\"\<DateObject\>\"", ",", "#"}], "}"}]}], "]"}], "[", 
+         "Values", "]"}], "]"}]}], "&"}], "/@", 
+     RowBox[{"Take", "[", 
+      RowBox[{
+       RowBox[{"Normal", "[", 
+        RowBox[{"Keys", "[", 
+         RowBox[{
+         "dsBTCPriceData", "\[LeftDoubleBracket]", "1", 
+          "\[RightDoubleBracket]"}], "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"3", ",", 
+         RowBox[{"-", "1"}]}], "}"}]}], "]"}]}], "]"}], ",", 
+   RowBox[{"AspectRatio", "\[Rule]", 
+    RowBox[{"1", "/", "4"}]}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "Large"}], ",", 
+   RowBox[{"PlotLabel", "->", 
+    RowBox[{"Row", "[", 
+     RowBox[{"{", "\"\<BTC-EUR, coinbase\>\"", "}"}], "]"}]}], ",", 
+   RowBox[{"PlotTheme", "\[Rule]", "\"\<Detailed\>\""}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8331044547078037`*^9, 3.833104527257929*^9}, {
+  3.833104561797495*^9, 3.833104705169992*^9}, {3.83310795415493*^9, 
+  3.8331080167313023`*^9}, {3.83310825459872*^9, 3.833108256083123*^9}, {
+  3.8331083167225523`*^9, 3.8331083595291348`*^9}, {3.833108636250655*^9, 
+  3.833108689654666*^9}, {3.833120790804412*^9, 3.833120792716075*^9}, {
+  3.83312089438437*^9, 3.8331209135305347`*^9}},
+ CellLabel->
+  "In[213]:=",ExpressionUUID->"7887a987-6173-4ace-ac06-d35d88c7202f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Volume data", "Subsubsection",
+ CellChangeTimes->{{3.833104754140896*^9, 3.833104757258219*^9}, {
+  3.8331052261504383`*^9, 
+  3.833105226816271*^9}},ExpressionUUID->"106a7856-2aa8-4bcc-8405-\
+816c7ed0424f"],
+
+Cell["\<\
+Here we extract the non-time columns (corresponding to exchanges) in the \
+tabular volume data obtained above and plot the corresponding time series:\
+\>", "Text",
+ CellChangeTimes->{{3.833104759688319*^9, 3.833104810787183*^9}, {
+  3.8331048744526777`*^9, 3.833104896754148*^9}, {3.833104940210567*^9, 
+  3.833104956602195*^9}},ExpressionUUID->"cb6d117e-cddf-4d38-8615-\
+362ed0948b87"],
+
+Cell[BoxData[
+ RowBox[{"DateListPlot", "[", 
+  RowBox[{
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"#", "->", 
+       RowBox[{"Normal", "[", 
+        RowBox[{
+         RowBox[{"dsBTCVolumeData", "[", 
+          RowBox[{"All", ",", 
+           RowBox[{"{", 
+            RowBox[{"\"\<DateObject\>\"", ",", "#"}], "}"}]}], "]"}], "[", 
+         "Values", "]"}], "]"}]}], "&"}], "/@", 
+     RowBox[{"Take", "[", 
+      RowBox[{
+       RowBox[{"Normal", "[", 
+        RowBox[{"Keys", "[", 
+         RowBox[{
+         "dsBTCVolumeData", "\[LeftDoubleBracket]", "1", 
+          "\[RightDoubleBracket]"}], "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"3", ",", 
+         RowBox[{"-", "1"}]}], "}"}]}], "]"}]}], "]"}], ",", 
+   RowBox[{"PlotRange", "->", "All"}], ",", 
+   RowBox[{"AspectRatio", "\[Rule]", 
+    RowBox[{"1", "/", "4"}]}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "Large"}], ",", 
+   RowBox[{"PlotLabel", "->", 
+    RowBox[{"Row", "[", 
+     RowBox[{"{", "\"\<BTC volume\>\"", "}"}], "]"}]}], ",", 
+   RowBox[{"PlotTheme", "\[Rule]", "\"\<Detailed\>\""}], ",", 
+   RowBox[{"GridLines", "\[Rule]", "Automatic"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8331044547078037`*^9, 3.833104527257929*^9}, {
+   3.833104561797495*^9, 3.833104705169992*^9}, 3.833104749959674*^9, {
+   3.833104817021659*^9, 3.833104863180373*^9}, {3.833108667671238*^9, 
+   3.833108701713148*^9}, {3.833120821011113*^9, 3.833120827703806*^9}, {
+   3.833120920893124*^9, 3.8331209248654003`*^9}},
+ CellLabel->
+  "In[214]:=",ExpressionUUID->"cc3b33b7-eb90-4146-8022-eb58e58f7103"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["References", "Section",
+ CellChangeTimes->{{3.8328473724088707`*^9, 
+  3.832847373376753*^9}},ExpressionUUID->"f9d149cb-b8e3-4b5c-8a6c-\
+87cd5fae27e2"],
+
+Cell["[DBO1] https://data.bitcoinity.org.", "Text",
+ CellChangeTimes->{{3.833099659551116*^9, 3.833099713124411*^9}, 
+   3.833101455127782*^9},ExpressionUUID->"343c6bbb-6a80-4779-8710-\
+726c294b8e8a"],
+
+Cell[TextData[{
+ "[WK1] Wikipedia entry, ",
+ ButtonBox["Cryptocurrency",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://en.wikipedia.org/wiki/Cryptocurrency"], None},
+  ButtonNote->"https://en.wikipedia.org/wiki/Cryptocurrency"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.833099740698612*^9, 
+  3.833099769929324*^9}},ExpressionUUID->"e3eddb09-bee9-401e-89f1-\
+90904b048669"],
+
+Cell[TextData[{
+ "[YF1] Yahoo! Finance, ",
+ ButtonBox["Cryptocurrencies",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://finance.yahoo.com/cryptocurrencies"], None},
+  ButtonNote->"https://finance.yahoo.com/cryptocurrencies"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.8328473750671043`*^9, 3.832847377583312*^9}, {
+  3.832847414695397*^9, 
+  3.832847478171085*^9}},ExpressionUUID->"e8c5dafc-d178-4a60-81f8-\
+e74ae72387a9"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1983, 1372},
+WindowMargins->{{645, Automatic}, {Automatic, -1440}},
+PrivateNotebookOptions->{"CloudPublishPath"->"/Published/Crypto-currencies-\
+data-acquisition-with-visualization.nb"},
+Magnification:>1.25 Inherited,
+FrontEndVersion->"12.3 for Mac OS X x86 (64-bit) (May 11, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"52fd7aa0-6242-4e46-a40c-4908ceaffe41"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 442, 6, 123, "Title",ExpressionUUID->"bbc61566-e827-4448-8d3d-6d4bfa15da1e"],
+Cell[1025, 30, 786, 19, 131, "Text",ExpressionUUID->"ff656a53-793c-453b-a100-b690eb453870"],
+Cell[CellGroupData[{
+Cell[1836, 53, 210, 4, 84, "Section",ExpressionUUID->"acc0e25a-0d41-48ae-9001-d5b0d4258a15"],
+Cell[2049, 59, 651, 11, 73, "Text",ExpressionUUID->"5e00f83a-4aaf-41e5-bc9d-42c5e6387284"],
+Cell[2703, 72, 618, 11, 73, "Text",ExpressionUUID->"35d5580e-0ae4-4c99-89a5-9942b560b265"],
+Cell[3324, 85, 312, 6, 44, "Text",ExpressionUUID->"b8c1e00f-4860-4cb1-a5ee-7b2c14851105"],
+Cell[3639, 93, 453, 10, 44, "Text",ExpressionUUID->"2a906afc-bd1d-4d84-9ad4-7684dfadc6f9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4129, 108, 311, 5, 84, "Section",ExpressionUUID->"f9c3f3f8-5bc0-44d3-87d5-b8196a8274b9"],
+Cell[CellGroupData[{
+Cell[4465, 117, 343, 5, 67, "Subsection",ExpressionUUID->"82ba4745-4ab3-4748-ae40-749faf53a311"],
+Cell[4811, 124, 224, 5, 44, "Text",ExpressionUUID->"5f58642b-610e-4f47-9a68-595642def0ea"],
+Cell[5038, 131, 191, 3, 44, "Text",ExpressionUUID->"5aef13d0-b896-47d1-a1a2-525e1bf7a107"],
+Cell[5232, 136, 498, 12, 90, "Input",ExpressionUUID->"b8354510-f7c4-4b35-83f0-28e7eb295eca"],
+Cell[5733, 150, 213, 4, 44, "Text",ExpressionUUID->"f9798219-64fe-425b-95eb-aaaec9a1223a"],
+Cell[5949, 156, 934, 20, 90, "Input",ExpressionUUID->"61bf10f3-d10a-433f-9761-3710fb389469"],
+Cell[6886, 178, 155, 3, 44, "Text",ExpressionUUID->"149edbbc-c3cc-4dcf-afe0-1cb0dbdfb95d"],
+Cell[7044, 183, 674, 14, 64, "Input",ExpressionUUID->"cb32798a-56f3-4115-aec4-76b61deeb10f"],
+Cell[7721, 199, 159, 3, 44, "Text",ExpressionUUID->"939e7d8e-a04b-4863-ba2c-49b477c9d740"],
+Cell[7883, 204, 724, 16, 37, "Input",ExpressionUUID->"20703349-ec71-44c7-9c11-ce163ff42cd1"],
+Cell[8610, 222, 189, 3, 44, "Text",ExpressionUUID->"e59cebc8-a15c-486f-9029-9711672e6955"],
+Cell[8802, 227, 517, 12, 37, "Input",ExpressionUUID->"58d1a85a-7d29-4e2f-9cdc-ea4d3ee5001e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9356, 244, 167, 3, 67, "Subsection",ExpressionUUID->"fc2b7862-ff86-4693-9e12-bdd820fe884d"],
+Cell[9526, 249, 274, 6, 44, "Text",ExpressionUUID->"91c87b0a-46a3-434a-b882-c83a0e2dcfb4"],
+Cell[9803, 257, 2280, 48, 298, "Input",ExpressionUUID->"87e8c2ae-65e5-4af8-ac8e-16714b8fb194"],
+Cell[12086, 307, 378, 9, 44, "Text",ExpressionUUID->"865787dd-eb1f-4d4b-b37d-50b8d866327f"],
+Cell[12467, 318, 193, 3, 44, "Text",ExpressionUUID->"964e5b71-41b0-4ed3-81b3-f1a1951db853"],
+Cell[12663, 323, 428, 7, 37, "Input",ExpressionUUID->"1185e7b7-f030-4cc2-bf72-0f10de75d597"],
+Cell[13094, 332, 188, 3, 44, "Text",ExpressionUUID->"be484239-36fe-4e85-a863-54a66dcc9b87"],
+Cell[13285, 337, 606, 14, 37, "Input",ExpressionUUID->"0292fc45-2f8d-41b9-acb5-3f8060c7b036"],
+Cell[13894, 353, 239, 6, 44, "Text",ExpressionUUID->"74be0c59-761a-42b7-9571-398d4e66ffd0"],
+Cell[14136, 361, 1200, 29, 90, "Input",ExpressionUUID->"94ad0370-0d04-4e35-bd68-287564cf78d4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15373, 395, 154, 3, 67, "Subsection",ExpressionUUID->"9cc77132-5847-45ae-9799-9b5a5751461d"],
+Cell[15530, 400, 305, 9, 44, "Text",ExpressionUUID->"0305507d-22dc-425b-b505-9161436b2365"],
+Cell[15838, 411, 516, 11, 37, "Input",ExpressionUUID->"3b1d59a2-b9fe-46dc-8b4c-1c9d70573ee7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16391, 427, 153, 3, 67, "Subsection",ExpressionUUID->"1a3b6177-aeaf-4863-b554-5572e1af992e"],
+Cell[16547, 432, 392, 8, 44, "Text",ExpressionUUID->"35828237-312b-4a32-933c-a0b21345178a"],
+Cell[16942, 442, 2494, 58, 324, "Input",ExpressionUUID->"a0e5d079-9e09-4c0f-8fce-fe343f97795c"],
+Cell[19439, 502, 284, 7, 44, "Text",ExpressionUUID->"07f83071-a37d-4835-ab5c-ff69d10284fe"],
+Cell[19726, 511, 2139, 49, 298, "Input",ExpressionUUID->"ab80abde-26ac-4c16-a092-34e432e38c9b"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21914, 566, 219, 4, 84, "Section",ExpressionUUID->"8598c2cf-a240-4445-8255-30dddae09eaa"],
+Cell[22136, 572, 394, 11, 44, "Text",ExpressionUUID->"a7be8344-aabb-443a-9502-f6b9da76e828"],
+Cell[CellGroupData[{
+Cell[22555, 587, 157, 3, 67, "Subsection",ExpressionUUID->"489e20f7-deca-409e-9c5c-bc51b84fa13b"],
+Cell[22715, 592, 286, 7, 44, "Text",ExpressionUUID->"af81f39c-2eb6-434b-9413-e5664c87eb2a"],
+Cell[23004, 601, 219, 5, 44, "Text",ExpressionUUID->"ed640191-89df-4a5f-af80-6d7d98244ae6"],
+Cell[23226, 608, 282, 6, 62, "Program",ExpressionUUID->"f6bd6c3b-5e65-434c-83fe-28c99a9c34e5"],
+Cell[CellGroupData[{
+Cell[23533, 618, 164, 3, 56, "Subsubsection",ExpressionUUID->"6671a73b-eb67-4dc6-9cbd-12e375416887"],
+Cell[23700, 623, 1324, 24, 64, "Input",ExpressionUUID->"ffae8df6-8ffd-48d2-855a-95e8da4a51f6"],
+Cell[25027, 649, 1477, 26, 90, "Input",ExpressionUUID->"a1ee0d06-9078-4298-91d1-44b9712f662d"],
+Cell[26507, 677, 565, 13, 37, "Input",ExpressionUUID->"39412ae6-8bdc-467e-a202-54eeeb5bbe27"],
+Cell[27075, 692, 398, 10, 37, "Input",ExpressionUUID->"fe2aff89-5fcc-403e-82c1-9333c85f85c1"],
+Cell[27476, 704, 1083, 21, 90, "Input",ExpressionUUID->"6b337c3c-0f17-4e48-bbc6-b4973013f572"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28608, 731, 262, 4, 67, "Subsection",ExpressionUUID->"5b41964e-0c79-4bc2-b5b3-468877cabbae"],
+Cell[28873, 737, 238, 6, 44, "Text",ExpressionUUID->"e0729d4a-f568-4fd7-8a51-9d29394d14c3"],
+Cell[29114, 745, 503, 11, 37, "Input",ExpressionUUID->"e3255bc8-7e2c-4a82-94ed-45310d083491"],
+Cell[29620, 758, 225, 5, 44, "Text",ExpressionUUID->"b3d7a95c-d8d9-4516-8554-5dec0430d7ba"],
+Cell[29848, 765, 608, 14, 37, "Input",ExpressionUUID->"0466607f-510c-4961-95eb-40d5225a8bb4"],
+Cell[30459, 781, 343, 9, 44, "Text",ExpressionUUID->"30db9379-49bb-4495-9aff-6897b5d4e9fd"],
+Cell[30805, 792, 583, 11, 44, "Text",ExpressionUUID->"f038f869-db2c-4407-8d64-6c3ece02f354"],
+Cell[CellGroupData[{
+Cell[31413, 807, 294, 4, 56, "Subsubsection",ExpressionUUID->"14f2e292-e781-4682-a920-7c7953a4201d"],
+Cell[31710, 813, 302, 7, 44, "Text",ExpressionUUID->"03242ce9-0ab1-4ef0-8f77-013541ce4ffe"],
+Cell[32015, 822, 1884, 38, 90, "Input",ExpressionUUID->"4b39f92d-0314-490e-b697-52ccdb8cad22"],
+Cell[33902, 862, 160, 3, 44, "Text",ExpressionUUID->"bb5d5f00-4c93-4f71-969d-b8d11e68e9e9"],
+Cell[34065, 867, 285, 6, 37, "Input",ExpressionUUID->"5a435cf4-2607-40f5-b55b-e9aecb0bb560"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34387, 878, 164, 3, 56, "Subsubsection",ExpressionUUID->"ac70365f-0c09-438c-aa62-f066fc171ac3"],
+Cell[34554, 883, 351, 7, 44, "Text",ExpressionUUID->"afd5b5a5-781a-4f5b-a13a-f47ce3019f9e"],
+Cell[34908, 892, 608, 13, 37, "Input",ExpressionUUID->"d045073e-1196-402e-89c3-1ca092d5a4a4"],
+Cell[35519, 907, 608, 13, 37, "Input",ExpressionUUID->"639bb39d-d135-4570-8475-9d124e3ed08e"],
+Cell[36130, 922, 1823, 37, 90, "Input",ExpressionUUID->"769ed5ce-554a-4db0-aaf9-18d825609a47"],
+Cell[37956, 961, 209, 4, 44, "Text",ExpressionUUID->"356a3711-3db6-43bf-b364-abc0c91b90cc"],
+Cell[38168, 967, 286, 6, 37, "Input",ExpressionUUID->"bee0379a-5477-4c9a-ae29-7f18a1667e56"],
+Cell[38457, 975, 728, 17, 37, "Input",ExpressionUUID->"a58dea1c-0cb8-4e7e-816e-53f8904978e5"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39234, 998, 153, 3, 67, "Subsection",ExpressionUUID->"589c6083-883a-45b7-9915-de5f56c2e203"],
+Cell[CellGroupData[{
+Cell[39412, 1005, 161, 3, 56, "Subsubsection",ExpressionUUID->"16e7ac38-6cf6-430d-8c8f-fa89466daf2c"],
+Cell[39576, 1010, 318, 7, 44, "Text",ExpressionUUID->"8dfb1dcc-d924-4fff-9781-5e8edb69d70d"],
+Cell[39897, 1019, 1576, 38, 64, "Input",ExpressionUUID->"7887a987-6173-4ace-ac06-d35d88c7202f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41510, 1062, 213, 4, 56, "Subsubsection",ExpressionUUID->"106a7856-2aa8-4bcc-8405-816c7ed0424f"],
+Cell[41726, 1068, 396, 7, 44, "Text",ExpressionUUID->"cb6d117e-cddf-4d38-8615-362ed0948b87"],
+Cell[42125, 1077, 1600, 39, 64, "Input",ExpressionUUID->"cc3b33b7-eb90-4146-8022-eb58e58f7103"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[43786, 1123, 157, 3, 84, "Section",ExpressionUUID->"f9d149cb-b8e3-4b5c-8a6c-87cd5fae27e2"],
+Cell[43946, 1128, 200, 3, 44, "Text",ExpressionUUID->"343c6bbb-6a80-4779-8710-726c294b8e8a"],
+Cell[44149, 1133, 384, 11, 44, "Text",ExpressionUUID->"e3eddb09-bee9-401e-89f1-90904b048669"],
+Cell[44536, 1146, 432, 12, 44, "Text",ExpressionUUID->"e8c5dafc-d178-4a60-81f8-e74ae72387a9"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

@@ -1,0 +1,2958 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    123827,       2950]
+NotebookOptionsPosition[    105216,       2685]
+NotebookOutlinePosition[    105785,       2704]
+CellTagsIndexPosition[    105742,       2701]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Cryptocurrencies data explorations", "Title",
+ CellChangeTimes->{{3.833271625569537*^9, 3.833271639879982*^9}, 
+   3.8333869013531227`*^9, {3.8335278024308863`*^9, 
+   3.8335278056749077`*^9}},ExpressionUUID->"5cbd3e83-8d61-4779-b58a-\
+ecc1bf7aeff0"],
+
+Cell[TextData[{
+ "Anton Antonov\n",
+ ButtonBox["MathematicaVsR at GitHub",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/MathematicaVsR/"], None},
+  ButtonNote->"https://github.com/antononcube/MathematicaVsR/"],
+ "\n",
+ ButtonBox["MathematicaForPrediction at WordPress",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://mathematicaforprediction.wordpress.com"], None},
+  ButtonNote->"https://mathematicaforprediction.wordpress.com"],
+ "\nJune 2021"
+}], "Text",
+ CellChangeTimes->{{3.8328417975494757`*^9, 3.8328418203188143`*^9}, {
+  3.833099264773211*^9, 3.8330992656610107`*^9}, {3.833106114697906*^9, 
+  3.8331061291841993`*^9}, {3.833107275492634*^9, 
+  3.8331072989746943`*^9}},ExpressionUUID->"9f8ae23c-aaca-4497-9891-\
+057749c8bc2d"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.833272003897187*^9, 
+  3.833272006248767*^9}},ExpressionUUID->"b3a7bb90-fb4d-467b-a968-\
+35bae5a8fe88"],
+
+Cell[TextData[{
+ "The main goal of this notebook is to provide some basic views and insights \
+into the landscape of cryptocurrencies. The \[OpenCurlyDoubleQuote]landscape\
+\[CloseCurlyDoubleQuote] we consider consists of price action and trading \
+volume time series for cryptocurrencies found in ",
+ ButtonBox["Yahoo Finance",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://finance.yahoo.com/cryptocurrencies"], None},
+  ButtonNote->"https://finance.yahoo.com/cryptocurrencies"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.83327212462845*^9, 3.833272137656361*^9}, 
+   3.833272959286886*^9, {3.833354577232863*^9, 3.8333546408831244`*^9}, {
+   3.8333565475978193`*^9, 3.833356630008667*^9}, {3.833370353647689*^9, 
+   3.8333703716700706`*^9}},ExpressionUUID->"72c3d7eb-0233-4cd7-9569-\
+bf27b2382bbd"],
+
+Cell["Here is the work plan followed in this notebook:", "Text",
+ CellChangeTimes->{{3.833356649000926*^9, 3.8333566991209917`*^9}, {
+  3.833358976721277*^9, 
+  3.83335898694689*^9}},ExpressionUUID->"fbf49723-f68c-4d8a-8388-\
+91e95ee0d9bb"],
+
+Cell["Get cryptocurrency data", "ItemNumbered",
+ CellChangeTimes->{{3.833307214600623*^9, 
+  3.833307233335806*^9}},ExpressionUUID->"7dcaff6a-5c90-49f8-90ba-\
+0ac324c726f1"],
+
+Cell["Do basic data analysis over suitable date ranges", "ItemNumbered",
+ CellChangeTimes->{{3.833307214600623*^9, 
+  3.83330725951423*^9}},ExpressionUUID->"c3ef04dc-09f6-4799-9855-\
+df7f1d86e3fe"],
+
+Cell["Gather important cryptocurrency events", "ItemNumbered",
+ CellChangeTimes->{{3.833307214600623*^9, 
+  3.8333072793040648`*^9}},ExpressionUUID->"b95d9517-2d3f-4aea-9378-\
+61d7aaee0aef"],
+
+Cell["\<\
+Plot together cryptocurrency prices and trading volume time series together \
+with the events\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.833307214600623*^9, 
+  3.833307323865259*^9}},ExpressionUUID->"f6a4c584-8fca-4be9-ba87-\
+bd7948abea6c"],
+
+Cell["Make observations and conjectures over the plots", "ItemNumbered",
+ CellChangeTimes->{{3.833307214600623*^9, 
+  3.833307343025127*^9}},ExpressionUUID->"3258f014-aff0-4c0f-ba8e-\
+af081c943254"],
+
+Cell["\<\
+Find \[OpenCurlyDoubleQuote]global\[CloseCurlyDoubleQuote] correlations \
+between the different cryptocurrencies\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.833307214600623*^9, 
+  3.833307378641919*^9}},ExpressionUUID->"12db8be9-806c-4de1-a2c0-\
+661e03a4f13c"],
+
+Cell["\<\
+Find clusters of cryptocurrencies based on time series correlations\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.833307214600623*^9, 
+  3.833307400307089*^9}},ExpressionUUID->"fefd1ec2-ef7e-460d-b091-\
+7f3bb0e6feec"],
+
+Cell["Here are some details for the steps above:", "Text",
+ CellChangeTimes->{{3.833358878586897*^9, 3.8333588842684526`*^9}, {
+  3.833358916690729*^9, 
+  3.833358926882456*^9}},ExpressionUUID->"9de7e582-dcd5-41ba-b2bf-\
+0a37781110d6"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "The procedure of obtaining the cryptocurrencies data, point 1, is explained \
+in detail in [",
+ ButtonBox["AA1",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://mathematicaforprediction.wordpress.com/2021/06/19/crypto-\
+currencies-data-acquisition-with-visualization/"], None},
+  ButtonNote->
+   "https://mathematicaforprediction.wordpress.com/2021/06/19/crypto-\
+currencies-data-acquisition-with-visualization/"],
+ "]. "
+}], "Item",
+ CellChangeTimes->{{3.833356720900276*^9, 3.8333568741368093`*^9}, {
+  3.833356935284419*^9, 3.8333569604871817`*^9}, {3.833357092756042*^9, 
+  3.833357138263094*^9}, {3.833357196224511*^9, 3.8333572514846907`*^9}, {
+  3.8333587718236103`*^9, 3.833358872253572*^9}, {3.833358937788621*^9, 
+  3.8333589377888927`*^9}, {3.8333590145592957`*^9, 
+  3.833359014559449*^9}},ExpressionUUID->"4564ee2f-99fa-4bd2-b6b4-\
+9884b9a4d989"],
+
+Cell[TextData[{
+ "There is a dedicated resource object ",
+ StyleBox[ButtonBox["CrypocurrencyData",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://www.wolframcloud.com/obj/antononcube/DeployedResources/\
+Function/CryptocurrencyData"], None},
+  ButtonNote->
+   "https://www.wolframcloud.com/obj/antononcube/DeployedResources/Function/\
+CryptocurrencyData"], "Program"],
+ " that provides cryptocurrency data and related documentation. "
+}], "Subitem",
+ CellChangeTimes->{{3.833356720900276*^9, 3.8333568741368093`*^9}, {
+  3.833356935284419*^9, 3.8333569604871817`*^9}, {3.833357092756042*^9, 
+  3.833357138263094*^9}, {3.833357196224511*^9, 3.8333572514846907`*^9}, {
+  3.8333587718236103`*^9, 3.833358872253572*^9}, {3.833358937788621*^9, 
+  3.8333589377888927`*^9}, {3.8333590207660847`*^9, 3.833359059791664*^9}, {
+  3.833370393766458*^9, 
+  3.833370394194009*^9}},ExpressionUUID->"f480de3a-6e71-4069-8207-\
+b518efad81c9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+The cryptocurrency events data, point 3, is taken from different news sites.\
+\>", "Item",
+ CellChangeTimes->{{3.833356720900276*^9, 3.8333568741368093`*^9}, {
+  3.833356935284419*^9, 3.8333569604871817`*^9}, {3.833357092756042*^9, 
+  3.833357138263094*^9}, {3.833357196224511*^9, 3.8333572514846907`*^9}, {
+  3.8333587718236103`*^9, 3.833358872253572*^9}, {3.833358942164596*^9, 
+  3.833358947617461*^9}, {3.8333589999651117`*^9, 
+  3.83335900571694*^9}},ExpressionUUID->"30159b28-48a8-4476-8d56-\
+610542d8c0fa"],
+
+Cell["Links are provided in the corresponding dataset.", "Subitem",
+ CellChangeTimes->{{3.833356720900276*^9, 3.8333568741368093`*^9}, {
+  3.833356935284419*^9, 3.8333569604871817`*^9}, {3.833357092756042*^9, 
+  3.833357138263094*^9}, {3.833357196224511*^9, 3.8333572514846907`*^9}, {
+  3.8333587718236103`*^9, 3.833358872253572*^9}, {3.833358942164596*^9, 
+  3.833358947617461*^9}, {3.8333589999651117`*^9, 
+  3.8333590071636*^9}},ExpressionUUID->"b3c46e39-7a50-46eb-a8bd-69185edea0cd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "The points 6 and 7 follow similar explorations (and code) described in [",
+ ButtonBox["AA2",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://mathematicaforprediction.wordpress.com/2021/01/15/ny-times-\
+covid-19-data-visualization-update/"], None},
+  ButtonNote->
+   "https://mathematicaforprediction.wordpress.com/2021/01/15/ny-times-covid-\
+19-data-visualization-update/"],
+ ", ",
+ ButtonBox["AA3",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://mathematicaforprediction.wordpress.com/2020/04/17/apple-\
+mobility-trends-data-visualization-for-covid-19/"], None},
+  ButtonNote->
+   "https://mathematicaforprediction.wordpress.com/2020/04/17/apple-mobility-\
+trends-data-visualization-for-covid-19/"],
+ "]. "
+}], "Item",
+ CellChangeTimes->{{3.833356720900276*^9, 3.8333568741368093`*^9}, {
+  3.833356935284419*^9, 3.8333569604871817`*^9}, {3.833357092756042*^9, 
+  3.833357138263094*^9}, {3.833357196224511*^9, 3.8333572514846907`*^9}, {
+  3.8333587718236103`*^9, 3.833358872253572*^9}, {3.833359009528182*^9, 
+  3.833359009778881*^9}},ExpressionUUID->"d59180cf-d7fc-49bb-a0ec-\
+ad9fd834f21b"],
+
+Cell["Those two articles deal with COVID-19 time series.", "Subitem",
+ CellChangeTimes->{{3.833356720900276*^9, 3.8333568741368093`*^9}, {
+  3.833356935284419*^9, 3.8333569604871817`*^9}, {3.833357092756042*^9, 
+  3.833357138263094*^9}, {3.833357196224511*^9, 3.8333572514846907`*^9}, {
+  3.8333587718236103`*^9, 3.833358872253572*^9}, {3.833359009528182*^9, 
+  3.833359010878539*^9}},ExpressionUUID->"71a0e6d1-edeb-4924-8ecd-\
+e50075b19ef7"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["Remark:",
+  FontWeight->"Bold"],
+ " Note that in this notebook we do not discuss philosophical, \
+macro-economic, and environmental issues with cryptocurrencies. We only \
+discuss financial time series data."
+}], "Text",
+ CellChangeTimes->{{3.833356703980357*^9, 3.833356718775176*^9}, {
+  3.833356963929562*^9, 3.833357078602066*^9}, {3.833359072292769*^9, 
+  3.833359073157426*^9}, {3.833370417663033*^9, 
+  3.8333704571050158`*^9}},ExpressionUUID->"bed67356-ee2a-4a4e-b717-\
+0addbc1e323c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Cryptocurrencies data", "Section",
+ CellChangeTimes->{{3.8332730056268797`*^9, 
+  3.833273013693905*^9}},ExpressionUUID->"379286e3-b376-42c5-8c1f-\
+ae5ebf78a37e"],
+
+Cell[TextData[{
+ "The cryptocurrencies data used in this notebook is obtained from found in \
+",
+ ButtonBox["Yahoo Finance",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://finance.yahoo.com/cryptocurrencies"], None},
+  ButtonNote->"https://finance.yahoo.com/cryptocurrencies"],
+ " . The procedure of obtaining the cryptocurrencies data is explained in \
+detail in [",
+ ButtonBox["AA1",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://mathematicaforprediction.wordpress.com/2021/06/19/crypto-\
+currencies-data-acquisition-with-visualization/"], None},
+  ButtonNote->
+   "https://mathematicaforprediction.wordpress.com/2021/06/19/crypto-\
+currencies-data-acquisition-with-visualization/"],
+ "]. There is a dedicated resource object ",
+ StyleBox[ButtonBox["CrypocurrencyData",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://www.wolframcloud.com/obj/antononcube/DeployedResources/\
+Function/CryptocurrencyData"], None},
+  ButtonNote->
+   "https://www.wolframcloud.com/obj/antononcube/DeployedResources/Function/\
+CryptocurrencyData"], "Program"],
+ " that provides the cryptocurrency data and related documentation. "
+}], "Text",
+ CellChangeTimes->{{3.8332730171471167`*^9, 3.833273018430113*^9}, 
+   3.8332930810619*^9, {3.83335869069974*^9, 3.8333587607408667`*^9}, {
+   3.833359090581121*^9, 3.833359105879279*^9}, {3.8333704662981253`*^9, 
+   3.833370469278634*^9}},ExpressionUUID->"6c7b161a-2dd5-4477-9db6-\
+b606f2e89639"],
+
+Cell["Here are all cryptocurrencies we have data for:", "Text",
+ CellChangeTimes->{{3.833296706483737*^9, 
+  3.8332967253787746`*^9}},ExpressionUUID->"4e3951f4-f56f-4e80-8698-\
+53304597321a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+  "\"\<CryptocurrencyNames\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.833369715387217*^9, 3.833369718007853*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"6cf3d0d9-d00f-42af-a7f6-004ea60a0bc9"],
+
+Cell[TextData[{
+ StyleBox["Remark:",
+  FontWeight->"Bold"],
+ " ",
+ StyleBox[ButtonBox["FinancialData",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://reference.wolfram.com/language/ref/FinancialData.html"], 
+    None},
+  ButtonNote->
+   "https://reference.wolfram.com/language/ref/FinancialData.html"], 
+  "Program"],
+ " is \[OpenCurlyDoubleQuote]aware\[CloseCurlyDoubleQuote] of 10 \
+cryptocurrencies, but that is not documented (as far as I can tell) and only \
+prices are provided. (For more details see the discussion in ",
+ StyleBox[ButtonBox["CrypocurrencyData",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://www.wolframcloud.com/obj/antononcube/DeployedResources/\
+Function/CryptocurrencyData"], None},
+  ButtonNote->
+   "https://www.wolframcloud.com/obj/antononcube/DeployedResources/Function/\
+CryptocurrencyData"], "Program"],
+ ".) Here are examples:"
+}], "Text",
+ CellChangeTimes->{{3.833370511062059*^9, 3.833370605486368*^9}, {
+  3.833370685949071*^9, 
+  3.833370686644606*^9}},ExpressionUUID->"251ecdbd-185f-420e-b089-\
+9bf1529d9cf8"],
+
+Cell[BoxData[
+ RowBox[{"Row", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"DateListPlot", "[", 
+     RowBox[{
+      RowBox[{"FinancialData", "[", 
+       RowBox[{"#", ",", "\"\<Jan 1 2021\>\""}], "]"}], ",", 
+      RowBox[{"ImageSize", "->", "Medium"}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", 
+       RowBox[{"1", "/", "4"}]}], ",", 
+      RowBox[{"PlotLabel", "\[Rule]", "#"}]}], "]"}], "&"}], "/@", 
+   RowBox[{"{", 
+    RowBox[{"\"\<BTC\>\"", ",", "\"\<ETH\>\""}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8333705918419027`*^9, 3.833370675812554*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"2144cfe5-0357-445b-8b44-94c1285b34b9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Significant cryptocurrencies", "Section",
+ CellChangeTimes->{{3.833296001844453*^9, 3.833296011868417*^9}, {
+  3.833297297022421*^9, 
+  3.833297307732682*^9}},ExpressionUUID->"2c456627-6750-44fb-80c8-\
+7779f2ea0924"],
+
+Cell["\<\
+In this section we analyze the summaries of cryptocurrencies data in order to \
+derive a list of the most significant ones. \
+\>", "Text",
+ CellChangeTimes->{{3.833369026343617*^9, 
+  3.833369117125572*^9}},ExpressionUUID->"cd2b4776-cc71-4208-8413-\
+765314e97c00"],
+
+Cell["\<\
+We choose the phrase \"significant cryptocurrency\" to mean \"a \
+cryptocurrency with high market capitalization, price, or trading volume.\
+\[CloseCurlyDoubleQuote]\
+\>", "Text",
+ CellChangeTimes->{{3.833369026343617*^9, 3.83336915563161*^9}, {
+  3.833369487326255*^9, 
+  3.833369498076971*^9}},ExpressionUUID->"7be5786d-f8a7-48cb-8bd0-\
+5cfa5b144748"],
+
+Cell[TextData[{
+ "Together with the summaries we look into the ",
+ ButtonBox["Pareto principle",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://en.wikipedia.org/wiki/Pareto_principle"], None},
+  ButtonNote->"https://en.wikipedia.org/wiki/Pareto_principle"],
+ " adherence of the corresponding values."
+}], "Text",
+ CellChangeTimes->{{3.833369163216044*^9, 3.833369182867414*^9}, {
+  3.833369479210677*^9, 3.833369550163598*^9}, {3.833370719145553*^9, 
+  3.8333707196433897`*^9}},ExpressionUUID->"7eb8a31b-2e7e-48bb-9b8c-\
+859ac2b7bf40"],
+
+Cell[TextData[{
+ StyleBox["Remark:",
+  FontWeight->"Bold"],
+ " The Pareto principle adherence should be interpreted carefully here -- the \
+cryptocurrencies ",
+ StyleBox["are not",
+  FontSlant->"Italic"],
+ " mutually exclusive when in comes to money invested and trading volumes. \
+Nevertheless, we can interpret the corresponding value ratios as indicators \
+of \[OpenCurlyDoubleQuote]mind share\[CloseCurlyDoubleQuote] or \
+\[OpenCurlyDoubleQuote]significance.\[CloseCurlyDoubleQuote]"
+}], "Text",
+ CellChangeTimes->{{3.8333695265170918`*^9, 3.8333696808024807`*^9}, {
+  3.833370732187621*^9, 
+  3.833370733154694*^9}},ExpressionUUID->"23bb5b88-923b-4df7-a83b-\
+3646a3d4aba6"],
+
+Cell[CellGroupData[{
+
+Cell["By summaries", "Subsection",
+ CellChangeTimes->{{3.833307418982259*^9, 
+  3.833307427779859*^9}},ExpressionUUID->"08b4611d-631c-4d95-b9f8-\
+afbfb7110922"],
+
+Cell[TextData[{
+ "Here is a summary of the cryptocurrencies we consider (from ",
+ ButtonBox["Yahoo Finance",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://finance.yahoo.com/cryptocurrencies"], None},
+  ButtonNote->"https://finance.yahoo.com/cryptocurrencies"],
+ ") ordered by \[OpenCurlyDoubleQuote]Market Cap\[CloseCurlyDoubleQuote] \
+(largest first):"
+}], "Text",
+ CellChangeTimes->{{3.833354121297373*^9, 3.833354171113145*^9}, {
+  3.833354204194002*^9, 
+  3.833354204194871*^9}},ExpressionUUID->"a4a15a85-d41b-4ae5-a25e-\
+c0c6cee25d84"],
+
+Cell[BoxData[
+ RowBox[{"dsCCSummary", "=", 
+  RowBox[{
+   RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+   
+   RowBox[{"All", ",", "\"\<Summary\>\""}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.8333074247015047`*^9, 3.833307440706575*^9}, {
+  3.8333540692331667`*^9, 3.833354102375211*^9}, {3.833354281062953*^9, 
+  3.8333542863380947`*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"62113f77-d6b0-4111-9d8b-8fec9f5c1848"],
+
+Cell["Here is the summary of summary dataset above:", "Text",
+ CellChangeTimes->{{3.833368917891753*^9, 3.8333689262620983`*^9}, {
+  3.8333707621364927`*^9, 
+  3.83337080157938*^9}},ExpressionUUID->"9ad78538-bc44-462b-a086-\
+77df9cc2f9af"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+  "dsCCSummary", "]"}]], "Input",
+ CellChangeTimes->{{3.833362287915503*^9, 3.833362294855155*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"c98384ab-ea75-4283-bfa9-d6bf6c5a403a"],
+
+Cell["\<\
+Here is a Pareto principle adherence plot for the cryptocurrency market caps:\
+\
+\>", "Text",
+ CellChangeTimes->{{3.8333542255305357`*^9, 
+  3.833354254853479*^9}},ExpressionUUID->"7fbe0899-ac99-4e09-b753-\
+78668399ba6e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"aMCaps", "=", 
+   RowBox[{"Normal", "[", 
+    RowBox[{"dsCCSummary", "[", 
+     RowBox[{"Association", ",", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"StringSplit", "[", 
+          RowBox[{"#Symbol", ",", "\"\<-\>\""}], "]"}], 
+         "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], "->", 
+        RowBox[{"#", "[", "\"\<Market Cap\>\"", "]"}]}], "&"}]}], "]"}], 
+    "]"}]}], ";", 
+  RowBox[{
+   RowBox[{"ResourceFunction", "[", "\"\<ParetoPrinciplePlot\>\"", "]"}], "[", 
+   RowBox[{"aMCaps", ",", 
+    RowBox[{"PlotRange", "->", "All"}], ",", 
+    RowBox[{
+    "PlotLabel", "->", 
+     "\"\<Pareto principle for cryptocurrency market caps\>\""}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.8333542604738092`*^9, 3.8333543993707457`*^9}, {
+  3.8333591824640903`*^9, 3.8333592840598707`*^9}, {3.833359404744568*^9, 
+  3.8333594321841373`*^9}, {3.833360519433146*^9, 3.8333605247544003`*^9}, {
+  3.833369200895585*^9, 3.833369215183769*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"310ae3ed-1b40-4013-b6c5-9e2dd42d92d8"],
+
+Cell["\<\
+Here is the Pareto statistic for the top 12 cryptocurrencies:\
+\>", "Text",
+ CellChangeTimes->{{3.83336898751989*^9, 
+  3.833369005047235*^9}},ExpressionUUID->"3a7903a3-2456-4429-974b-\
+adbf8a72682a"],
+
+Cell[BoxData[
+ RowBox[{"Take", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"AssociationThread", "[", 
+     RowBox[{
+      RowBox[{"Keys", "@", "aMCaps"}], ",", 
+      RowBox[{"Accumulate", "[", 
+       RowBox[{"Values", "@", "aMCaps"}], "]"}]}], "]"}], "/", 
+    RowBox[{"Total", "[", "aMCaps", "]"}]}], ",", "12"}], "]"}]], "Input",
+ CellChangeTimes->{{3.833360780304775*^9, 3.833360899539651*^9}, {
+  3.833361045656767*^9, 3.8333610579717484`*^9}, {3.8333616257876673`*^9, 
+  3.833361629715273*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"82259048-750d-4c7c-aec6-9d4d4d1a47bd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["By price", "Subsection",
+ CellChangeTimes->{{3.83329731960144*^9, 
+  3.833297321075262*^9}},ExpressionUUID->"76694f8a-a369-4000-87e0-\
+0b5a13a52606"],
+
+Cell["\<\
+Get the mean daily closing prices data for the last two weeks and show the \
+corresponding data summary:\
+\>", "Text",
+ CellChangeTimes->{{3.833369274692601*^9, 
+  3.833369357235436*^9}},ExpressionUUID->"95aff425-fc2c-4dc9-991d-\
+71ba941e8ac7"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"startDate", "=", 
+   RowBox[{"DatePlus", "[", 
+    RowBox[{"Now", ",", 
+     RowBox[{"-", 
+      RowBox[{"Quantity", "[", 
+       RowBox[{"2", ",", "\"\<Weeks\>\""}], "]"}]}]}], "]"}]}], ";", 
+  RowBox[{"aMeans", "=", 
+   RowBox[{"ReverseSort", "[", 
+    RowBox[{"Association", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"#", "->", 
+        RowBox[{"Mean", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+           
+           RowBox[{"#", ",", "\"\<Close\>\"", ",", "startDate"}], "]"}], "[", 
+          "\"\<Values\>\"", "]"}], "]"}]}], "&"}], "/@", 
+      RowBox[{
+       RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], 
+       "[", "\"\<Cryptocurrencies\>\"", "]"}]}], "]"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+  RowBox[{"aMeans", ",", 
+   RowBox[{"Thread", "->", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.833369303077483*^9, 3.8333693361805162`*^9}},
+ CellLabel->"In[91]:=",ExpressionUUID->"39f06af3-baba-44be-8912-2aface79bc7c"],
+
+Cell["Pareto principle adherence plot:", "Text",
+ TaggingRules->{},
+ CellChangeTimes->{{3.8332160865913143`*^9, 3.833216126898992*^9}, {
+  3.833216317595963*^9, 3.833216334952779*^9}, {3.833216455821968*^9, 
+  3.8332164572886066`*^9}, {3.833260796441327*^9, 3.833260797384853*^9}, {
+  3.833296776647985*^9, 3.8332968335183687`*^9}, {3.8333693694537077`*^9, 
+  3.833369374246167*^9}},
+ CellID->1894663852,ExpressionUUID->"f2695f32-05c8-4365-8cac-bdea879ad4b3"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<ParetoPrinciplePlot\>\"", "]"}], "[", 
+  
+  RowBox[{"aMeans", ",", 
+   RowBox[{"PlotRange", "->", "All"}], ",", 
+   RowBox[{
+   "PlotLabel", "->", 
+    "\"\<Pareto principle for cryptocurrency closing prices\>\""}]}], 
+  "]"}]], "Input",
+ TaggingRules->{},
+ CellChangeTimes->{{3.833216129168705*^9, 3.833216302500484*^9}, {
+  3.833216375346168*^9, 3.833216415600854*^9}, {3.833216452392619*^9, 
+  3.8332164526843147`*^9}, {3.833296015649021*^9, 3.833296071269555*^9}, {
+  3.833296822705689*^9, 3.8332969078815947`*^9}, {3.8332970666095657`*^9, 
+  3.833297189078123*^9}, {3.8332972722850523`*^9, 3.83329727522036*^9}, {
+  3.833302549361073*^9, 3.833302562304397*^9}, {3.8333026041112967`*^9, 
+  3.83330261182796*^9}, {3.83336926974695*^9, 3.833369270665318*^9}},
+ CellLabel->"In[93]:=",
+ CellID->1500293889,ExpressionUUID->"1e3d0584-9ee6-40b3-8a43-1f21b61b5bd8"],
+
+Cell["\<\
+Here are the Pareto statistic values for the top 12 cryptocurrencies:\
+\>", "Text",
+ CellChangeTimes->{{3.83336898751989*^9, 3.833369005047235*^9}, {
+  3.8333693971741*^9, 
+  3.833369404666366*^9}},ExpressionUUID->"3fdbd0d9-95fa-4ddd-a335-\
+5b3df1449b05"],
+
+Cell[BoxData[
+ RowBox[{"aCCTop", "=", 
+  RowBox[{"Take", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"AssociationThread", "[", 
+      RowBox[{
+       RowBox[{"Keys", "@", "aMeans"}], ",", 
+       RowBox[{"Accumulate", "[", 
+        RowBox[{"Values", "@", "aMeans"}], "]"}]}], "]"}], "/", 
+     RowBox[{"Total", "[", "aMeans", "]"}]}], ",", "12"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.8333621139959097`*^9, 3.83336212503345*^9}, {
+  3.833369768882598*^9, 3.8333697729082937`*^9}},
+ CellLabel->"In[94]:=",ExpressionUUID->"e180c851-66fe-4291-9821-bb2ddaede026"],
+
+Cell["\<\
+Plot the daily closing prices of top cryptocurrencies since January 2018:\
+\>", "Text",
+ TaggingRules->{},
+ CellChangeTimes->{{3.833215899660033*^9, 3.8332159206396933`*^9}, {
+  3.833260662812014*^9, 3.833260685331225*^9}, {3.833360746110552*^9, 
+  3.8333607469767923`*^9}, {3.833369798839666*^9, 3.833369814106303*^9}, {
+  3.833369999813178*^9, 3.833370035656755*^9}},
+ CellID->96863732,ExpressionUUID->"669bb4cf-8e28-4e40-91cc-24c760f19fa4"],
+
+Cell[BoxData[
+ RowBox[{"DateListPlot", "[", 
+  RowBox[{
+   RowBox[{"Log10", "/@", 
+    RowBox[{"Association", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"#", "->", 
+        RowBox[{
+         RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}],
+          "[", 
+         RowBox[{"#", ",", "\"\<Close\>\"", ",", "\"\<Jan 1, 2018\>\""}], 
+         "]"}]}], "&"}], "/@", 
+      RowBox[{"Keys", "[", "aCCTop", "]"}]}], "]"}]}], ",", 
+   RowBox[{
+   "PlotLabel", "->", 
+    "\"\<lg of crytocurrencies daily closing prices, USD\>\""}], ",", 
+   RowBox[{"PlotTheme", "->", "\"\<Detailed\>\""}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}]], "Input",
+ TaggingRules->{},
+ CellChangeTimes->{{3.833216129168705*^9, 3.833216302500484*^9}, {
+   3.833216375346168*^9, 3.833216427982689*^9}, {3.833216468525175*^9, 
+   3.833216481352627*^9}, {3.833260648011499*^9, 3.833260648192903*^9}, 
+   3.8333591473971577`*^9, {3.833360658909243*^9, 3.833360671962473*^9}, {
+   3.833360749159937*^9, 3.833360751735916*^9}, {3.8333697807954407`*^9, 
+   3.833369784181905*^9}, {3.8333700025037403`*^9, 3.83337002906448*^9}, {
+   3.833370143916006*^9, 3.833370228487809*^9}},
+ CellLabel->"In[95]:=",
+ CellID->608928330,ExpressionUUID->"33b34584-d92b-4e1b-948a-07d48774b299"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["By trading volume", "Subsection",
+ CellChangeTimes->{{3.83329731960144*^9, 
+  3.8332973416181917`*^9}},ExpressionUUID->"3b264f18-271d-4265-835a-\
+4126678618ab"],
+
+Cell["\<\
+Get the mean daily trading volumes data for the last two weeks and show the \
+corresponding data summary:\
+\>", "Text",
+ CellChangeTimes->{{3.833369409037633*^9, 
+  3.833369438712454*^9}},ExpressionUUID->"51feefc8-72a0-48ef-8e6f-\
+1e9cd960e2fd"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"startDate", "=", 
+   RowBox[{"DatePlus", "[", 
+    RowBox[{"Now", ",", 
+     RowBox[{"-", 
+      RowBox[{"Quantity", "[", 
+       RowBox[{"2", ",", "\"\<Weeks\>\""}], "]"}]}]}], "]"}]}], ";", 
+  RowBox[{"aMeans", "=", 
+   RowBox[{"ReverseSort", "[", 
+    RowBox[{"Association", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"#", "->", 
+        RowBox[{"Mean", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+           
+           RowBox[{"#", ",", "\"\<Volume\>\"", ",", "startDate"}], "]"}], 
+          "[", "\"\<Values\>\"", "]"}], "]"}]}], "&"}], "/@", 
+      RowBox[{
+       RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], 
+       "[", "\"\<Cryptocurrencies\>\"", "]"}]}], "]"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+  RowBox[{"aMeans", ",", 
+   RowBox[{"Thread", "->", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.8333694425351267`*^9, 3.8333694440427217`*^9}},
+ CellLabel->"In[96]:=",ExpressionUUID->"81e3c308-9540-425d-bd1d-980a1e3decac"],
+
+Cell["Pareto principle adherence plot:", "Text",
+ TaggingRules->{},
+ CellChangeTimes->{{3.8332160865913143`*^9, 3.833216126898992*^9}, {
+  3.833216317595963*^9, 3.833216334952779*^9}, {3.833216455821968*^9, 
+  3.8332164572886066`*^9}, {3.833260796441327*^9, 3.833260797384853*^9}, {
+  3.833296776647985*^9, 3.8332968335183687`*^9}, {3.833369452726871*^9, 
+  3.83336945641689*^9}},
+ CellID->1475574675,ExpressionUUID->"50672dd0-7d42-4cdd-bb64-7f3db6bb3ad5"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<ParetoPrinciplePlot\>\"", "]"}], "[", 
+  
+  RowBox[{"aMeans", ",", 
+   RowBox[{"PlotRange", "->", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "1.1"}], "}"}]}], ",", 
+   RowBox[{"PlotRange", "->", "All"}], ",", 
+   RowBox[{
+   "PlotLabel", "->", 
+    "\"\<Pareto principle for cryptocurrency trading volumes\>\""}]}], 
+  "]"}]], "Input",
+ TaggingRules->{},
+ CellChangeTimes->{{3.833216129168705*^9, 3.833216302500484*^9}, {
+  3.833216375346168*^9, 3.833216415600854*^9}, {3.833216452392619*^9, 
+  3.8332164526843147`*^9}, {3.833296015649021*^9, 3.833296071269555*^9}, {
+  3.833296822705689*^9, 3.8332969078815947`*^9}, {3.8332970666095657`*^9, 
+  3.833297189078123*^9}, {3.8332972722850523`*^9, 3.83329727522036*^9}, {
+  3.8332973344079123`*^9, 3.833297378700164*^9}, {3.833297433295085*^9, 
+  3.833297439573453*^9}, {3.83330266178926*^9, 3.83330267578622*^9}, {
+  3.833369412160553*^9, 3.833369413081214*^9}},
+ CellLabel->"In[98]:=",
+ CellID->842407169,ExpressionUUID->"81b2a71b-8f4a-4b72-b773-d7930a6cb5e8"],
+
+Cell["\<\
+Here are the Pareto statistic values for the top 12 cryptocurrencies:\
+\>", "Text",
+ CellChangeTimes->{{3.83336898751989*^9, 3.833369005047235*^9}, {
+  3.8333694657542057`*^9, 
+  3.83336946862331*^9}},ExpressionUUID->"26b88102-55e9-4dfd-af3a-\
+111190c9fa16"],
+
+Cell[BoxData[
+ RowBox[{"aCCTop", "=", 
+  RowBox[{"N", "@", 
+   RowBox[{"Take", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"AssociationThread", "[", 
+       RowBox[{
+        RowBox[{"Keys", "@", "aMeans"}], ",", 
+        RowBox[{"Accumulate", "[", 
+         RowBox[{"Values", "@", "aMeans"}], "]"}]}], "]"}], "/", 
+      RowBox[{"Total", "[", "aMeans", "]"}]}], ",", "12"}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.8333621139959097`*^9, 3.83336212503345*^9}, {
+  3.8333622039730463`*^9, 3.833362204752841*^9}, {3.83336982697775*^9, 
+  3.833369830419196*^9}, {3.833369869211275*^9, 3.833369907202115*^9}},
+ CellLabel->"In[99]:=",ExpressionUUID->"f731fd53-9264-4c5b-8611-040fefed4ef5"],
+
+Cell["\<\
+Plot the daily closing prices of top cryptocurrencies since January 2018:\
+\>", "Text",
+ TaggingRules->{},
+ CellChangeTimes->{{3.833215899660033*^9, 3.8332159206396933`*^9}, {
+  3.833260662812014*^9, 3.833260685331225*^9}, {3.833360746110552*^9, 
+  3.8333607469767923`*^9}, {3.833369798839666*^9, 3.833369814106303*^9}, {
+  3.8333699773242683`*^9, 3.83336998397688*^9}, {3.833370044615716*^9, 
+  3.833370044997257*^9}},
+ CellID->1469200750,ExpressionUUID->"7d9d63d6-3e7e-4993-b5e6-c82eca6591e4"],
+
+Cell[BoxData[
+ RowBox[{"DateListPlot", "[", 
+  RowBox[{
+   RowBox[{"Log10", "/@", 
+    RowBox[{"Association", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"#", "->", 
+        RowBox[{
+         RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}],
+          "[", 
+         RowBox[{"#", ",", "\"\<Volume\>\"", ",", "\"\<Jan 1, 2018\>\""}], 
+         "]"}]}], "&"}], "/@", 
+      RowBox[{"Keys", "[", "aCCTop", "]"}]}], "]"}]}], ",", 
+   RowBox[{
+   "PlotLabel", "->", "\"\<lg of cryptocurrencies trading volumes\>\""}], ",", 
+   RowBox[{"PlotTheme", "->", "\"\<Detailed\>\""}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"5", ",", "Automatic"}], "}"}]}]}], "]"}]], "Input",
+ TaggingRules->{},
+ CellChangeTimes->{{3.833216129168705*^9, 3.833216302500484*^9}, {
+   3.833216375346168*^9, 3.833216427982689*^9}, {3.833216468525175*^9, 
+   3.833216481352627*^9}, {3.833260648011499*^9, 3.833260648192903*^9}, 
+   3.8333591473971577`*^9, {3.833360658909243*^9, 3.833360671962473*^9}, {
+   3.833360749159937*^9, 3.833360751735916*^9}, {3.8333697807954407`*^9, 
+   3.833369784181905*^9}, {3.83336983470646*^9, 3.8333698386553802`*^9}, {
+   3.8333698995755577`*^9, 3.8333699895878153`*^9}, {3.833370047670765*^9, 
+   3.833370131701618*^9}, {3.833370244948262*^9, 3.8333702632187862`*^9}},
+ CellLabel->"In[100]:=",
+ CellID->1090032044,ExpressionUUID->"c21ec7f1-4b2e-48c8-897b-bb422d4fc000"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Related events", "Section",
+ CellChangeTimes->{{3.8329097753094378`*^9, 
+  3.832909780823078*^9}},ExpressionUUID->"ddd7c365-8083-4943-a549-\
+11a3fc91a5e2"],
+
+Cell["\<\
+In this section we make a dataset that has the dates of certain \
+cryptocurrency related events and links to their news announcements.\
+\>", "Text",
+ CellChangeTimes->{{3.8332797395456247`*^9, 
+  3.833279841708591*^9}},ExpressionUUID->"2c4317f9-db12-4295-9437-\
+ac2652e5ce21"],
+
+Cell[TextData[{
+ "The events were taken by observing cryptocurrency board stories in the news \
+aggregation site ",
+ ButtonBox["slashdot.org",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://slashdot.org/index2.pl?fhfilter=bitcoin"], None},
+  ButtonNote->"https://slashdot.org/index2.pl?fhfilter=bitcoin"],
+ ". "
+}], "Text",
+ CellChangeTimes->{{3.833291694208001*^9, 3.833291767791669*^9}, {
+  3.833291829015439*^9, 
+  3.8332918870917892`*^9}},ExpressionUUID->"1e09550e-fa11-4a73-8d53-\
+b5d8be17041a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"lsEventData", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<Jun 18, 2021\>\"", ",", 
+       "\"\<China to shut down over 90% of its Bitcoin mining capacity after \
+local bans\>\"", ",", 
+       "\"\<https://www.globaltimes.cn/page/202106/1226598.shtml\>\""}], 
+      "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<Jun 10, 2021\>\"", ",", 
+       "\"\<Global banking regulators call for toughest rules for \
+cryptocurrencies\>\"", ",", 
+       "\"\<https://www.theguardian.com/technology/2021/jun/10/global-banking-\
+regulators-cryptocurrencies-bitcoin\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<June 10, 2021\>\"", ",", 
+       "\"\<IMF sees legal, economic issues with El Salvador's bitcoin move\>\
+\"", ",", 
+       "\"\<https://www.reuters.com/business/finance/imf-sees-legal-economic-\
+issues-with-el-salvador-bitcoin-move-2021-06-10/\>\""}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<June 8, 2021\>\"", ",", 
+       "\"\<El Salvador Becomes First Country To Adopt Bitcoin as Legal \
+Tender After Passing Law\>\"", ",", 
+       "\"\<https://www.cnbc.com/2021/06/09/el-salvador-proposes-law-to-make-\
+bitcoin-legal-tender.html\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<June 8, 2021\>\"", ",", 
+       "\"\<US recovers millions in cryptocurrency paid to Colonial Pipeline \
+ransomware hackers\>\"", ",", 
+       "\"\<https://edition.cnn.com/2021/06/07/politics/colonial-pipeline-\
+ransomware-recovered/\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<June 4, 2021\>\"", ",", 
+       "\"\<Start of Bitcoin 2021: World\[CloseCurlyQuote]s Largest \
+Cryptocurrency Conference Coming To Wynwood\>\"", ",", 
+       "\"\<https://miami.cbslocal.com/2021/06/04/bitcoin-2021-worlds-largest-\
+cryptocurrency-conference-coming-to-wynwood/\>\""}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<June 6, 2021\>\"", ",", 
+       "\"\<End of Bitcoin 2021: World\[CloseCurlyQuote]s Largest \
+Cryptocurrency Conference Coming To Wynwood\>\"", ",", 
+       "\"\<https://miami.cbslocal.com/2021/06/04/bitcoin-2021-worlds-largest-\
+cryptocurrency-conference-coming-to-wynwood/\>\""}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<May 28, 2021\>\"", ",", 
+       "\"\<Iran Bans Crypto Mining After Months of Blackouts\>\"", ",", 
+       "\"\<https://gizmodo.com/iran-bans-crypto-mining-after-months-of-\
+blackouts-1846991039\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<May 19, 2021\>\"", ",", 
+       "\"\<Bitcoin, Ethereum prices in free fall as China plans crackdown on \
+mining and trading\>\"", ",", 
+       "\"\<https://www.cnet.com/news/bitcoin-ethereum-prices-in-freefall-as-\
+china-plans-crackdown-on-mining-and-trading/#ftag=CAD590a51e\>\""}], "}"}]}], 
+    "\[IndentingNewLine]", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dsEventData", "=", 
+   RowBox[{
+    RowBox[{"Dataset", "[", "lsEventData", "]"}], "[", 
+    RowBox[{"All", ",", 
+     RowBox[{
+      RowBox[{"AssociationThread", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"\"\<Date\>\"", ",", "\"\<Event\>\"", ",", "\"\<URL\>\""}], 
+         "}"}], ",", "#"}], "]"}], "&"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dsEventData", "=", 
+   RowBox[{"dsEventData", "[", 
+    RowBox[{"All", ",", 
+     RowBox[{
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{"Prepend", "[", 
+         RowBox[{"#", ",", 
+          RowBox[{"\"\<DateObject\>\"", "->", 
+           RowBox[{"DateObject", "[", "#Date", "]"}]}]}], "]"}], ",", 
+        RowBox[{"<|", 
+         RowBox[{"\"\<URL\>\"", "->", 
+          RowBox[{"URL", "[", "#URL", "]"}]}], "|>"}]}], "]"}], "&"}]}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"dsEventData", "=", 
+  RowBox[{"dsEventData", "[", 
+   RowBox[{"SortBy", "[", 
+    RowBox[{"#DateObject", "&"}], "]"}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.832909784094266*^9, 3.8329098705203733`*^9}, {
+  3.832909906306554*^9, 3.832909927903228*^9}, {3.832909960861928*^9, 
+  3.832909969070458*^9}, {3.8329100029025097`*^9, 3.8329100865665417`*^9}, {
+  3.832910161717767*^9, 3.83291022602199*^9}, {3.832910256151451*^9, 
+  3.832910286526184*^9}, {3.832910411727868*^9, 3.832910436028307*^9}, {
+  3.832910572738954*^9, 3.8329106794786797`*^9}, {3.832913030187091*^9, 
+  3.8329130672233562`*^9}, {3.832913124152315*^9, 3.832913124432664*^9}, {
+  3.832913632908598*^9, 3.8329136601330833`*^9}, {3.8332789590754213`*^9, 
+  3.833278959131342*^9}, {3.8333067091551647`*^9, 3.833306738441689*^9}, {
+  3.833306777147895*^9, 3.833306796262949*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"432ecc76-6b71-4131-8243-98202343af56"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Cryptocurrency time series with events", "Section",
+ CellChangeTimes->{{3.8329109612358503`*^9, 3.832910965421047*^9}, {
+  3.833279002207706*^9, 
+  3.833279028398674*^9}},ExpressionUUID->"c20dcb17-007a-4e1f-b26e-\
+39b709100806"],
+
+Cell["\<\
+In this section we discuss possible correlation and causation effects of \
+reported cryptocurrency events. \
+\>", "Text",
+ CellChangeTimes->{{3.833284061931422*^9, 3.8332841167207937`*^9}, {
+  3.833293052183228*^9, 
+  3.833293061767995*^9}},ExpressionUUID->"61d92b04-a3fb-4e42-8f4e-\
+6e877120f6d7"],
+
+Cell[TextData[{
+ StyleBox["Remark:",
+  FontWeight->"Bold"],
+ " The discussion is based on time series and events only, without \
+considering other operational properties of the cryptocurrencies."
+}], "Text",
+ CellChangeTimes->{{3.833293063534253*^9, 3.833293073591934*^9}, {
+  3.833368590241981*^9, 
+  3.833368672030905*^9}},ExpressionUUID->"53c52a50-a56c-4af6-98eb-\
+690874bc4364"],
+
+Cell["Here is a date range:", "Text",
+ CellChangeTimes->{{3.8332835074302893`*^9, 
+  3.833283542949266*^9}},ExpressionUUID->"a5080e29-238f-446f-9829-\
+5af9a65b4b94"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dateRange", "=", 
+   RowBox[{"{", 
+    RowBox[{"\"\<May 15 2021\>\"", ",", "\"\<Jun 21 2021\>\""}], "}"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.8332795463311577`*^9, 3.833279553354765*^9}, {
+  3.833283535309442*^9, 3.8332835367392387`*^9}, {3.83328378500773*^9, 
+  3.833283813831115*^9}, {3.833286717019003*^9, 3.833286792798235*^9}, {
+  3.833290871031128*^9, 3.833290871559267*^9}},
+ CellLabel->"In[31]:=",ExpressionUUID->"461fcdaf-e214-4e7a-977e-64433dace6f8"],
+
+Cell["\<\
+Here get time series for the daily opening and closing prices for the \
+selected date range:\
+\>", "Text",
+ CellChangeTimes->{{3.833283873535632*^9, 3.833283887632092*^9}, {
+  3.833283986635614*^9, 3.8332839999656982`*^9}, {3.8332848486788483`*^9, 
+  3.833284854033263*^9}},ExpressionUUID->"cae92d3d-0bab-48a4-b7ff-\
+6f521a4c9f7a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"aBTCPrices", "=", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+    RowBox[{"\"\<BTC\>\"", ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Open\>\"", ",", "\"\<Close\>\""}], "}"}], ",", 
+     "dateRange"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"aETHPrices", "=", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+    RowBox[{"\"\<ETH\>\"", ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Open\>\"", ",", "\"\<Close\>\""}], "}"}], ",", 
+     "dateRange"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"aCCVolume", "=", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<BTC\>\"", ",", "\"\<ETH\>\""}], "}"}], ",", 
+     "\"\<Volume\>\"", ",", "dateRange"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8332791690311327`*^9, 3.833279253334968*^9}, {
+   3.833279484313614*^9, 3.833279500222052*^9}, {3.833279559611875*^9, 
+   3.833279569285037*^9}, {3.833279714312204*^9, 3.8332797145475616`*^9}, 
+   3.833283807086788*^9, {3.833284645687419*^9, 3.833284660658906*^9}, {
+   3.833284691283003*^9, 3.8332847222779207`*^9}, {3.833284785211611*^9, 
+   3.8332847853675537`*^9}, {3.8332858629874153`*^9, 3.833285897750174*^9}, {
+   3.833367970486123*^9, 3.833367980960536*^9}, {3.8333681442665*^9, 
+   3.833368156277917*^9}},
+ CellLabel->"In[32]:=",ExpressionUUID->"5272377f-b798-4afe-8f79-0d47a73c211f"],
+
+Cell["Here are the summaries for prices:", "Text",
+ CellChangeTimes->{{3.83336835982257*^9, 3.833368367630609*^9}, {
+  3.8333685617658873`*^9, 
+  3.8333685701822643`*^9}},ExpressionUUID->"fb484b1b-e997-45a3-a5d3-\
+1413b4989e80"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<GridTableForm\>\"", "]"}], "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+        RowBox[{
+         RowBox[{"#", "[", "\"\<Values\>\"", "]"}], ",", "\"\<USD\>\""}], 
+        "]"}], "&"}], ",", "#"}], "]"}], "&"}], "/@", 
+   RowBox[{"<|", 
+    RowBox[{
+     RowBox[{"\"\<BTC\>\"", "->", "aBTCPrices"}], ",", 
+     RowBox[{"\"\<ETH\>\"", "->", "aETHPrices"}]}], "|>"}]}], "]"}]], "Input",\
+
+ CellChangeTimes->{{3.833368297541823*^9, 3.833368331618724*^9}, {
+  3.833368388770632*^9, 3.833368487010221*^9}},
+ CellLabel->"In[35]:=",ExpressionUUID->"a86ae7ed-d3cd-452a-b49f-102e7fe79db6"],
+
+Cell["Here are the summaries for trading volumes:", "Text",
+ CellChangeTimes->{{3.83336835982257*^9, 3.833368367630609*^9}, {
+  3.8333685617658873`*^9, 
+  3.833368580521399*^9}},ExpressionUUID->"05b01a02-565f-4938-83ab-\
+238c8321698c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+    RowBox[{
+     RowBox[{"#", "[", "\"\<Values\>\"", "]"}], ",", "\"\<USD\>\""}], "]"}], 
+   "&"}], "/@", "aCCVolume"}]], "Input",
+ CellChangeTimes->{{3.833368508666531*^9, 3.833368544509305*^9}},
+ CellLabel->"In[36]:=",ExpressionUUID->"8d39099d-de83-48b9-8d31-a6e502f8c080"],
+
+Cell["\<\
+Here we plot the cryptocurrency events with together with the Bitcoin (BTC) \
+price time series:\
+\>", "Text",
+ CellChangeTimes->{{3.833284015636484*^9, 3.8332840571280813`*^9}, {
+  3.8332845657736063`*^9, 3.833284569081224*^9}, {3.83329154417391*^9, 
+  3.8332916016834183`*^9}},ExpressionUUID->"4c1133d4-5e59-4ac1-9eb6-\
+1319334f3aa1"],
+
+Cell[BoxData[
+ RowBox[{"CryptocurrencyPlot", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"aBTCPrices", ",", "dsEventData"}], "}"}], ",", 
+   RowBox[{"PlotLabel", "->", "\"\<BTC daily prices\>\""}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "1200"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8329250699410267`*^9, 3.832925089932872*^9}, {
+   3.832925162599147*^9, 3.832925186178804*^9}, {3.832926507630858*^9, 
+   3.8329265165848722`*^9}, {3.832926553329215*^9, 3.832926553665447*^9}, {
+   3.8329289581758842`*^9, 3.832928993184001*^9}, {3.832929100972458*^9, 
+   3.8329291013539753`*^9}, {3.833036533708997*^9, 3.833036534191513*^9}, {
+   3.833036950184721*^9, 3.833036970391932*^9}, {3.833037391668231*^9, 
+   3.833037394028474*^9}, {3.833279032550932*^9, 3.8332790400325527`*^9}, {
+   3.833279156482471*^9, 3.8332791659327803`*^9}, {3.833279262706905*^9, 
+   3.833279272584244*^9}, {3.833279475819562*^9, 3.833279475987836*^9}, {
+   3.833279655418065*^9, 3.8332796557316723`*^9}, {3.833279688663138*^9, 
+   3.833279689189535*^9}, 3.833285210560112*^9, {3.833285721190391*^9, 
+   3.833285726060215*^9}, 3.8332859054475937`*^9, {3.833286076074914*^9, 
+   3.833286107923925*^9}, {3.833286228018773*^9, 3.83328622843347*^9}, {
+   3.833286976201148*^9, 3.8332869945955057`*^9}, {3.833287029154683*^9, 
+   3.833287039245755*^9}, 3.8333679329907618`*^9, {3.8333680708740063`*^9, 
+   3.8333680753621902`*^9}, 3.833372641052965*^9},
+ CellLabel->"In[78]:=",ExpressionUUID->"7ba7ce83-7203-48b5-a1b0-e00f07e06f05"],
+
+Cell["\<\
+Here we plot the cryptocurrency events with together with the Ether (ETH) \
+price time series:\
+\>", "Text",
+ CellChangeTimes->{{3.833284015636484*^9, 3.8332840571280813`*^9}, {
+  3.8332845657736063`*^9, 3.833284569081224*^9}, {3.83329154417391*^9, 
+  3.8332916016834183`*^9}, {3.8333682113196487`*^9, 
+  3.833368215167532*^9}},ExpressionUUID->"34e1d441-0ae2-402b-94de-\
+7eecec06ee30"],
+
+Cell[BoxData[
+ RowBox[{"CryptocurrencyPlot", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"aETHPrices", ",", "dsEventData"}], "}"}], ",", 
+   RowBox[{"PlotRange", "->", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0.95", ",", "1.05"}], "}"}], 
+     RowBox[{"MinMax", "[", 
+      RowBox[{
+       RowBox[{
+       "aETHPrices", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+       "[", "\"\<Values\>\"", "]"}], "]"}]}]}], ",", 
+   RowBox[{"PlotLabel", "->", "\"\<BTC daily prices\>\""}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "1200"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8329250699410267`*^9, 3.832925089932872*^9}, {
+   3.832925162599147*^9, 3.832925186178804*^9}, {3.832926507630858*^9, 
+   3.8329265165848722`*^9}, {3.832926553329215*^9, 3.832926553665447*^9}, {
+   3.8329289581758842`*^9, 3.832928993184001*^9}, {3.832929100972458*^9, 
+   3.8329291013539753`*^9}, {3.833036533708997*^9, 3.833036534191513*^9}, {
+   3.833036950184721*^9, 3.833036970391932*^9}, {3.833037391668231*^9, 
+   3.833037394028474*^9}, {3.833279032550932*^9, 3.8332790400325527`*^9}, {
+   3.833279156482471*^9, 3.8332791659327803`*^9}, {3.833279262706905*^9, 
+   3.833279272584244*^9}, {3.833279475819562*^9, 3.833279475987836*^9}, {
+   3.833279655418065*^9, 3.8332796557316723`*^9}, {3.833279688663138*^9, 
+   3.833279689189535*^9}, 3.833285210560112*^9, {3.833285721190391*^9, 
+   3.833285726060215*^9}, 3.8332859054475937`*^9, {3.833286076074914*^9, 
+   3.833286107923925*^9}, {3.833286228018773*^9, 3.83328622843347*^9}, {
+   3.833286976201148*^9, 3.8332869945955057`*^9}, {3.833287029154683*^9, 
+   3.833287039245755*^9}, 3.8333679329907618`*^9, {3.8333680708740063`*^9, 
+   3.8333680753621902`*^9}, {3.8333681181275063`*^9, 3.833368127820565*^9}, 
+   3.833368165843045*^9, {3.833368806731205*^9, 3.833368897057534*^9}},
+ CellLabel->"In[38]:=",ExpressionUUID->"89cee084-8673-47cd-8228-0d326ab57608"],
+
+Cell["\<\
+Here we plot the cryptocurrency events with together with the BTC trading \
+volume time series:\
+\>", "Text",
+ CellChangeTimes->{{3.833284015636484*^9, 3.8332840571280813`*^9}, {
+  3.8332845657736063`*^9, 3.833284569081224*^9}, {3.83329154417391*^9, 
+  3.833291607735806*^9}},ExpressionUUID->"2de9dc49-ba69-41c5-999d-\
+8f0f04467062"],
+
+Cell[BoxData[
+ RowBox[{"CryptocurrencyPlot", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"aCCVolume", ",", "dsEventData"}], "}"}], ",", 
+   RowBox[{"PlotLabel", "->", "\"\<BTC and ETH trading volumes\>\""}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "1200"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8329250699410267`*^9, 3.832925089932872*^9}, {
+   3.832925162599147*^9, 3.832925186178804*^9}, {3.832926507630858*^9, 
+   3.8329265165848722`*^9}, {3.832926553329215*^9, 3.832926553665447*^9}, {
+   3.8329289581758842`*^9, 3.832928993184001*^9}, {3.832929100972458*^9, 
+   3.8329291013539753`*^9}, {3.833036533708997*^9, 3.833036534191513*^9}, {
+   3.833036950184721*^9, 3.833036970391932*^9}, {3.833037391668231*^9, 
+   3.833037394028474*^9}, {3.833279032550932*^9, 3.8332790400325527`*^9}, {
+   3.833279156482471*^9, 3.8332791659327803`*^9}, {3.833279262706905*^9, 
+   3.833279272584244*^9}, {3.833279475819562*^9, 3.833279475987836*^9}, {
+   3.833279655418065*^9, 3.8332796557316723`*^9}, {3.833279688663138*^9, 
+   3.833279689189535*^9}, 3.833285210560112*^9, {3.833285721190391*^9, 
+   3.833285726060215*^9}, {3.833285787532308*^9, 3.833285841452777*^9}, {
+   3.833285890439221*^9, 3.833285915219726*^9}, {3.8332869976129837`*^9, 
+   3.8332870258694*^9}, {3.833367938738298*^9, 3.8333679472440033`*^9}},
+ CellLabel->"In[39]:=",ExpressionUUID->"6a90b727-d423-4c8f-89ee-d366653d85a1"],
+
+Cell["", "Text",
+ CellChangeTimes->{{3.833368106141592*^9, 
+  3.833368110348988*^9}},ExpressionUUID->"44362bd6-a26f-4bf3-b6d9-\
+a4c6bafe56f3"],
+
+Cell[CellGroupData[{
+
+Cell["Observations", "Subsection",
+ CellChangeTimes->{{3.833285292346196*^9, 
+  3.833285295135407*^9}},ExpressionUUID->"e8c38471-709b-4ed7-8ca1-\
+c3333f19b5b5"],
+
+Cell[CellGroupData[{
+
+Cell["Going down", "Subsubsection",
+ CellChangeTimes->{{3.8332923678436203`*^9, 
+  3.833292370703321*^9}},ExpressionUUID->"600a0bfe-0a18-4206-b92e-\
+71b29ffc273a"],
+
+Cell["\<\
+We can see that opening prices and volume going down correlate with:\
+\>", "Text",
+ CellChangeTimes->{{3.8332853736641808`*^9, 3.83328550732653*^9}, {
+  3.83328557238618*^9, 3.833285573790243*^9}, {3.833285940655325*^9, 
+  3.83328594364848*^9}},ExpressionUUID->"6e95921d-8794-430b-b9e0-\
+8c362e3faa0e"],
+
+Cell["\<\
+The news announcement that China plans to crackdown on mining and trading\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.833285299625104*^9, 3.833285397525943*^9}, {
+   3.83328544892424*^9, 3.833285471121347*^9}, 3.833285502477895*^9, {
+   3.833285577167136*^9, 
+   3.833285584770081*^9}},ExpressionUUID->"7b546c1d-f55e-41c4-bd9f-\
+365e18e10a71"],
+
+Cell["The news announcement Iran bans crypto mining", "ItemNumbered",
+ CellChangeTimes->{{3.833285299625104*^9, 3.833285390582189*^9}, {
+  3.833285461952187*^9, 3.833285464925241*^9}, {3.833285511453109*^9, 
+  3.83328552254608*^9}, {3.8332855864373426`*^9, 3.83328558832544*^9}, {
+  3.833306819302574*^9, 
+  3.833306819302863*^9}},ExpressionUUID->"8564c264-2166-4775-aaa4-\
+93acd4218e55"],
+
+Cell["\<\
+The Sichuan Provincial Development and Reform Commission and the Sichuan \
+Energy Bureau issue of a joint notice, ordering local electricity companies \
+to \[OpenCurlyDoubleQuote]screen, clean up and terminate\
+\[CloseCurlyDoubleQuote] mining operations\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.833285299625104*^9, 3.833285390582189*^9}, {
+  3.833285461952187*^9, 3.833285464925241*^9}, {3.833285511453109*^9, 
+  3.83328552254608*^9}, {3.8332855864373426`*^9, 3.83328558832544*^9}, {
+  3.833306820403376*^9, 3.833306824398067*^9}, {3.8333068800542717`*^9, 
+  3.833306909462862*^9}},ExpressionUUID->"37ba975d-b2da-4b17-a608-\
+c3c68eb9eafd"],
+
+Cell["The start of the \[OpenCurlyDoubleQuote]Bitcoin 2021\
+\[CloseCurlyDoubleQuote] conference", "ItemNumbered",
+ CellChangeTimes->{{3.833285299625104*^9, 3.833285390582189*^9}, {
+  3.833285461952187*^9, 3.833285464925241*^9}, {3.833285511453109*^9, 
+  3.83328552254608*^9}, {3.8332855864373426`*^9, 
+  3.833285610094305*^9}},ExpressionUUID->"6ea2d19c-c14e-4a46-b803-\
+e3e70bc216cb"],
+
+Cell["Related conjectures:", "Text",
+ CellChangeTimes->{{3.8332909456626*^9, 
+  3.83329095389902*^9}},ExpressionUUID->"db600268-bf7f-4c75-bda1-\
+fef343157cb8"],
+
+Cell["\<\
+We can easily conjecture that 1 and 2 made cryptocurrencies (Bitcoin) less \
+attractive to miners or traders in China and Iran, hence the price and the \
+volume went down. \
+\>", "Item",
+ CellChangeTimes->{{3.833285646803053*^9, 3.833285783233577*^9}, {
+  3.83329088941294*^9, 3.833290916030875*^9}, {3.83329096816415*^9, 
+  3.8332909834347343`*^9}},ExpressionUUID->"7052220a-cabd-452f-bc03-\
+e06c025a6c80"],
+
+Cell["\<\
+The most active Bitcoin traders were attending the \
+\[OpenCurlyDoubleQuote]Bitcoin 2021\[CloseCurlyDoubleQuote] conference, hence \
+the price and volume went down.\
+\>", "Item",
+ CellChangeTimes->{{3.833285646803053*^9, 3.833285783233577*^9}, {
+  3.83329088941294*^9, 3.833290916030875*^9}, {3.83329096816415*^9, 
+  3.833291022637398*^9}, {3.833291081511407*^9, 3.833291102143508*^9}, {
+  3.8332916157469597`*^9, 
+  3.833291665280939*^9}},ExpressionUUID->"6262c130-987b-4af0-a820-\
+5f7a30a5a4b4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Going up", "Subsubsection",
+ CellChangeTimes->{{3.83329237600014*^9, 
+  3.833292378272913*^9}},ExpressionUUID->"a7b171bd-5a71-4069-928c-\
+bca3a8644105"],
+
+Cell["We can see the prices and volume going up correlate with:", "Text",
+ CellChangeTimes->{{3.8332916821328993`*^9, 3.8332916871509647`*^9}, {
+  3.833291899070581*^9, 
+  3.83329194605168*^9}},ExpressionUUID->"d4e4ee58-d2c8-45c2-8985-\
+4b54afc24eeb"],
+
+Cell["\<\
+The news announcement of El Salvador adopting BTC as legal tender currency\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.833291986474245*^9, 3.8332920682525597`*^9}, 
+   3.83329222496562*^9},ExpressionUUID->"08d1c50d-cf58-4ec4-a5b2-\
+bc4c6baa86ca"],
+
+Cell["\<\
+The news announcement that US Justice Department recovered most of the ransom \
+paid to the Colonial Pipeline hackers\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.833291986474245*^9, 3.833292070084165*^9}, {
+  3.833292220015972*^9, 3.8332922318620157`*^9}, {3.833292269316688*^9, 
+  3.833292326712945*^9}},ExpressionUUID->"c1a20302-6298-47c1-8ece-\
+da225a8befa1"],
+
+Cell["The end of the \[OpenCurlyDoubleQuote]Bitcoin 2021\
+\[CloseCurlyDoubleQuote] conference", "ItemNumbered",
+ CellChangeTimes->{{3.833291986474245*^9, 
+  3.833292066563249*^9}},ExpressionUUID->"5f3f3a7d-bb53-48d5-9e8e-\
+f296ee428030"],
+
+Cell["Related conjectures:", "Text",
+ CellChangeTimes->{{3.833292536698251*^9, 
+  3.833292544946875*^9}},ExpressionUUID->"2f6cef7a-4274-469a-a9be-\
+7677e8b2fb32"],
+
+Cell["\<\
+Of course, a country deciding to use BTC as legal tender would make (some) \
+traders willing to invest in BTC.\
+\>", "Item",
+ CellChangeTimes->{{3.8332925840509977`*^9, 3.833292683066408*^9}, {
+   3.833292754659622*^9, 3.833292757640811*^9}, 
+   3.833292820776719*^9},ExpressionUUID->"8b39d1e1-8e01-449a-bf70-\
+82e288a9d8b5"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+The announcement that USA Justice Department, have made (some) traders to \
+more confidently invest in BTC.\
+\>", "Item",
+ CellChangeTimes->{{3.8332925840509977`*^9, 
+  3.833292828970498*^9}},ExpressionUUID->"5d4a6fb0-fa14-49cf-8307-\
+a84af3bb0220"],
+
+Cell["\<\
+Although, the opposite could also happen -- for some people if BTC can be \
+recovered by law enforcement, then BTC is less attractive for financial \
+transactions.\
+\>", "Subitem",
+ CellChangeTimes->{{3.8332925840509977`*^9, 
+  3.833292924103283*^9}},ExpressionUUID->"2a0d3102-81f2-48d9-8a45-\
+32afd8896f0e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+After the end of \[OpenCurlyDoubleQuote]Bitcoin 2021\[CloseCurlyDoubleQuote] \
+conference the attending traders resumed their usual activity.\
+\>", "Item",
+ CellChangeTimes->{{3.8332925840509977`*^9, 
+  3.833292971140465*^9}},ExpressionUUID->"bf8c41ad-6209-4619-9f81-\
+63fa515dbd58"],
+
+Cell["\<\
+That conjecture and the \[OpenCurlyDoubleQuote]start of Bitcoin 2021\
+\[CloseCurlyDoubleQuote] conjecture above support each other.\
+\>", "Subitem",
+ CellChangeTimes->{{3.8332925840509977`*^9, 3.8332930439930897`*^9}, {
+  3.833367999951551*^9, 
+  3.833368000026161*^9}},ExpressionUUID->"72f43cef-91a0-45f7-b6ec-\
+389932af42c3"],
+
+Cell["\<\
+The same pattern is observed for both BTC and ETH trading volumes.\
+\>", "Subitem",
+ CellChangeTimes->{{3.8332925840509977`*^9, 3.8332930439930897`*^9}, {
+  3.833368000637061*^9, 
+  3.833368034556471*^9}},ExpressionUUID->"d5fae81d-dc0a-4854-80bf-\
+a10d54253f44"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Time series correlations", "Section",
+ CellChangeTimes->{{3.833013181859569*^9, 
+  3.833013212400588*^9}},ExpressionUUID->"205d7fb6-00ac-4a50-a6d4-\
+da781f244e4d"],
+
+Cell["\<\
+In this section we compute and visualize correlations between the time series \
+of a set of cryptocurrencies.\
+\>", "Text",
+ CellChangeTimes->{{3.833279971580923*^9, 
+  3.833280024388904*^9}},ExpressionUUID->"4365f88f-5875-4b72-9ec7-\
+0c30747e0046"],
+
+Cell[CellGroupData[{
+
+Cell["Getting time series data", "Subsection",
+ CellChangeTimes->{{3.833293446265877*^9, 
+  3.8332934518686934`*^9}},ExpressionUUID->"411fdd88-2f74-44f6-b3fb-\
+7a4699d221e6"],
+
+Cell["Here are the cryptocurrencies we consider:", "Text",
+ CellChangeTimes->{{3.8332799663045387`*^9, 3.8332799692411003`*^9}, {
+  3.833280006422339*^9, 
+  3.8332800461694603`*^9}},ExpressionUUID->"a8312c1d-0723-479c-8d82-\
+68f7ed16a67e"],
+
+Cell[BoxData[
+ RowBox[{"lsCCFocus", "=", 
+  RowBox[{
+   RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+   "\"\<Cryptocurrencies\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.833279942632493*^9, 3.833279963290041*^9}, {
+  3.8333040568531647`*^9, 3.833304094172811*^9}, {3.833305568339781*^9, 
+  3.833305579269298*^9}},
+ CellLabel->"In[40]:=",ExpressionUUID->"998df337-6fe1-4e87-ab7d-a953a3e0c260"],
+
+Cell[TextData[{
+ "The start date we use is the one that was ",
+ Cell[BoxData[
+  FormBox["90", TraditionalForm]],ExpressionUUID->
+  "9fd44f85-360e-43cb-9808-a8b18d22719d"],
+ " days ago:"
+}], "Text",
+ CellChangeTimes->{{3.8332800598602448`*^9, 3.833280081101416*^9}, {
+   3.833280165478057*^9, 3.833280181464904*^9}, {3.833281123673669*^9, 
+   3.833281128186121*^9}, {3.833294453034013*^9, 3.833294453607258*^9}, {
+   3.833295607732489*^9, 3.833295607811659*^9}, 
+   3.8333637418836937`*^9},ExpressionUUID->"1e59ccee-a6a1-4012-b2cb-\
+53a79fce587d"],
+
+Cell[BoxData[
+ RowBox[{"startDate", "=", 
+  RowBox[{"DatePlus", "[", 
+   RowBox[{
+    RowBox[{"Date", "[", "]"}], ",", 
+    RowBox[{"-", 
+     RowBox[{"Quantity", "[", 
+      RowBox[{"90", ",", "\"\<Days\>\""}], "]"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.833280082445321*^9, 3.833280097706764*^9}, {
+  3.8332801563550653`*^9, 3.833280226466012*^9}, {3.833281130213148*^9, 
+  3.8332811308741407`*^9}, {3.833294159135447*^9, 3.833294159820365*^9}, {
+  3.833294449501292*^9, 3.833294451233395*^9}, {3.833295610758154*^9, 
+  3.833295610851613*^9}},
+ CellLabel->"In[41]:=",ExpressionUUID->"bfd42209-26ee-44fd-a1fd-57c788d61f72"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"aTSOpen", "=", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+    RowBox[{"lsCCFocus", ",", "\"\<Open\>\"", ",", "startDate"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"aTSVolume", "=", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], "[", 
+    RowBox[{"lsCCFocus", ",", "\"\<Volume\>\"", ",", "startDate"}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.833013222921318*^9, 3.833013372090393*^9}, {
+   3.833013640763783*^9, 3.833013648482081*^9}, {3.8330138407917757`*^9, 
+   3.833013861818623*^9}, {3.833279932982904*^9, 3.833279939282342*^9}, 
+   3.833280053080147*^9, {3.833280103748961*^9, 3.8332801290158567`*^9}},
+ CellLabel->"In[42]:=",ExpressionUUID->"3d374d25-cd8f-45c3-a440-c1c2018eb503"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dateRange", "=", 
+   RowBox[{"{", 
+    RowBox[{"startDate", ",", 
+     RowBox[{"Date", "[", "]"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"aTSOpen2", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Quiet", "@", 
+      RowBox[{"TimeSeriesResample", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{"Append", "[", 
+         RowBox[{"dateRange", ",", "\"\<Day\>\""}], "]"}]}], "]"}]}], "&"}], "/@",
+     "aTSOpen"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"aTSVolume2", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Quiet", "@", 
+      RowBox[{"TimeSeriesResample", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{"Append", "[", 
+         RowBox[{"dateRange", ",", "\"\<Day\>\""}], "]"}]}], "]"}]}], "&"}], "/@",
+     "aTSVolume"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.833013905470892*^9, 3.8330139690384493`*^9}, {
+   3.833013999347054*^9, 3.833014028934702*^9}, {3.833014123818162*^9, 
+   3.8330141899130173`*^9}, 3.833014373631439*^9, {3.833280221292605*^9, 
+   3.8332802888451138`*^9}},
+ CellLabel->"In[44]:=",ExpressionUUID->"a00c6850-65a3-43b3-8a13-8f552192240c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Opening price time series", "Subsection",
+ CellChangeTimes->{{3.833014989263335*^9, 3.833014990477744*^9}, {
+  3.8332805419577017`*^9, 
+  3.83328056909343*^9}},ExpressionUUID->"b7ffbcb5-e8dc-4cf5-addd-\
+d4d3248f5702"],
+
+Cell["\<\
+Show heat-map plot corresponding to the max-normalized time series with \
+clustering:\
+\>", "Text",
+ CellChangeTimes->{{3.83328063576219*^9, 3.8332806563500032`*^9}, {
+  3.833281057072205*^9, 3.833281076311699*^9}, {3.833281355393111*^9, 
+  3.8332813663226433`*^9}},ExpressionUUID->"34a16fde-e0b5-453e-9253-\
+665cc919b960"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"matVals", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<SparseMatrix\>\"", "->", 
+      RowBox[{"SparseArray", "[", 
+       RowBox[{"Values", "@", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", "\"\<Values\>\"", "]"}], "/", 
+            RowBox[{"Max", "[", 
+             RowBox[{"#", "[", "\"\<Values\>\"", "]"}], "]"}]}], "&"}], ",", 
+          "aTSOpen2"}], "]"}]}], "]"}]}], ",", 
+     RowBox[{"\"\<RowNames\>\"", "\[Rule]", 
+      RowBox[{"Keys", "[", "aTSOpen2", "]"}]}], ",", 
+     RowBox[{"\"\<ColumnNames\>\"", "\[Rule]", 
+      RowBox[{"Range", "[", 
+       RowBox[{"Length", "[", 
+        RowBox[{
+         RowBox[{
+         "aTSOpen2", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+         "[", "\"\<Times\>\"", "]"}], "]"}], "]"}]}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{"HeatmapPlot", "[", 
+  RowBox[{
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"#", "/.", 
+       RowBox[{"x_Association", "\[RuleDelayed]", 
+        RowBox[{"Keys", "[", "x", "]"}]}]}], "&"}], ",", "matVals"}], "]"}], 
+   ",", 
+   RowBox[{"Dendrogram", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+   RowBox[{"DistanceFunction", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"CosineDistance", ",", "None"}], "}"}]}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "1200"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.833280667544353*^9, 3.833280690123899*^9}, {
+  3.833280761047305*^9, 3.833280764539287*^9}, {3.8332811027825727`*^9, 
+  3.833281138884143*^9}, {3.8332815223824997`*^9, 3.833281532316518*^9}, {
+  3.8332816119815607`*^9, 3.833281633771822*^9}},
+ CellLabel->"In[47]:=",ExpressionUUID->"446df87d-c7ed-45e6-bd92-84d8c176d75a"],
+
+Cell[TextData[{
+ "Derive correlation triplets using ",
+ StyleBox["SpearmanRho", "Program"],
+ " :"
+}], "Text",
+ CellChangeTimes->{{3.833280500154409*^9, 
+  3.8332805219209547`*^9}},ExpressionUUID->"f7e81e82-a4c2-476a-9739-\
+72e019f145fc"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"lsCorTriplets", "=", 
+   RowBox[{"Flatten", "[", 
+    RowBox[{
+     RowBox[{"Outer", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"#1", ",", "#2", ",", 
+          RowBox[{"SpearmanRho", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"aTSOpen2", "[", "#1", "]"}], "[", "\"\<Values\>\"", 
+             "]"}], ",", 
+            RowBox[{
+             RowBox[{"aTSOpen2", "[", "#2", "]"}], "[", "\"\<Values\>\"", 
+             "]"}]}], "]"}]}], "}"}], "&"}], ",", 
+       RowBox[{"Keys", "@", "aTSOpen2"}], ",", 
+       RowBox[{"Keys", "@", "aTSOpen2"}]}], "]"}], ",", "1"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"dsCorTriplets", "=", 
+   RowBox[{
+    RowBox[{"Dataset", "[", "lsCorTriplets", "]"}], "[", 
+    RowBox[{"All", ",", 
+     RowBox[{
+      RowBox[{"AssociationThread", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<TS1\>\"", ",", "\"\<TS2\>\"", ",", "\"\<Correlation\>\""}], 
+         "}"}], ",", "#"}], "]"}], "&"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dsCorTriplets", "=", 
+   RowBox[{"dsCorTriplets", "[", 
+    RowBox[{"Select", "[", 
+     RowBox[{
+      RowBox[{"#TS1", "\[NotEqual]", "#TS2"}], "&"}], "]"}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.833014237379572*^9, 3.833014282130918*^9}, {
+  3.833014561531404*^9, 3.833014855702478*^9}, {3.833280301302314*^9, 
+  3.8332803084242697`*^9}, {3.833280922789289*^9, 3.833280959839538*^9}},
+ CellLabel->"In[49]:=",ExpressionUUID->"f850fc85-a1de-44b3-8727-e07de25598f9"],
+
+Cell["Show summary of the correlation triplets:", "Text",
+ CellChangeTimes->{{3.8332804746159143`*^9, 
+  3.8332804906903753`*^9}},ExpressionUUID->"c5c69563-f8b5-41f9-96a1-\
+532c3bdbe08f"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+  "dsCorTriplets", "]"}]], "Input",
+ CellChangeTimes->{{3.833014294024376*^9, 3.833014312000688*^9}, {
+   3.833014703260983*^9, 3.833014707693556*^9}, 3.833280961888205*^9},
+ CellLabel->"In[52]:=",ExpressionUUID->"ca54a517-fd06-4a0a-8744-920693958d37"],
+
+Cell["Show correlations that too high or too low:", "Text",
+ CellChangeTimes->{{3.833280335109672*^9, 
+  3.833280379684595*^9}},ExpressionUUID->"2926e454-f1da-44f1-a6c9-\
+82be48f9d25d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Dataset", "[", 
+   RowBox[{"Union", "[", 
+    RowBox[{
+     RowBox[{"Normal", "@", 
+      RowBox[{"dsCorTriplets", "[", 
+       RowBox[{"Select", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Abs", "[", "#Correlation", "]"}], ">", "0.85"}], "&"}], 
+        "]"}], "]"}]}], ",", 
+     RowBox[{"\"\<SameTest\>\"", "\[Rule]", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Sort", "[", 
+          RowBox[{"Values", "@", "#1"}], "]"}], "\[Equal]", 
+         RowBox[{"Sort", "[", 
+          RowBox[{"Values", "@", "#2"}], "]"}]}], "&"}], ")"}]}]}], "]"}], 
+   "]"}], "[", 
+  RowBox[{"ReverseSortBy", "[", 
+   RowBox[{"#Correlation", "&"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.833015133772579*^9, 3.8330151577913322`*^9}, {
+   3.8330151895173073`*^9, 3.833015220593174*^9}, {3.83301526273458*^9, 
+   3.833015285255155*^9}, 3.8330153307266903`*^9, {3.8330154422130423`*^9, 
+   3.8330155365652857`*^9}, {3.833015583220996*^9, 3.83301560449807*^9}, {
+   3.8332803324462557`*^9, 3.833280368231761*^9}, 3.833280964442099*^9, {
+   3.833281152003581*^9, 3.833281152429422*^9}},
+ CellLabel->"In[53]:=",ExpressionUUID->"1d60b2c3-2a7e-49ac-a415-5fb9a77d4282"],
+
+Cell["\<\
+Cross tabulate the correlation triplets and show the corresponding dataset:\
+\>", "Text",
+ CellChangeTimes->{{3.833280390112844*^9, 
+  3.833280461091337*^9}},ExpressionUUID->"d104caeb-bb3d-49c6-973f-\
+00fa4d3ca3fb"],
+
+Cell[BoxData[
+ RowBox[{"dsMatCor", "=", 
+  RowBox[{
+   RowBox[{"ResourceFunction", "[", "\"\<CrossTabulate\>\"", "]"}], "[", 
+   "dsCorTriplets", "]"}]}]], "Input",
+ CellChangeTimes->{{3.833014869087783*^9, 3.833014923471737*^9}, {
+  3.833280984174877*^9, 3.8332809957923117`*^9}},
+ CellLabel->"In[54]:=",ExpressionUUID->"dfd174bb-f632-4a80-9cb4-146b89fd46b8"],
+
+Cell["\<\
+Cross tabulate the correlation triplets and plot the corresponding matrix \
+with heat-map plot:\
+\>", "Text",
+ CellChangeTimes->{{3.833280443371715*^9, 3.833280466674245*^9}, {
+   3.8332807304441433`*^9, 3.833280745598424*^9}, 
+   3.83328132216376*^9},ExpressionUUID->"dd0fd735-4e9a-40b0-b419-\
+0a51aeeca018"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"matCor1", "=", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<CrossTabulate\>\"", "]"}], "[", 
+    RowBox[{"dsCorTriplets", ",", 
+     RowBox[{"\"\<Sparse\>\"", "\[Rule]", "True"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{"gr1", "=", 
+  RowBox[{"HeatmapPlot", "[", 
+   RowBox[{"matCor1", ",", 
+    RowBox[{"Dendrogram", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"True", ",", "True"}], "}"}]}], ",", 
+    RowBox[{"DistanceFunction", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"CosineDistance", ",", "CosineDistance"}], "}"}]}], ",", 
+    RowBox[{"ImageSize", "->", "Medium"}], ",", 
+    RowBox[{"PlotLabel", "->", "\"\<Opening price\>\""}]}], "]"}]}]}], "Input",\
+
+ CellChangeTimes->{{3.8330149276588287`*^9, 3.833014955602392*^9}, {
+   3.833280709069497*^9, 3.833280719893345*^9}, {3.8332808323735857`*^9, 
+   3.83328083951093*^9}, 3.833280987414939*^9, {3.833281032929421*^9, 
+   3.833281034740595*^9}, {3.833281328395461*^9, 3.833281333663753*^9}, {
+   3.8332817160795794`*^9, 3.833281740231798*^9}, {3.833281827821143*^9, 
+   3.833281828402467*^9}, {3.833282134883555*^9, 3.833282138288999*^9}},
+ CellLabel->"In[55]:=",ExpressionUUID->"d2825efe-2f58-42ac-8816-8c345511576a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Trading volume time series", "Subsection",
+ CellChangeTimes->{{3.833014989263335*^9, 3.833014990477744*^9}, {
+  3.8332805419577017`*^9, 3.83328056909343*^9}, {3.833281227186763*^9, 
+  3.833281231596911*^9}},ExpressionUUID->"d4b074a8-f06e-4dee-825d-\
+cb00845a8f9b"],
+
+Cell["\<\
+Show heat-map plot corresponding to the max-normalized time series with \
+clustering:\
+\>", "Text",
+ CellChangeTimes->{{3.83328063576219*^9, 3.8332806563500032`*^9}, {
+   3.833281057072205*^9, 3.833281076311699*^9}, 
+   3.833281384513629*^9},ExpressionUUID->"9876b4ee-dc7d-4f51-b913-\
+6bcd1027d11a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"matVals", "=", 
+   RowBox[{"Association", "[", 
+    RowBox[{
+     RowBox[{"\"\<SparseMatrix\>\"", "->", 
+      RowBox[{"SparseArray", "[", 
+       RowBox[{"Values", "@", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", "\"\<Values\>\"", "]"}], "/", 
+            RowBox[{"Max", "[", 
+             RowBox[{"#", "[", "\"\<Values\>\"", "]"}], "]"}]}], "&"}], ",", 
+          "aTSVolume2"}], "]"}]}], "]"}]}], ",", 
+     RowBox[{"\"\<RowNames\>\"", "\[Rule]", 
+      RowBox[{"Keys", "[", "aTSOpen2", "]"}]}], ",", 
+     RowBox[{"\"\<ColumnNames\>\"", "\[Rule]", 
+      RowBox[{"Range", "[", 
+       RowBox[{"Length", "[", 
+        RowBox[{
+         RowBox[{
+         "aTSVolume2", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}],
+          "[", "\"\<Times\>\"", "]"}], "]"}], "]"}]}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{"HeatmapPlot", "[", 
+  RowBox[{
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"#", "/.", 
+       RowBox[{"x_Association", "\[RuleDelayed]", 
+        RowBox[{"Keys", "[", "x", "]"}]}]}], "&"}], ",", "matVals"}], "]"}], 
+   ",", 
+   RowBox[{"Dendrogram", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+   RowBox[{"DistanceFunction", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"CosineDistance", ",", "None"}], "}"}]}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "1200"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.833280667544353*^9, 3.833280690123899*^9}, {
+  3.833280761047305*^9, 3.833280764539287*^9}, {3.8332811027825727`*^9, 
+  3.833281138884143*^9}, {3.8332815223824997`*^9, 3.833281532316518*^9}, {
+  3.8332816119815607`*^9, 3.833281633771822*^9}, {3.833281669390204*^9, 
+  3.833281676524728*^9}},
+ CellLabel->"In[57]:=",ExpressionUUID->"52d5e9a4-d1f8-4b23-a5eb-f5e464b1f4d4"],
+
+Cell[TextData[{
+ "Derive correlation triplets using ",
+ StyleBox["SpearmanRho", "Program"],
+ " :"
+}], "Text",
+ CellChangeTimes->{{3.833280500154409*^9, 
+  3.8332805219209547`*^9}},ExpressionUUID->"cfebc886-87ce-4738-9b41-\
+3eee87e3aae4"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"lsCorTriplets", "=", 
+   RowBox[{"Flatten", "[", 
+    RowBox[{
+     RowBox[{"Outer", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"#1", ",", "#2", ",", 
+          RowBox[{"SpearmanRho", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"aTSVolume2", "[", "#1", "]"}], "[", "\"\<Values\>\"", 
+             "]"}], ",", 
+            RowBox[{
+             RowBox[{"aTSVolume2", "[", "#2", "]"}], "[", "\"\<Values\>\"", 
+             "]"}]}], "]"}]}], "}"}], "&"}], ",", 
+       RowBox[{"Keys", "@", "aTSVolume2"}], ",", 
+       RowBox[{"Keys", "@", "aTSVolume2"}]}], "]"}], ",", "1"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"dsCorTriplets", "=", 
+   RowBox[{
+    RowBox[{"Dataset", "[", "lsCorTriplets", "]"}], "[", 
+    RowBox[{"All", ",", 
+     RowBox[{
+      RowBox[{"AssociationThread", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<TS1\>\"", ",", "\"\<TS2\>\"", ",", "\"\<Correlation\>\""}], 
+         "}"}], ",", "#"}], "]"}], "&"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dsCorTriplets", "=", 
+   RowBox[{"dsCorTriplets", "[", 
+    RowBox[{"Select", "[", 
+     RowBox[{
+      RowBox[{"#TS1", "\[NotEqual]", "#TS2"}], "&"}], "]"}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.833014237379572*^9, 3.833014282130918*^9}, {
+  3.833014561531404*^9, 3.833014855702478*^9}, {3.833280301302314*^9, 
+  3.8332803084242697`*^9}, {3.833280922789289*^9, 3.833280959839538*^9}, {
+  3.8332812498031178`*^9, 3.833281254820932*^9}},
+ CellLabel->"In[59]:=",ExpressionUUID->"b9df0d88-7905-4ac9-8e35-00380fa54f43"],
+
+Cell["Show summary of the correlation triplets:", "Text",
+ CellChangeTimes->{{3.8332804746159143`*^9, 
+  3.8332804906903753`*^9}},ExpressionUUID->"b5615c5c-046c-41ae-aa90-\
+64efc44dd427"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<RecordsSummary\>\"", "]"}], "[", 
+  "dsCorTriplets", "]"}]], "Input",
+ CellChangeTimes->{{3.833014294024376*^9, 3.833014312000688*^9}, {
+   3.833014703260983*^9, 3.833014707693556*^9}, 3.833280961888205*^9},
+ CellLabel->"In[62]:=",ExpressionUUID->"66659b54-e173-4a6e-8361-519f5e8fd9f1"],
+
+Cell["Show correlations that too high or too low:", "Text",
+ CellChangeTimes->{{3.833280335109672*^9, 
+  3.833280379684595*^9}},ExpressionUUID->"4e96944d-6864-47fd-95a3-\
+1070a713df92"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Dataset", "[", 
+   RowBox[{"Union", "[", 
+    RowBox[{
+     RowBox[{"Normal", "@", 
+      RowBox[{"dsCorTriplets", "[", 
+       RowBox[{"Select", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Abs", "[", "#Correlation", "]"}], ">", "0.85"}], "&"}], 
+        "]"}], "]"}]}], ",", 
+     RowBox[{"\"\<SameTest\>\"", "\[Rule]", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Sort", "[", 
+          RowBox[{"Values", "@", "#1"}], "]"}], "\[Equal]", 
+         RowBox[{"Sort", "[", 
+          RowBox[{"Values", "@", "#2"}], "]"}]}], "&"}], ")"}]}]}], "]"}], 
+   "]"}], "[", 
+  RowBox[{"ReverseSortBy", "[", 
+   RowBox[{"#Correlation", "&"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.833015133772579*^9, 3.8330151577913322`*^9}, {
+   3.8330151895173073`*^9, 3.833015220593174*^9}, {3.83301526273458*^9, 
+   3.833015285255155*^9}, 3.8330153307266903`*^9, {3.8330154422130423`*^9, 
+   3.8330155365652857`*^9}, {3.833015583220996*^9, 3.83301560449807*^9}, {
+   3.8332803324462557`*^9, 3.833280368231761*^9}, 3.833280964442099*^9, {
+   3.833281152003581*^9, 3.833281152429422*^9}},
+ CellLabel->"In[63]:=",ExpressionUUID->"dec9ee7b-ae24-4f66-bce2-cfc57bc269be"],
+
+Cell["\<\
+Cross tabulate the correlation triplets and show the corresponding dataset:\
+\>", "Text",
+ CellChangeTimes->{{3.833280390112844*^9, 
+  3.833280461091337*^9}},ExpressionUUID->"a404977e-19bc-4908-87d7-\
+587069f4b005"],
+
+Cell[BoxData[
+ RowBox[{"dsMatCor", "=", 
+  RowBox[{
+   RowBox[{"ResourceFunction", "[", "\"\<CrossTabulate\>\"", "]"}], "[", 
+   "dsCorTriplets", "]"}]}]], "Input",
+ CellChangeTimes->{{3.833014869087783*^9, 3.833014923471737*^9}, {
+  3.833280984174877*^9, 3.8332809957923117`*^9}},
+ CellLabel->"In[64]:=",ExpressionUUID->"5fc207e3-52c1-474f-a14f-4a60d96eaa45"],
+
+Cell["\<\
+Cross tabulate the correlation triplets and plot the corresponding matrix \
+with heat-map plot:\
+\>", "Text",
+ CellChangeTimes->{{3.833280443371715*^9, 3.833280466674245*^9}, {
+  3.8332807304441433`*^9, 3.833280745598424*^9}, {3.833281291999255*^9, 
+  3.833281299390143*^9}},ExpressionUUID->"b7bbc4f4-ed54-403e-a857-\
+c722aa4c2a01"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"matCor2", "=", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<CrossTabulate\>\"", "]"}], "[", 
+    RowBox[{"dsCorTriplets", ",", 
+     RowBox[{"\"\<Sparse\>\"", "\[Rule]", "True"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{"gr2", "=", 
+  RowBox[{"HeatmapPlot", "[", 
+   RowBox[{"matCor2", ",", 
+    RowBox[{"Dendrogram", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"True", ",", "True"}], "}"}]}], ",", 
+    RowBox[{"DistanceFunction", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"CosineDistance", ",", "CosineDistance"}], "}"}]}], ",", 
+    RowBox[{"ImageSize", "->", "Medium"}], ",", 
+    RowBox[{"PlotLabel", "->", "\"\<Trading volume\>\""}]}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.8330149276588287`*^9, 3.833014955602392*^9}, {
+   3.833280709069497*^9, 3.833280719893345*^9}, {3.8332808323735857`*^9, 
+   3.83328083951093*^9}, 3.833280987414939*^9, {3.833281032929421*^9, 
+   3.833281034740595*^9}, {3.8332812828091497`*^9, 3.833281306992385*^9}, {
+   3.833281753937437*^9, 3.833281768460964*^9}, {3.833281822174019*^9, 
+   3.83328182258601*^9}, {3.833282123620708*^9, 3.833282126242333*^9}},
+ CellLabel->"In[65]:=",ExpressionUUID->"8e27ac58-8d09-47d8-913c-7ad52a8477d5"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Observations", "Subsection",
+ CellChangeTimes->{{3.833281774760618*^9, 3.833281777213388*^9}, {
+  3.833294551089286*^9, 3.8332945548119183`*^9}, {3.8332945939074078`*^9, 
+  3.833294598834793*^9}},ExpressionUUID->"5f7be75d-8387-44e7-af8b-\
+2a3cf608fc35"],
+
+Cell["\<\
+ Here are the correlation matrix plots above placed next to each other:\
+\>", "Text",
+ CellChangeTimes->{{3.833281971031659*^9, 3.833281974677218*^9}, {
+  3.833282019678186*^9, 3.833282065567978*^9}, {3.8332832533685417`*^9, 
+  3.833283256810649*^9}, {3.833283398067265*^9, 3.833283424077526*^9}, {
+  3.833293622680777*^9, 3.833293633384201*^9}, {3.8332947006712437`*^9, 
+  3.833294742015834*^9}},ExpressionUUID->"1b0a43e3-4a1c-4c3f-8a8a-\
+8c135bce3c6d"],
+
+Cell[BoxData[
+ RowBox[{"Row", "[", 
+  RowBox[{"{", 
+   RowBox[{"gr1", ",", "gr2"}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.833281778357854*^9, 3.833281816460737*^9}, {
+  3.833281847439086*^9, 3.833281848259037*^9}},
+ CellLabel->"In[67]:=",ExpressionUUID->"55bcc99d-e6e5-4d4d-a1e7-20190cef2a2e"],
+
+Cell["\<\
+Generally speaking, the two clustering patterns are different. This is one of \
+the reasons to do the nearest neighbor graph clusterings below.\
+\>", "Text",
+ CellChangeTimes->{
+  3.833294749548855*^9, {3.8333708552668657`*^9, 3.833370879341357*^9}, {
+   3.833386930267829*^9, 
+   3.833386934555354*^9}},ExpressionUUID->"04bf345b-a793-44b1-8e4c-\
+9b11ee17fffb"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Nearest neighbors graphs", "Section",
+ CellChangeTimes->{{3.8333065539685793`*^9, 
+  3.833306573629924*^9}},ExpressionUUID->"9894818f-0a89-45ad-8295-\
+e02413c0b1e0"],
+
+Cell["\<\
+In this section we create nearest neighbor graphs of the correlation matrices \
+computed above and plot clusterings of the nodes.\
+\>", "Text",
+ CellChangeTimes->{{3.796119526137355*^9, 3.796119568054771*^9}, {
+  3.796120373487712*^9, 3.7961204102108707`*^9}, {3.833306986009219*^9, 
+  3.833307007732924*^9}, {3.833307144939928*^9, 
+  3.8333071520835667`*^9}},ExpressionUUID->"f0d5bd55-947e-4566-8a4c-\
+384bdd2698c4"],
+
+Cell[CellGroupData[{
+
+Cell["Graphs overview", "Subsection",
+ CellChangeTimes->{{3.796119583119062*^9, 
+  3.796119603331664*^9}},ExpressionUUID->"e40ecb2a-e7d5-4587-bea1-\
+3340e9dbda1e"],
+
+Cell["Here we create the nearest neighbor graphs:", "Text",
+ CellChangeTimes->{{3.83330715500825*^9, 
+  3.833307171388028*^9}},ExpressionUUID->"33c3da4a-9c1d-44b4-93d6-\
+ca0c1d765338"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"aNNGraphsVertexRules", "=", 
+   RowBox[{"Association", "@", 
+    RowBox[{"MapThread", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"#2", "->", 
+        RowBox[{"Association", "[", 
+         RowBox[{"Thread", "[", 
+          RowBox[{"Rule", "[", 
+           RowBox[{
+            RowBox[{"Normal", "[", 
+             RowBox[{"Transpose", "[", "#SparseMatrix", "]"}], "]"}], ",", 
+            "#ColumnNames"}], "]"}], "]"}], "]"}]}], "&"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"matCor1", ",", "matCor2"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Open\>\"", ",", "\"\<Volume\>\""}], "}"}]}], "}"}]}], 
+     "]"}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.8333058932750797`*^9, 3.8333059400753613`*^9}, {
+  3.833305972542388*^9, 3.833306018938957*^9}, {3.8333060669877977`*^9, 
+  3.8333060697096024`*^9}},
+ CellLabel->"In[68]:=",ExpressionUUID->"aae6f839-3b07-45ec-8df4-9b1170801f58"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"aNNGraphs", "=", 
+   RowBox[{"Association", "@", 
+    RowBox[{"MapThread", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"gr", "=", 
+          RowBox[{"NearestNeighborGraph", "[", 
+           RowBox[{
+            RowBox[{"Normal", "[", 
+             RowBox[{"Transpose", "[", "#SparseMatrix", "]"}], "]"}], ",", 
+            "4", ",", 
+            RowBox[{"GraphLayout", "\[Rule]", "\"\<SpringEmbedding\>\""}], 
+            ",", 
+            RowBox[{"VertexLabels", "\[Rule]", 
+             RowBox[{"Normal", "[", 
+              RowBox[{"aNNGraphsVertexRules", "[", "#2", "]"}], "]"}]}]}], 
+           "]"}]}], ";", 
+         RowBox[{"#2", "->", 
+          RowBox[{"Graph", "[", 
+           RowBox[{
+            RowBox[{"EdgeList", "[", "gr", "]"}], ",", 
+            RowBox[{"VertexLabels", "\[Rule]", 
+             RowBox[{"Normal", "[", 
+              RowBox[{"aNNGraphsVertexRules", "[", "#2", "]"}], "]"}]}], ",", 
+            
+            RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "]"}]}]}], ")"}], 
+       "&"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"matCor1", ",", "matCor2"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Open\>\"", ",", "\"\<Volume\>\""}], "}"}]}], "}"}]}], 
+     "]"}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7961198879657173`*^9, 3.796119916078084*^9}, {
+   3.7961200224008837`*^9, 3.796120073166396*^9}, {3.796120242281187*^9, 
+   3.796120318683865*^9}, {3.79612042768318*^9, 3.796120452866446*^9}, {
+   3.796120548966283*^9, 3.796120549301601*^9}, {3.7961206660592623`*^9, 
+   3.796120666541667*^9}, {3.7961207419102*^9, 3.7961207424682407`*^9}, {
+   3.7963239782291*^9, 3.796324105964301*^9}, {3.799646776158202*^9, 
+   3.79964678173193*^9}, {3.7996468319367237`*^9, 3.799646834022099*^9}, {
+   3.799646934050128*^9, 3.799646951721352*^9}, {3.799647592487381*^9, 
+   3.7996475926672897`*^9}, {3.799663521198926*^9, 3.799663579456065*^9}, {
+   3.799663703712159*^9, 3.799663704070581*^9}, {3.833305448211422*^9, 
+   3.8333054672140217`*^9}, 3.833305497475493*^9, {3.833305944620492*^9, 
+   3.833305963353931*^9}, {3.83330603048104*^9, 3.833306054314999*^9}, {
+   3.833306086563609*^9, 3.833306099045849*^9}, {3.833306137807575*^9, 
+   3.833306163861959*^9}, 3.83330658176941*^9, {3.833307032508095*^9, 
+   3.8333070514745073`*^9}, {3.833307111774703*^9, 3.833307112675521*^9}},
+ CellLabel->"In[69]:=",ExpressionUUID->"6bafce9a-5ad4-4e3e-8982-dfd342e991c0"],
+
+Cell["Here we plot the graphs with clusters:", "Text",
+ CellChangeTimes->{{3.79612071024518*^9, 
+  3.796120731794976*^9}},ExpressionUUID->"f0372a25-d1b0-40a4-9b78-\
+246cced8835b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<GridTableForm\>\"", "]"}], "[", 
+  RowBox[{
+   RowBox[{"List", "@@@", 
+    RowBox[{"Normal", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"CommunityGraphPlot", "[", 
+        RowBox[{"#", ",", 
+         RowBox[{"ImageSize", "\[Rule]", "800"}]}], "]"}], "&"}], "/@", 
+      "aNNGraphs"}], "]"}]}], ",", 
+   RowBox[{"TableHeadings", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Property\>\"", ",", 
+      "\"\<Communities of nearest neighbors graph\>\""}], "}"}]}], ",", 
+   RowBox[{"Background", "\[Rule]", "White"}], ",", 
+   RowBox[{"Dividers", "\[Rule]", "All"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.833306258048826*^9, 3.833306278499666*^9}},
+ CellLabel->"In[70]:=",ExpressionUUID->"69b25234-eec8-4d74-9575-2c5f9d004ab7"],
+
+Cell["\<\
+Here are the corresponding time series plots for each cluster:\
+\>", "Text",
+ CellChangeTimes->{{3.833306375621166*^9, 
+  3.833306397300049*^9}},ExpressionUUID->"f8ca4ed0-4b7f-4922-ac49-\
+8a248a06e18a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"aClusterPlots", "=", "\[IndentingNewLine]", 
+   RowBox[{"Association", "@", 
+    RowBox[{"Map", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Function", "[", 
+       RowBox[{
+        RowBox[{"{", "prop", "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"prop", "->", 
+         RowBox[{"Map", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"DateListPlot", "[", 
+             RowBox[{"Log10", "/@", 
+              RowBox[{
+               RowBox[{
+               "ResourceFunction", "[", "\"\<CryptocurrencyData\>\"", "]"}], 
+               "[", 
+               RowBox[{"#", ",", "prop", ",", "dateRange"}], "]"}]}], "]"}], 
+            "&"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"FindGraphCommunities", "[", 
+             RowBox[{"aNNGraphs", "[", "prop", "]"}], "]"}], "/.", 
+            RowBox[{"aNNGraphsVertexRules", "[", "prop", "]"}]}]}], "]"}]}]}],
+        "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Keys", "[", "aNNGraphs", "]"}]}], "\[IndentingNewLine]", 
+     "]"}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.833305677959524*^9, 3.833305731970826*^9}, 
+   3.8333061819430313`*^9, {3.83330629987523*^9, 3.833306354224077*^9}, {
+   3.833306432007678*^9, 3.8333064985176983`*^9}, {3.8333065333714523`*^9, 
+   3.833306533594942*^9}},
+ CellLabel->"In[71]:=",ExpressionUUID->"8ac94a5e-5eed-4c80-bf0b-bb232b16cb50"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<GridTableForm\>\"", "]"}], "[", 
+  RowBox[{
+   RowBox[{"List", "@@@", 
+    RowBox[{"Normal", "[", "aClusterPlots", "]"}]}], ",", 
+   RowBox[{"TableHeadings", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Property\>\"", ",", "\"\<Cluster plots\>\""}], "}"}]}], ",", 
+   RowBox[{"Background", "\[Rule]", "White"}], ",", 
+   RowBox[{"Dividers", "\[Rule]", "All"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.833306258048826*^9, 3.833306278499666*^9}, 
+   3.833306398832136*^9, {3.833306507180101*^9, 3.8333065171925287`*^9}},
+ CellLabel->"In[72]:=",ExpressionUUID->"1ac35eee-48da-4a27-92c2-d7fd0e5c5e3a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Other types of analysis", "Section",
+ CellChangeTimes->{{3.833370887092462*^9, 
+  3.833370902280817*^9}},ExpressionUUID->"093c36cf-11db-466b-a421-\
+7c7e59f037e3"],
+
+Cell["I investigated the data with several other methods:", "Text",
+ CellChangeTimes->{{3.8333709053062763`*^9, 
+  3.833370937708322*^9}},ExpressionUUID->"576e36e3-3deb-4a0b-832a-\
+2d7fbc62f638"],
+
+Cell["Clustering with different methods and distance functions", "Item",
+ CellChangeTimes->{{3.833370940768117*^9, 
+  3.833370966830961*^9}},ExpressionUUID->"e6810e08-1dbe-43b6-abde-\
+5cf990265196"],
+
+Cell["\<\
+Clustering after the application of Independent Component Analysis (ICA), \
+[AAw5]\
+\>", "Item",
+ CellChangeTimes->{{3.833370940768117*^9, 3.833371001373597*^9}, {
+  3.8333711110643578`*^9, 3.833371112128045*^9}, {3.833371252649619*^9, 
+  3.833371255327517*^9}},ExpressionUUID->"db2b352b-77bc-40f2-bc6b-\
+97987d80b0ff"],
+
+Cell["Time series analysis with Quantile Regression (QR), [AAw6]", "Item",
+ CellChangeTimes->{{3.833370940768117*^9, 3.833371001373597*^9}, {
+  3.8333711110643578`*^9, 3.833371134429449*^9}, {3.833371258792322*^9, 
+  3.833371261155157*^9}},ExpressionUUID->"c2b94d82-470d-4a7c-8335-\
+950dfc62d62d"],
+
+Cell["\<\
+None of the outcomes provided some \[OpenCurlyDoubleQuote]immediate\
+\[CloseCurlyDoubleQuote], notable insight. The analyses with ICA and QR, \
+though, seem to provide some interesting and fruitful future explorations. \
+\>", "Text",
+ CellChangeTimes->{{3.83337113707054*^9, 3.8333712313080072`*^9}, {
+  3.833371264822386*^9, 
+  3.8333714166572647`*^9}},ExpressionUUID->"15631c69-d081-4524-a352-\
+eedc1f93ae60"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Load packages", "Section",
+ CellChangeTimes->{{3.795432542698386*^9, 3.795432555612383*^9}},
+ FontSlant->"Italic",ExpressionUUID->"22e07e4b-565c-402b-83b0-d3a6434a7aba"],
+
+Cell[BoxData[{
+ RowBox[{"Import", "[", 
+  "\"\<https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/\
+master/SSparseMatrix.m\>\"", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Import", "[", 
+  "\"\<https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/\
+master/Misc/HeatmapPlot.m\>\"", "]"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7948247933964863`*^9, 3.79482479774011*^9}, {
+   3.794825215242093*^9, 3.7948252158650103`*^9}, 3.796115991859358*^9, {
+   3.833279065098578*^9, 3.833279067571574*^9}},
+ CellLabel->"In[73]:=",ExpressionUUID->"9e0edb7e-a69d-4828-b62e-755744bd03c0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Definitions", "Section",
+ CellChangeTimes->{{3.832924390855831*^9, 3.8329243976732607`*^9}, {
+  3.833278493416416*^9, 3.833278499162484*^9}},
+ FontSlant->"Italic",ExpressionUUID->"7202e60d-a29d-4a4d-af6b-38d9dd56189a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "CryptocurrencyPlot", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CryptocurrencyPlot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "aCryptoCurrenciesData_Association", ",", "dsEventData_Dataset"}], 
+      "}"}], ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "aEventDateObject", ",", "aEventURL", ",", "aEventRank", ",", "grGrid", 
+       ",", "lsVals"}], "}"}], ",", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"aEventDateObject", "=", 
+       RowBox[{"Normal", "@", 
+        RowBox[{"dsEventData", "[", 
+         RowBox[{"Association", ",", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"#Event", "\[Rule]", 
+             RowBox[{"AbsoluteTime", "[", "#DateObject", "]"}]}], "}"}], 
+           "&"}]}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"aEventURL", "=", 
+       RowBox[{"Normal", "@", 
+        RowBox[{"dsEventData", "[", 
+         RowBox[{"Association", ",", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"#Event", "->", 
+             RowBox[{"Button", "[", 
+              RowBox[{
+               RowBox[{"Mouseover", "[", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{"#Event", ",", "Gray", ",", 
+                   RowBox[{"FontSize", "\[Rule]", "10"}]}], "]"}], ",", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{"#Event", ",", "Pink", ",", 
+                   RowBox[{"FontSize", "\[Rule]", "10"}]}], "]"}]}], "]"}], 
+               ",", 
+               RowBox[{"NotebookLocate", "[", 
+                RowBox[{"{", 
+                 RowBox[{"#URL", ",", "None"}], "}"}], "]"}], ",", 
+               RowBox[{"Appearance", "\[Rule]", "None"}]}], "]"}]}], "}"}], 
+           "&"}]}], "]"}]}]}], ";", 
+      RowBox[{"aEventRank", "=", 
+       RowBox[{"Block", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"k", "=", "1"}], "}"}], ",", 
+         RowBox[{"Normal", "@", 
+          RowBox[{"dsEventData", "[", 
+           RowBox[{"Association", ",", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"#Event", "->", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"k", "++"}], ")"}], "/", 
+                RowBox[{"Length", "[", "dsEventData", "]"}]}]}], "}"}], 
+             "&"}]}], "]"}]}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"lsVals", "=", 
+       RowBox[{"Flatten", "@", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"#", "[", "\"\<Values\>\"", "]"}], "&"}], ",", 
+          RowBox[{"Values", "@", "aCryptoCurrenciesData"}]}], "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"grGrid", "=", "\[IndentingNewLine]", 
+       RowBox[{"DateListPlot", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"KeyValueMap", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Callout", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"#2", ",", 
+                RowBox[{"Rescale", "[", 
+                 RowBox[{
+                  RowBox[{"aEventRank", "[", "#1", "]"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"0", ",", "1"}], "}"}], ",", 
+                  RowBox[{"MinMax", "[", "lsVals", "]"}]}], "]"}]}], "}"}], 
+              ",", 
+              RowBox[{"aEventURL", "[", "#1", "]"}], ",", "Right"}], "]"}], 
+            "&"}], ",", 
+           RowBox[{"Sort", "@", "aEventDateObject"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"PlotStyle", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"Gray", ",", 
+            RowBox[{"Opacity", "[", "0.3", "]"}], ",", 
+            RowBox[{"PointSize", "[", "0.0035", "]"}]}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Joined", "->", "False"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"GridLines", "->", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Sort", "@", 
+             RowBox[{"Values", "[", "aEventDateObject", "]"}]}], ",", 
+            "None"}], "}"}]}]}], "\[IndentingNewLine]", "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"DateListPlot", "[", "\[IndentingNewLine]", 
+         RowBox[{
+         "aCryptoCurrenciesData", ",", "\[IndentingNewLine]", "opts", ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"GridLines", "->", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Sort", "@", 
+              RowBox[{"Values", "[", "aEventDateObject", "]"}]}], ",", 
+             "None"}], "}"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"PlotRange", "\[Rule]", "All"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"AspectRatio", "\[Rule]", 
+           RowBox[{"1", "/", "4"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "\[IndentingNewLine]", 
+         "]"}], ",", "\[IndentingNewLine]", "grGrid"}], "\[IndentingNewLine]",
+        "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CryptocurrencyPlot", "[", "___", "]"}], ":=", "$Failed"}], 
+  ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.8328420692741537`*^9, 3.8328422003551283`*^9}, {
+   3.8328422898980417`*^9, 3.832842342527631*^9}, {3.8328423953373203`*^9, 
+   3.832842428882183*^9}, {3.832843202241749*^9, 3.832843205310986*^9}, {
+   3.832846598150277*^9, 3.8328466030742702`*^9}, {3.832846635984754*^9, 
+   3.832846736099024*^9}, {3.8328467716407223`*^9, 3.832846818508429*^9}, {
+   3.832910812781322*^9, 3.8329108206563263`*^9}, {3.8329109741621447`*^9, 
+   3.83291097442231*^9}, {3.832911356434414*^9, 3.832911396911456*^9}, {
+   3.832911434712758*^9, 3.832911563155345*^9}, {3.8329116537979116`*^9, 
+   3.832911659669557*^9}, {3.832912165586707*^9, 3.832912171053059*^9}, {
+   3.832912427419248*^9, 3.8329124329999743`*^9}, {3.832912631693918*^9, 
+   3.832912694463282*^9}, {3.832912733744706*^9, 3.8329127715688334`*^9}, {
+   3.8329128123431396`*^9, 3.832912855011492*^9}, {3.832912891058416*^9, 
+   3.832912953758361*^9}, {3.832912997113908*^9, 3.832912997372156*^9}, {
+   3.832913140430538*^9, 3.8329131409248533`*^9}, {3.832913179615645*^9, 
+   3.832913185408577*^9}, {3.832913241701075*^9, 3.832913303153235*^9}, {
+   3.832913566241459*^9, 3.832913609911742*^9}, {3.8329137978587418`*^9, 
+   3.83291380960494*^9}, {3.8329237492459593`*^9, 3.8329238867031612`*^9}, {
+   3.832923958008407*^9, 3.83292395843445*^9}, {3.832924182854541*^9, 
+   3.8329241840695267`*^9}, {3.832924234088337*^9, 3.832924234525708*^9}, {
+   3.8329244018949633`*^9, 3.832924496936792*^9}, {3.832924554031476*^9, 
+   3.8329245701087646`*^9}, {3.832924604544697*^9, 3.832924677706087*^9}, {
+   3.83292470813643*^9, 3.832924744239367*^9}, {3.832924787481509*^9, 
+   3.8329248187961597`*^9}, {3.832924886014776*^9, 3.8329248973437157`*^9}, {
+   3.8329249329056473`*^9, 3.832924957891725*^9}, {3.83292500404169*^9, 
+   3.832925057344481*^9}, {3.8329251447029343`*^9, 3.832925151340289*^9}, 
+   3.832925723267963*^9, 3.833278981151746*^9, 3.833279449210823*^9, 
+   3.833284911195847*^9, {3.8332849449233418`*^9, 3.833285062475831*^9}, {
+   3.833285126556481*^9, 3.833285178756936*^9}, {3.8332859851407824`*^9, 
+   3.8332859898097754`*^9}, {3.83328605000954*^9, 3.833286053429669*^9}, {
+   3.833286153555562*^9, 3.833286160698702*^9}, {3.833286202628334*^9, 
+   3.83328620411617*^9}, {3.8332863045544252`*^9, 3.83328630491402*^9}, {
+   3.8332868346860523`*^9, 3.8332868397489233`*^9}, {3.833286881150374*^9, 
+   3.8332869198503227`*^9}, {3.833368704479252*^9, 3.833368754744093*^9}, 
+   3.833368908623776*^9},
+ CellLabel->"In[75]:=",ExpressionUUID->"6685e8dc-cdc8-4834-8a65-4e4dab9fc84d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["References", "Section",
+ CellChangeTimes->{{3.8332730231657877`*^9, 
+  3.8332730257537937`*^9}},ExpressionUUID->"d44b4f34-4e92-41c7-bbe0-\
+77f4ba02ff0b"],
+
+Cell[CellGroupData[{
+
+Cell["Articles", "Subsection",
+ CellChangeTimes->{{3.8332814427185802`*^9, 
+  3.833281444406196*^9}},ExpressionUUID->"ceacc55b-a36f-4fbb-b2cb-\
+c2c84fa6f698"],
+
+Cell[TextData[{
+ "[AA1] Anton Antonov, ",
+ ButtonBox["\"Crypto-currencies data acquisition \
+with\[NonBreakingSpace]visualization\"",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://mathematicaforprediction.wordpress.com/2021/06/19/crypto-\
+currencies-data-acquisition-with-visualization/"], None},
+  ButtonNote->
+   "https://mathematicaforprediction.wordpress.com/2021/06/19/crypto-\
+currencies-data-acquisition-with-visualization/"],
+ ", (2021), ",
+ ButtonBox["MathematicaForPrediction at WordPress",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://mathematicaforprediction.wordpress.com"], None},
+  ButtonNote->"https://mathematicaforprediction.wordpress.com"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.8332930926384697`*^9, 3.8332931001905003`*^9}, {
+  3.833293237237082*^9, 
+  3.833293296294854*^9}},ExpressionUUID->"3e8daf02-f9b2-4fe9-b137-\
+ef6a78b1a63b"],
+
+Cell[TextData[{
+ "[AA2] Anton Antonov, ",
+ ButtonBox["\"NY Times COVID-19 data visualization\"",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/SystemModeling/blob/master/Projects/\
+Coronavirus-propagation-dynamics/Documents/NYTimes-COVID-19-data-\
+visualization.md"], None},
+  ButtonNote->
+   "https://github.com/antononcube/SystemModeling/blob/master/Projects/\
+Coronavirus-propagation-dynamics/Documents/NYTimes-COVID-19-data-\
+visualization.md"],
+ ", (2020), ",
+ ButtonBox["SystemModeling at GitHub",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/SystemModeling"], None},
+  ButtonNote->"https://github.com/antononcube/SystemModeling"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.794745781750211*^9, 3.794745830524087*^9}, {
+  3.794828285485854*^9, 3.794828286767498*^9}, {3.833293087024465*^9, 
+  3.833293087080522*^9}},ExpressionUUID->"53935c7e-3c0d-416e-b256-\
+696575d2b4bd"],
+
+Cell[TextData[{
+ "[AA3] Anton Antonov, ",
+ ButtonBox["\[OpenCurlyDoubleQuote]Apple mobility trends data visualization\
+\[CloseCurlyDoubleQuote]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/SystemModeling/blob/master/Projects/\
+Coronavirus-propagation-dynamics/Documents/Apple-mobility-trends-data-\
+visualization.md"], None},
+  ButtonNote->
+   "https://github.com/antononcube/SystemModeling/blob/master/Projects/\
+Coronavirus-propagation-dynamics/Documents/Apple-mobility-trends-data-\
+visualization.md"],
+ ", (2020), ",
+ ButtonBox["SystemModeling at GitHub",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/SystemModeling"], None},
+  ButtonNote->"https://github.com/antononcube/SystemModeling"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.794745781750211*^9, 3.794745830524087*^9}, {
+   3.794828285485854*^9, 3.794828286767498*^9}, {3.833273205635466*^9, 
+   3.833273225562039*^9}, 3.833273507789813*^9, {3.833293090084992*^9, 
+   3.833293090141348*^9}},ExpressionUUID->"34df5b97-28ed-49c2-8f5b-\
+eaf145489d7a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Packages", "Subsection",
+ CellChangeTimes->{{3.833281455015277*^9, 
+  3.833281457175215*^9}},ExpressionUUID->"78d16d23-6fec-44ab-bf13-\
+c027bb8db453"],
+
+Cell[TextData[{
+ "[AAp1] Anton Antonov, ",
+ ButtonBox["Data reshaping Mathematica package",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/MathematicaForPrediction/blob/master/\
+DataReshape.m"], None},
+  ButtonNote->
+   "https://github.com/antononcube/MathematicaForPrediction/blob/master/\
+DataReshape.m"],
+ ", (2018), ",
+ ButtonBox["MathematicaForPrediciton at GitHub",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/MathematicaForPrediction"], None},
+  ButtonNote->"https://github.com/antononcube/MathematicaForPrediction"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.794828156850593*^9, 
+  3.794828236850971*^9}},ExpressionUUID->"118b1df5-cb1c-4a1b-855c-\
+961ea4f6386a"],
+
+Cell[TextData[{
+ "[AAp2] Anton Antonov, ",
+ ButtonBox["Heatmap plot Mathematica package",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/MathematicaForPrediction/blob/master/\
+Misc/HeatmapPlot.m"], None},
+  ButtonNote->
+   "https://github.com/antononcube/MathematicaForPrediction/blob/master/Misc/\
+HeatmapPlot.m"],
+ ", (2018), ",
+ ButtonBox["MathematicaForPrediciton at GitHub",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://github.com/antononcube/MathematicaForPrediction"], None},
+  ButtonNote->"https://github.com/antononcube/MathematicaForPrediction"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.794828156850593*^9, 3.794828236850971*^9}, {
+  3.7952479470287867`*^9, 
+  3.795247992691471*^9}},ExpressionUUID->"7b7a2f04-5fe3-4d2a-a036-\
+be633f5b04e2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Resource functions", "Subsection",
+ CellChangeTimes->{{3.833281462451518*^9, 
+  3.8332814653542747`*^9}},ExpressionUUID->"bc415734-77de-4ac1-9a8e-\
+aad9c11153cc"],
+
+Cell[TextData[{
+ "[AAw1] Anton Antonov, ",
+ ButtonBox["CryptocurrencyData",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://www.wolframcloud.com/obj/antononcube/DeployedResources/\
+Function/CryptocurrencyData"], None},
+  ButtonNote->
+   "https://www.wolframcloud.com/obj/antononcube/DeployedResources/Function/\
+CryptocurrencyData"],
+ ", (2021)."
+}], "Text",
+ CellChangeTimes->{{3.833293302784493*^9, 3.8332933336967783`*^9}, {
+  3.8332933654596043`*^9, 
+  3.833293365460411*^9}},ExpressionUUID->"807b32d1-b151-442e-83a9-\
+8bfe3f42c0d7"],
+
+Cell[TextData[{
+ "[AAw2] Anton Antonov, ",
+ ButtonBox["RecordsSummary",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://resources.wolframcloud.com/FunctionRepository/resources/\
+RecordsSummary/"], None},
+  ButtonNote->
+   "https://resources.wolframcloud.com/FunctionRepository/resources/\
+RecordsSummary/"],
+ ", (2019)."
+}], "Text",
+ CellChangeTimes->{{3.8332933707655783`*^9, 
+  3.833293424013489*^9}},ExpressionUUID->"b8102045-cf54-4f3d-88ad-\
+21c68aaf1f52"],
+
+Cell[TextData[{
+ "[AAw3] Anton Antonov, ",
+ ButtonBox["ParetoPrinciplePlot",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://resources.wolframcloud.com/FunctionRepository/resources/\
+ParetoPrinciplePlot"], None},
+  ButtonNote->
+   "https://resources.wolframcloud.com/FunctionRepository/resources/\
+ParetoPrinciplePlot"],
+ ", (2019)."
+}], "Text",
+ CellChangeTimes->{{3.833296183162264*^9, 
+  3.8332962348565083`*^9}},ExpressionUUID->"f2f9b9ba-b719-44a6-87e5-\
+51cc1e2d6263"],
+
+Cell[TextData[{
+ "[AAw4] Anton Antonov, ",
+ ButtonBox["CrossTabulate",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://resources.wolframcloud.com/FunctionRepository/resources/\
+CrossTabulate"], None},
+  ButtonNote->
+   "https://resources.wolframcloud.com/FunctionRepository/resources/\
+CrossTabulate"],
+ ", (2019)."
+}], "Text",
+ CellChangeTimes->{{3.833293480683115*^9, 3.833293539170412*^9}, {
+  3.8332962367016973`*^9, 
+  3.833296236757818*^9}},ExpressionUUID->"07159c80-8ef4-42f3-b0b3-\
+889e9f0808ec"],
+
+Cell[TextData[{
+ "[AAw5] Anton Antonov, ",
+ ButtonBox["IndependentComponentAnalysis",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://resources.wolframcloud.com/FunctionRepository/resources/\
+IndependentComponentAnalysis"], None},
+  ButtonNote->
+   "https://resources.wolframcloud.com/FunctionRepository/resources/\
+IndependentComponentAnalysis"],
+ ", (2019)."
+}], "Text",
+ CellChangeTimes->{{3.833371005568866*^9, 
+  3.833371068808207*^9}},ExpressionUUID->"54b4c198-9bd4-4cdb-b902-\
+c9e30e903419"],
+
+Cell[TextData[{
+ "[AAw6] Anton Antonov, ",
+ ButtonBox["QuantileRegression",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://resources.wolframcloud.com/FunctionRepository/resources/\
+QuantileRegression"], None},
+  ButtonNote->
+   "https://resources.wolframcloud.com/FunctionRepository/resources/\
+QuantileRegression"],
+ ", (2019)."
+}], "Text",
+ CellChangeTimes->{{3.8333710710582*^9, 
+  3.83337109859169*^9}},ExpressionUUID->"dacc515c-ae44-451e-987a-\
+95d85624a6b4"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{2052, 1367},
+WindowMargins->{{Automatic, 538}, {0, Automatic}},
+PrivateNotebookOptions->{"CloudPublishPath"->"/Published/Cryptocurrencies-\
+correlations-clustering-and-data-analysis.nb"},
+TaggingRules->Association["TryRealOnly" -> False],
+FrontEndVersion->"12.3 for Mac OS X x86 (64-bit) (May 11, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"07131e2d-9708-4ab5-94ec-1bd1aa2522fd"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 256, 4, 98, "Title",ExpressionUUID->"5cbd3e83-8d61-4779-b58a-ecc1bf7aeff0"],
+Cell[839, 28, 786, 19, 104, "Text",ExpressionUUID->"9f8ae23c-aaca-4497-9891-057749c8bc2d"],
+Cell[CellGroupData[{
+Cell[1650, 51, 157, 3, 67, "Section",ExpressionUUID->"b3a7bb90-fb4d-467b-a968-35bae5a8fe88"],
+Cell[1810, 56, 810, 16, 35, "Text",ExpressionUUID->"72c3d7eb-0233-4cd7-9569-bf27b2382bbd"],
+Cell[2623, 74, 240, 4, 35, "Text",ExpressionUUID->"fbf49723-f68c-4d8a-8388-91e95ee0d9bb"],
+Cell[2866, 80, 173, 3, 32, "ItemNumbered",ExpressionUUID->"7dcaff6a-5c90-49f8-90ba-0ac324c726f1"],
+Cell[3042, 85, 197, 3, 32, "ItemNumbered",ExpressionUUID->"c3ef04dc-09f6-4799-9855-df7f1d86e3fe"],
+Cell[3242, 90, 190, 3, 32, "ItemNumbered",ExpressionUUID->"b95d9517-2d3f-4aea-9378-61d7aaee0aef"],
+Cell[3435, 95, 251, 6, 32, "ItemNumbered",ExpressionUUID->"f6a4c584-8fca-4be9-ba87-bd7948abea6c"],
+Cell[3689, 103, 198, 3, 32, "ItemNumbered",ExpressionUUID->"3258f014-aff0-4c0f-ba8e-af081c943254"],
+Cell[3890, 108, 270, 6, 32, "ItemNumbered",ExpressionUUID->"12db8be9-806c-4de1-a2c0-661e03a4f13c"],
+Cell[4163, 116, 225, 5, 32, "ItemNumbered",ExpressionUUID->"fefd1ec2-ef7e-460d-b091-7f3bb0e6feec"],
+Cell[4391, 123, 235, 4, 35, "Text",ExpressionUUID->"9de7e582-dcd5-41ba-b2bf-0a37781110d6"],
+Cell[CellGroupData[{
+Cell[4651, 131, 888, 19, 32, "Item",ExpressionUUID->"4564ee2f-99fa-4bd2-b6b4-9884b9a4d989"],
+Cell[5542, 152, 935, 19, 27, "Subitem",ExpressionUUID->"f480de3a-6e71-4069-8207-b518efad81c9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6514, 176, 523, 9, 32, "Item",ExpressionUUID->"30159b28-48a8-4476-8d56-610542d8c0fa"],
+Cell[7040, 187, 487, 6, 27, "Subitem",ExpressionUUID->"b3c46e39-7a50-46eb-a8bd-69185edea0cd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7564, 198, 1133, 26, 32, "Item",ExpressionUUID->"d59180cf-d7fc-49bb-a0ec-ad9fd834f21b"],
+Cell[8700, 226, 442, 6, 27, "Subitem",ExpressionUUID->"71a0e6d1-edeb-4924-8ecd-e50075b19ef7"]
+}, Open  ]],
+Cell[9157, 235, 519, 11, 35, "Text",ExpressionUUID->"bed67356-ee2a-4a4e-b717-0addbc1e323c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9713, 251, 168, 3, 67, "Section",ExpressionUUID->"379286e3-b376-42c5-8c1f-ae5ebf78a37e"],
+Cell[9884, 256, 1457, 33, 35, "Text",ExpressionUUID->"6c7b161a-2dd5-4477-9db6-b606f2e89639"],
+Cell[11344, 291, 191, 3, 35, "Text",ExpressionUUID->"4e3951f4-f56f-4e80-8698-53304597321a"],
+Cell[11538, 296, 296, 5, 30, "Input",ExpressionUUID->"6cf3d0d9-d00f-42af-a7f6-004ea60a0bc9"],
+Cell[11837, 303, 1073, 28, 35, "Text",ExpressionUUID->"251ecdbd-185f-420e-b089-9bf1529d9cf8"],
+Cell[12913, 333, 644, 15, 30, "Input",ExpressionUUID->"2144cfe5-0357-445b-8b44-94c1285b34b9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13594, 353, 222, 4, 67, "Section",ExpressionUUID->"2c456627-6750-44fb-80c8-7779f2ea0924"],
+Cell[13819, 359, 274, 6, 35, "Text",ExpressionUUID->"cd2b4776-cc71-4208-8413-765314e97c00"],
+Cell[14096, 367, 363, 8, 35, "Text",ExpressionUUID->"7be5786d-f8a7-48cb-8bd0-5cfa5b144748"],
+Cell[14462, 377, 547, 12, 35, "Text",ExpressionUUID->"7eb8a31b-2e7e-48bb-9b8c-859ac2b7bf40"],
+Cell[15012, 391, 678, 15, 35, "Text",ExpressionUUID->"23bb5b88-923b-4df7-a83b-3646a3d4aba6"],
+Cell[CellGroupData[{
+Cell[15715, 410, 160, 3, 54, "Subsection",ExpressionUUID->"08b4611d-631c-4d95-b9f8-afbfb7110922"],
+Cell[15878, 415, 553, 13, 35, "Text",ExpressionUUID->"a4a15a85-d41b-4ae5-a25e-c0c6cee25d84"],
+Cell[16434, 430, 449, 9, 30, "Input",ExpressionUUID->"62113f77-d6b0-4111-9d8b-8fec9f5c1848"],
+Cell[16886, 441, 239, 4, 35, "Text",ExpressionUUID->"9ad78538-bc44-462b-a086-77df9cc2f9af"],
+Cell[17128, 447, 276, 5, 30, "Input",ExpressionUUID->"c98384ab-ea75-4283-bfa9-d6bf6c5a403a"],
+Cell[17407, 454, 231, 6, 35, "Text",ExpressionUUID->"7fbe0899-ac99-4e09-b753-78668399ba6e"],
+Cell[17641, 462, 1093, 26, 52, "Input",ExpressionUUID->"310ae3ed-1b40-4013-b6c5-9e2dd42d92d8"],
+Cell[18737, 490, 210, 5, 35, "Text",ExpressionUUID->"3a7903a3-2456-4429-974b-adbf8a72682a"],
+Cell[18950, 497, 577, 13, 30, "Input",ExpressionUUID->"82259048-750d-4c7c-aec6-9d4d4d1a47bd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19564, 515, 155, 3, 54, "Subsection",ExpressionUUID->"76694f8a-a369-4000-87e0-0b5a13a52606"],
+Cell[19722, 520, 254, 6, 35, "Text",ExpressionUUID->"95aff425-fc2c-4dc9-991d-71ba941e8ac7"],
+Cell[19979, 528, 1179, 31, 73, "Input",ExpressionUUID->"39f06af3-baba-44be-8912-2aface79bc7c"],
+Cell[21161, 561, 459, 7, 35, "Text",ExpressionUUID->"f2695f32-05c8-4365-8cac-bdea879ad4b3",
+ CellID->1894663852],
+Cell[21623, 570, 925, 19, 30, "Input",ExpressionUUID->"1e3d0584-9ee6-40b3-8a43-1f21b61b5bd8",
+ CellID->1500293889],
+Cell[22551, 591, 265, 6, 35, "Text",ExpressionUUID->"3fdbd0d9-95fa-4ddd-a335-5b3df1449b05"],
+Cell[22819, 599, 563, 13, 30, "Input",ExpressionUUID->"e180c851-66fe-4291-9821-bb2ddaede026"],
+Cell[23385, 614, 453, 8, 35, "Text",ExpressionUUID->"669bb4cf-8e28-4e40-91cc-24c760f19fa4",
+ CellID->96863732],
+Cell[23841, 624, 1281, 28, 52, "Input",ExpressionUUID->"33b34584-d92b-4e1b-948a-07d48774b299",
+ CellID->608928330]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25159, 657, 166, 3, 54, "Subsection",ExpressionUUID->"3b264f18-271d-4265-835a-4126678618ab"],
+Cell[25328, 662, 255, 6, 35, "Text",ExpressionUUID->"51feefc8-72a0-48ef-8e6f-1e9cd960e2fd"],
+Cell[25586, 670, 1182, 31, 73, "Input",ExpressionUUID->"81e3c308-9540-425d-bd1d-980a1e3decac"],
+Cell[26771, 703, 456, 7, 35, "Text",ExpressionUUID->"50672dd0-7d42-4cdd-bb64-7f3db6bb3ad5",
+ CellID->1475574675],
+Cell[27230, 712, 1070, 23, 30, "Input",ExpressionUUID->"81b2a71b-8f4a-4b72-b773-d7930a6cb5e8",
+ CellID->842407169],
+Cell[28303, 737, 268, 6, 35, "Text",ExpressionUUID->"26b88102-55e9-4dfd-af3a-111190c9fa16"],
+Cell[28574, 745, 694, 16, 30, "Input",ExpressionUUID->"f731fd53-9264-4c5b-8611-040fefed4ef5"],
+Cell[29271, 763, 505, 9, 35, "Text",ExpressionUUID->"7d9d63d6-3e7e-4993-b5e6-c82eca6591e4",
+ CellID->1469200750],
+Cell[29779, 774, 1429, 30, 52, "Input",ExpressionUUID->"c21ec7f1-4b2e-48c8-897b-bb422d4fc000",
+ CellID->1090032044]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31257, 810, 161, 3, 67, "Section",ExpressionUUID->"ddd7c365-8083-4943-a549-11a3fc91a5e2"],
+Cell[31421, 815, 286, 6, 35, "Text",ExpressionUUID->"2c4317f9-db12-4295-9437-ac2652e5ce21"],
+Cell[31710, 823, 512, 13, 35, "Text",ExpressionUUID->"1e09550e-fa11-4a73-8d53-b5d8be17041a"],
+Cell[32225, 838, 4984, 112, 304, "Input",ExpressionUUID->"432ecc76-6b71-4131-8243-98202343af56"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37246, 955, 234, 4, 67, "Section",ExpressionUUID->"c20dcb17-007a-4e1f-b26e-39b709100806"],
+Cell[37483, 961, 308, 7, 35, "Text",ExpressionUUID->"61d92b04-a3fb-4e42-8f4e-6e877120f6d7"],
+Cell[37794, 970, 382, 9, 35, "Text",ExpressionUUID->"53c52a50-a56c-4af6-98eb-690874bc4364"],
+Cell[38179, 981, 165, 3, 35, "Text",ExpressionUUID->"a5080e29-238f-446f-9829-5af9a65b4b94"],
+Cell[38347, 986, 504, 10, 30, "Input",ExpressionUUID->"461fcdaf-e214-4e7a-977e-64433dace6f8"],
+Cell[38854, 998, 341, 7, 35, "Text",ExpressionUUID->"cae92d3d-0bab-48a4-b7ff-6f521a4c9f7a"],
+Cell[39198, 1007, 1550, 33, 73, "Input",ExpressionUUID->"5272377f-b798-4afe-8f79-0d47a73c211f"],
+Cell[40751, 1042, 228, 4, 35, "Text",ExpressionUUID->"fb484b1b-e997-45a3-a5d3-1413b4989e80"],
+Cell[40982, 1048, 778, 20, 30, "Input",ExpressionUUID->"a86ae7ed-d3cd-452a-b49f-102e7fe79db6"],
+Cell[41763, 1070, 235, 4, 35, "Text",ExpressionUUID->"05b01a02-565f-4938-83ab-238c8321698c"],
+Cell[42001, 1076, 399, 9, 30, "Input",ExpressionUUID->"8d39099d-de83-48b9-8d31-a6e502f8c080"],
+Cell[42403, 1087, 346, 7, 35, "Text",ExpressionUUID->"4c1133d4-5e59-4ac1-9eb6-1319334f3aa1"],
+Cell[42752, 1096, 1505, 23, 30, "Input",ExpressionUUID->"7ba7ce83-7203-48b5-a1b0-e00f07e06f05"],
+Cell[44260, 1121, 395, 8, 35, "Text",ExpressionUUID->"34e1d441-0ae2-402b-94de-7eecec06ee30"],
+Cell[44658, 1131, 1903, 33, 30, "Input",ExpressionUUID->"89cee084-8673-47cd-8228-0d326ab57608"],
+Cell[46564, 1166, 343, 7, 35, "Text",ExpressionUUID->"2de9dc49-ba69-41c5-999d-8f0f04467062"],
+Cell[46910, 1175, 1388, 21, 30, "Input",ExpressionUUID->"6a90b727-d423-4c8f-89ee-d366653d85a1"],
+Cell[48301, 1198, 142, 3, 35, "Text",ExpressionUUID->"44362bd6-a26f-4bf3-b6d9-a4c6bafe56f3"],
+Cell[CellGroupData[{
+Cell[48468, 1205, 160, 3, 54, "Subsection",ExpressionUUID->"e8c38471-709b-4ed7-8ca1-c3333f19b5b5"],
+Cell[CellGroupData[{
+Cell[48653, 1212, 163, 3, 45, "Subsubsection",ExpressionUUID->"600a0bfe-0a18-4206-b92e-71b29ffc273a"],
+Cell[48819, 1217, 312, 6, 35, "Text",ExpressionUUID->"6e95921d-8794-430b-b9e0-8c362e3faa0e"],
+Cell[49134, 1225, 353, 7, 32, "ItemNumbered",ExpressionUUID->"7b546c1d-f55e-41c4-bd9f-365e18e10a71"],
+Cell[49490, 1234, 388, 6, 32, "ItemNumbered",ExpressionUUID->"8564c264-2166-4775-aaa4-93acd4218e55"],
+Cell[49881, 1242, 652, 11, 32, "ItemNumbered",ExpressionUUID->"37ba975d-b2da-4b17-a608-c3c68eb9eafd"],
+Cell[50536, 1255, 384, 6, 32, "ItemNumbered",ExpressionUUID->"6ea2d19c-c14e-4a46-b803-e3e70bc216cb"],
+Cell[50923, 1263, 159, 3, 35, "Text",ExpressionUUID->"db600268-bf7f-4c75-bda1-fef343157cb8"],
+Cell[51085, 1268, 417, 8, 32, "Item",ExpressionUUID->"7052220a-cabd-452f-bc03-e06c025a6c80"],
+Cell[51505, 1278, 507, 10, 32, "Item",ExpressionUUID->"6262c130-987b-4af0-a820-5f7a30a5a4b4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[52049, 1293, 158, 3, 45, "Subsubsection",ExpressionUUID->"a7b171bd-5a71-4069-928c-bca3a8644105"],
+Cell[52210, 1298, 251, 4, 35, "Text",ExpressionUUID->"d4e4ee58-d2c8-45c2-8985-4b54afc24eeb"],
+Cell[52464, 1304, 256, 5, 32, "ItemNumbered",ExpressionUUID->"08d1c50d-cf58-4ec4-a5b2-bc4c6baa86ca"],
+Cell[52723, 1311, 372, 7, 32, "ItemNumbered",ExpressionUUID->"c1a20302-6298-47c1-8ece-da225a8befa1"],
+Cell[53098, 1320, 237, 4, 32, "ItemNumbered",ExpressionUUID->"5f3f3a7d-bb53-48d5-9e8e-f296ee428030"],
+Cell[53338, 1326, 162, 3, 35, "Text",ExpressionUUID->"2f6cef7a-4274-469a-a9be-7677e8b2fb32"],
+Cell[53503, 1331, 335, 7, 32, "Item",ExpressionUUID->"8b39d1e1-8e01-449a-bf70-82e288a9d8b5"],
+Cell[CellGroupData[{
+Cell[53863, 1342, 259, 6, 32, "Item",ExpressionUUID->"5d4a6fb0-fa14-49cf-8307-a84af3bb0220"],
+Cell[54125, 1350, 318, 7, 27, "Subitem",ExpressionUUID->"2a0d3102-81f2-48d9-8a45-32afd8896f0e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[54480, 1362, 293, 6, 32, "Item",ExpressionUUID->"bf8c41ad-6209-4619-9f81-63fa515dbd58"],
+Cell[54776, 1370, 337, 7, 27, "Subitem",ExpressionUUID->"72f43cef-91a0-45f7-b6ec-389932af42c3"],
+Cell[55116, 1379, 272, 6, 27, "Subitem",ExpressionUUID->"d5fae81d-dc0a-4854-80bf-a10d54253f44"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[55461, 1393, 169, 3, 67, "Section",ExpressionUUID->"205d7fb6-00ac-4a50-a6d4-da781f244e4d"],
+Cell[55633, 1398, 259, 6, 35, "Text",ExpressionUUID->"4365f88f-5875-4b72-9ec7-0c30747e0046"],
+Cell[CellGroupData[{
+Cell[55917, 1408, 174, 3, 54, "Subsection",ExpressionUUID->"411fdd88-2f74-44f6-b3fb-7a4699d221e6"],
+Cell[56094, 1413, 239, 4, 35, "Text",ExpressionUUID->"a8312c1d-0723-479c-8d82-68f7ed16a67e"],
+Cell[56336, 1419, 426, 8, 30, "Input",ExpressionUUID->"998df337-6fe1-4e87-ab7d-a953a3e0c260"],
+Cell[56765, 1429, 546, 12, 35, "Text",ExpressionUUID->"1e59ccee-a6a1-4012-b2cb-53a79fce587d"],
+Cell[57314, 1443, 632, 13, 30, "Input",ExpressionUUID->"bfd42209-26ee-44fd-a1fd-57c788d61f72"],
+Cell[57949, 1458, 848, 17, 52, "Input",ExpressionUUID->"3d374d25-cd8f-45c3-a440-c1c2018eb503"],
+Cell[58800, 1477, 1140, 30, 73, "Input",ExpressionUUID->"a00c6850-65a3-43b3-8a13-8f552192240c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[59977, 1512, 223, 4, 54, "Subsection",ExpressionUUID->"b7ffbcb5-e8dc-4cf5-addd-d4d3248f5702"],
+Cell[60203, 1518, 333, 7, 35, "Text",ExpressionUUID->"34a16fde-e0b5-453e-9253-665cc919b960"],
+Cell[60539, 1527, 1808, 46, 52, "Input",ExpressionUUID->"446df87d-c7ed-45e6-bd92-84d8c176d75a"],
+Cell[62350, 1575, 237, 7, 35, "Text",ExpressionUUID->"f7e81e82-a4c2-476a-9739-72e019f145fc"],
+Cell[62590, 1584, 1596, 44, 73, "Input",ExpressionUUID->"f850fc85-a1de-44b3-8727-e07de25598f9"],
+Cell[64189, 1630, 187, 3, 35, "Text",ExpressionUUID->"c5c69563-f8b5-41f9-96a1-532c3bdbe08f"],
+Cell[64379, 1635, 350, 6, 30, "Input",ExpressionUUID->"ca54a517-fd06-4a0a-8744-920693958d37"],
+Cell[64732, 1643, 185, 3, 35, "Text",ExpressionUUID->"2926e454-f1da-44f1-a6c9-82be48f9d25d"],
+Cell[64920, 1648, 1226, 29, 30, "Input",ExpressionUUID->"1d60b2c3-2a7e-49ac-a415-5fb9a77d4282"],
+Cell[66149, 1679, 225, 5, 35, "Text",ExpressionUUID->"d104caeb-bb3d-49c6-973f-00fa4d3ca3fb"],
+Cell[66377, 1686, 360, 7, 30, "Input",ExpressionUUID->"dfd174bb-f632-4a80-9cb4-146b89fd46b8"],
+Cell[66740, 1695, 319, 7, 35, "Text",ExpressionUUID->"dd0fd735-4e9a-40b0-b419-0a51aeeca018"],
+Cell[67062, 1704, 1220, 25, 52, "Input",ExpressionUUID->"d2825efe-2f58-42ac-8816-8c345511576a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[68319, 1734, 270, 4, 54, "Subsection",ExpressionUUID->"d4b074a8-f06e-4dee-825d-cb00845a8f9b"],
+Cell[68592, 1740, 309, 7, 35, "Text",ExpressionUUID->"9876b4ee-dc7d-4f51-b913-6bcd1027d11a"],
+Cell[68904, 1749, 1858, 46, 52, "Input",ExpressionUUID->"52d5e9a4-d1f8-4b23-a5eb-f5e464b1f4d4"],
+Cell[70765, 1797, 237, 7, 35, "Text",ExpressionUUID->"cfebc886-87ce-4738-9b41-3eee87e3aae4"],
+Cell[71005, 1806, 1655, 45, 73, "Input",ExpressionUUID->"b9df0d88-7905-4ac9-8e35-00380fa54f43"],
+Cell[72663, 1853, 187, 3, 35, "Text",ExpressionUUID->"b5615c5c-046c-41ae-aa90-64efc44dd427"],
+Cell[72853, 1858, 350, 6, 30, "Input",ExpressionUUID->"66659b54-e173-4a6e-8361-519f5e8fd9f1"],
+Cell[73206, 1866, 185, 3, 35, "Text",ExpressionUUID->"4e96944d-6864-47fd-95a3-1070a713df92"],
+Cell[73394, 1871, 1226, 29, 30, "Input",ExpressionUUID->"dec9ee7b-ae24-4f66-bce2-cfc57bc269be"],
+Cell[74623, 1902, 225, 5, 35, "Text",ExpressionUUID->"a404977e-19bc-4908-87d7-587069f4b005"],
+Cell[74851, 1909, 360, 7, 30, "Input",ExpressionUUID->"5fc207e3-52c1-474f-a14f-4a60d96eaa45"],
+Cell[75214, 1918, 342, 7, 35, "Text",ExpressionUUID->"b7bbc4f4-ed54-403e-a857-c722aa4c2a01"],
+Cell[75559, 1927, 1222, 25, 52, "Input",ExpressionUUID->"8e27ac58-8d09-47d8-913c-7ad52a8477d5"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[76818, 1957, 259, 4, 54, "Subsection",ExpressionUUID->"5f7be75d-8387-44e7-af8b-2a3cf608fc35"],
+Cell[77080, 1963, 464, 8, 35, "Text",ExpressionUUID->"1b0a43e3-4a1c-4c3f-8a8a-8c135bce3c6d"],
+Cell[77547, 1973, 301, 6, 30, "Input",ExpressionUUID->"55bcc99d-e6e5-4d4d-a1e7-20190cef2a2e"],
+Cell[77851, 1981, 371, 8, 35, "Text",ExpressionUUID->"04bf345b-a793-44b1-8e4c-9b11ee17fffb"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[78271, 1995, 171, 3, 67, "Section",ExpressionUUID->"9894818f-0a89-45ad-8295-e02413c0b1e0"],
+Cell[78445, 2000, 427, 8, 35, "Text",ExpressionUUID->"f0d5bd55-947e-4566-8a4c-384bdd2698c4"],
+Cell[CellGroupData[{
+Cell[78897, 2012, 163, 3, 54, "Subsection",ExpressionUUID->"e40ecb2a-e7d5-4587-bea1-3340e9dbda1e"],
+Cell[79063, 2017, 184, 3, 35, "Text",ExpressionUUID->"33c3da4a-9c1d-44b4-93d6-ca0c1d765338"],
+Cell[79250, 2022, 983, 25, 30, "Input",ExpressionUUID->"aae6f839-3b07-45ec-8df4-9b1170801f58"],
+Cell[80236, 2049, 2529, 53, 52, "Input",ExpressionUUID->"6bafce9a-5ad4-4e3e-8982-dfd342e991c0"],
+Cell[82768, 2104, 179, 3, 35, "Text",ExpressionUUID->"f0372a25-d1b0-40a4-9b78-246cced8835b"],
+Cell[82950, 2109, 806, 20, 30, "Input",ExpressionUUID->"69b25234-eec8-4d74-9575-2c5f9d004ab7"],
+Cell[83759, 2131, 212, 5, 35, "Text",ExpressionUUID->"f8ca4ed0-4b7f-4922-ac49-8a248a06e18a"],
+Cell[83974, 2138, 1472, 32, 199, "Input",ExpressionUUID->"8ac94a5e-5eed-4c80-bf0b-bb232b16cb50"],
+Cell[85449, 2172, 665, 13, 30, "Input",ExpressionUUID->"1ac35eee-48da-4a27-92c2-d7fd0e5c5e3a"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[86163, 2191, 168, 3, 67, "Section",ExpressionUUID->"093c36cf-11db-466b-a421-7c7e59f037e3"],
+Cell[86334, 2196, 195, 3, 35, "Text",ExpressionUUID->"576e36e3-3deb-4a0b-832a-2d7fbc62f638"],
+Cell[86532, 2201, 198, 3, 32, "Item",ExpressionUUID->"e6810e08-1dbe-43b6-abde-5cf990265196"],
+Cell[86733, 2206, 329, 7, 32, "Item",ExpressionUUID->"db2b352b-77bc-40f2-bc6b-97987d80b0ff"],
+Cell[87065, 2215, 297, 4, 32, "Item",ExpressionUUID->"c2b94d82-470d-4a7c-8335-950dfc62d62d"],
+Cell[87365, 2221, 421, 8, 35, "Text",ExpressionUUID->"15631c69-d081-4524-a352-eedc1f93ae60"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[87823, 2234, 175, 2, 67, "Section",ExpressionUUID->"22e07e4b-565c-402b-83b0-d3a6434a7aba"],
+Cell[88001, 2238, 631, 11, 68, "Input",ExpressionUUID->"9e0edb7e-a69d-4828-b62e-755744bd03c0",
+ InitializationCell->True]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[88669, 2254, 224, 3, 67, "Section",ExpressionUUID->"7202e60d-a29d-4a4d-af6b-38d9dd56189a"],
+Cell[88896, 2259, 8017, 171, 635, "Input",ExpressionUUID->"6685e8dc-cdc8-4834-8a65-4e4dab9fc84d",
+ InitializationCell->True]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[96950, 2435, 159, 3, 67, "Section",ExpressionUUID->"d44b4f34-4e92-41c7-bbe0-77f4ba02ff0b"],
+Cell[CellGroupData[{
+Cell[97134, 2442, 158, 3, 54, "Subsection",ExpressionUUID->"ceacc55b-a36f-4fbb-b2cb-c2c84fa6f698"],
+Cell[97295, 2447, 882, 22, 35, "Text",ExpressionUUID->"3e8daf02-f9b2-4fe9-b137-ef6a78b1a63b"],
+Cell[98180, 2471, 948, 23, 35, "Text",ExpressionUUID->"53935c7e-3c0d-416e-b256-696575d2b4bd"],
+Cell[99131, 2496, 1081, 25, 35, "Text",ExpressionUUID->"34df5b97-28ed-49c2-8f5b-eaf145489d7a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[100249, 2526, 156, 3, 54, "Subsection",ExpressionUUID->"78d16d23-6fec-44ab-bf13-c027bb8db453"],
+Cell[100408, 2531, 740, 20, 35, "Text",ExpressionUUID->"118b1df5-cb1c-4a1b-855c-961ea4f6386a"],
+Cell[101151, 2553, 799, 21, 35, "Text",ExpressionUUID->"7b7a2f04-5fe3-4d2a-a036-be633f5b04e2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[101987, 2579, 168, 3, 54, "Subsection",ExpressionUUID->"bc415734-77de-4ac1-9a8e-aad9c11153cc"],
+Cell[102158, 2584, 548, 15, 35, "Text",ExpressionUUID->"807b32d1-b151-442e-83a9-8bfe3f42c0d7"],
+Cell[102709, 2601, 471, 14, 35, "Text",ExpressionUUID->"b8102045-cf54-4f3d-88ad-21c68aaf1f52"],
+Cell[103183, 2617, 484, 14, 35, "Text",ExpressionUUID->"f2f9b9ba-b719-44a6-87e5-51cc1e2d6263"],
+Cell[103670, 2633, 515, 15, 35, "Text",ExpressionUUID->"07159c80-8ef4-42f3-b0b3-889e9f0808ec"],
+Cell[104188, 2650, 509, 14, 35, "Text",ExpressionUUID->"54b4c198-9bd4-4cdb-b902-c9e30e903419"],
+Cell[104700, 2666, 476, 14, 35, "Text",ExpressionUUID->"dacc515c-ae44-451e-987a-95d85624a6b4"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
