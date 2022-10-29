@@ -276,13 +276,11 @@ proximity -- the highest in the list would be committed the soonest.
 
 - [Functional parsers programming and basic applications](https://mathematicaforprediction.wordpress.com/?s=functional+parsers)
 
-- Recommendation engines
+- [Recommendation engines](https://github.com/antononcube/Scalable-Recommender-Framework-project)
 
 - [Lebesgue numerical integration](https://mathematicaforprediction.wordpress.com/2016/07/01/adaptive-numerical-lebesgue-integration-by-set-measure-estimates/)
 
-- [Conversational engines](https://mathematicaforprediction.wordpress.com/2014/11/29/simple-time-series-conversational-engine/)
-
-
+- [Conversational engines](https://github.com/antononcube/ConversationalAgents)
 
 
 
@@ -294,3 +292,18 @@ see
 - the YouTube video ["RLink: Linking Mathematica and R"](https://www.youtube.com/watch?v=5ppY7cTy71o),
 
 - the set-up web page guide [Setting up RLink for Mathematica](http://szhorvat.net/pelican/setting-up-rlink-for-mathematica.html).
+
+------
+
+## Support & appreciation
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/antonov70)
+
+
+😅 ☕️ 😀
+
+------
+
+Anton Antonov
+22.10.2015, Florida, USA
+29.10.2022, Florida, USA (update)
